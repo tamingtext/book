@@ -1,0 +1,12 @@
+Taming Text, by Grant Ingersoll, Thomas Morton and Drew Farris is designed to teach software engineers the basic concepts of working with text to solve search and Natural Language Processing problems.  The book focuses on teaching using existing open source libraries like Apache Solr, Apache Mahout and Apache OpenNLP to manipulate text.  To learn more, visit http://www.manning.com/ingersoll.
+
+Getting Started
+
+
+Building the Source
+
+
+Running the Tests
+
+
+Next Steps

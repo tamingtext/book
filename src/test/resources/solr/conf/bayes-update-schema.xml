@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema name="test-bayes-update" version="1.2">
+  <types>
+    <fieldType name="string" class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
+    
+    <fieldType name="text" class="solr.TextField" positionIncrementGap="100">
+      <analyzer type="index">
+        <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+        <filter class="solr.SnowballPorterFilterFactory" language="English"/>
+      </analyzer>
+      <analyzer type="query">
+        <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+        <filter class="solr.SnowballPorterFilterFactory" language="English"/>
+      </analyzer>
+    </fieldType>  
+  </types>
+    
+  <fields>
+    <field name="id" type="string" indexed="true" stored="true" required="true"/>
+    <field name="subject" type="string" indexed="true" stored="true"/>
+    <field name="category" type="string" indexed="true" stored="true"/>
+    <field name="details" type="text" indexed="true" stored="true" termVectors="true"/>
+  </fields>
+ 
+  <uniqueKey>id</uniqueKey>
+  <defaultSearchField>details</defaultSearchField>
+</schema>

@@ -1,0 +1,20 @@
+<config>
+  <requestHandler name="standard" class="solr.StandardRequestHandler" default="true">
+    <lst name="defaults">
+      <str name="echoParams">explicit</str>
+     <int name="rows">10</int>
+     <str name="fl">*</str>
+     <str name="version">2.1</str>
+    </lst>
+  </requestHandler>
+  
+  <updateRequestProcessorChain key="mahout" default="true">
+    <processor class="com.tamingtext.classifier.bayes.BayesUpdateRequestProcessorFactory">
+      <str name="inputField">details</str>
+      <str name="outputField">subject</str>
+      <str name="model">src/test/resources/solr/conf/bayes-model</str>
+    </processor>
+    <processor class="solr.RunUpdateProcessorFactory"/>
+    <processor class="solr.LogUpdateProcessorFactory"/>
+  </updateRequestProcessorChain>
+</config>

@@ -1,0 +1,4 @@
+## empty header, customize as desired
+<div class="header">
+  <div><a href="#url_for_home#if($request.params.get('debugQuery'))?debugQuery=true#end"><img src="/static/taming-text-header.jpg" id="logo"/></a></div>
+</div>

@@ -1,0 +1,24 @@
+<config>
+  <luceneMatchVersion>LUCENE_31</luceneMatchVersion>
+
+  <requestHandler name="standard" class="solr.StandardRequestHandler" default="true">
+    <lst name="defaults">
+      <str name="echoParams">explicit</str>
+     <int name="rows">10</int>
+     <str name="fl">*</str>
+     <str name="version">2.1</str>
+      <str name="defType">qa</str>
+      <bool name="qa">true</bool>
+      <str name="qa.qf">details</str>
+    </lst>
+    <arr name="last-components">
+      <str>passageRank</str>
+    </arr>
+  </requestHandler>
+  
+  <searchComponent name="passageRank" class="com.tamingtext.qa.PassageRankingComponent">
+
+  </searchComponent>
+
+  <queryParser name="qa" class="com.tamingtext.qa.QuestionQParserPlugin"/>
+</config>

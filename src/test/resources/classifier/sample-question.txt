@@ -1,0 +1,8 @@
+Java 5 to Java 1.4 Source Code Backporting Tool
+
+Is there a tool that, given a Java 5 level source code, will backport it to 
+Java 1.4-compliant source code, by removing Generics declarations, 
+transforming for eachs in simple fors or iteration fors, etc.
+
+Please note that I am looking for a tool that translates source code to 
+source code, not class binaries.

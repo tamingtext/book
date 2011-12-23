@@ -1,12 +1,33 @@
 Taming Text, by Grant Ingersoll, Thomas Morton and Drew Farris is designed to teach software engineers the basic concepts of working with text to solve search and Natural Language Processing problems.  The book focuses on teaching using existing open source libraries like Apache Solr, Apache Mahout and Apache OpenNLP to manipulate text.  To learn more, visit http://www.manning.com/ingersoll.
 
-Getting Started
+This directory contains the full source code for all the Taming Text examples.
+Most of the code is setup to be run via JUnit tests, though they are not
+completely automated at this stage of the book.
+
+All instructions are relative to the tamingText-src directory, called TT_HOME from here on out.
+
+Taming Text uses Maven for building and running the code.  To run the tests, you will
+need:
+
+TODO: Make friendly for Windows.
+1. JDK 1.6+
+2. Maven 3.0 or higher
+3. The OpenNLP English models, available at http://maven.tamingtext.com/opennlp-models/models-1.4.  Place them in ../opennlp-models, preserving their directory structure.
+  For instance, if you put the source in ./tamingText/source, the models should be in tamingText/opennlp-models.
+  This can be done by using wget and then renaming the directory (assuming you have wget on your machine):
+  In the tamingText directory:
+      wget -np -m http://maven.tamingtext.com/opennlp-models/models-1.4
+      mv opennlp.org opennlp-models
+4. Get WordNet 3.0 and place it at the same level as the OpenNLP models:
+      wget -np -m wget -np -m http://maven.tamingtext.com/wordnet/
+      tar -xf Wordnet-3.0.tar.gz
+
+  TODO: Create a script to download these.
+
+4. Solr running against the provided Solr configuration, by:
+  a. cd solr
+  b. java -jar start.jar
 
 
-Building the Source
-
-
-Running the Tests
-
-
-Next Steps
+Then, to run the tests, in the TT_HOME:
+ mvn test

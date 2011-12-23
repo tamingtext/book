@@ -13,12 +13,12 @@ import java.io.File;
 public class TamingTextTestJ4 extends Assert {
   @BeforeClass
   public static void setUp() {
-    File models = new File("../opennlp-models");
+    File models = new File("../../opennlp-models");
     assertTrue(models.exists());
-    File wordnet = new File("../WordNet-3.0");
+    File wordnet = new File("../../WordNet-3.0");
     assertTrue(wordnet.exists());
-    System.setProperty("model.dir", "../opennlp-models");
-    System.setProperty("wordnet.dir", "../WordNet-3.0");
+    System.setProperty("model.dir", "../../opennlp-models");
+    System.setProperty("wordnet.dir", "../../WordNet-3.0");
   }
 
   public static File getWordNetDir(){

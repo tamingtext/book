@@ -9,7 +9,7 @@
   <artifactId>taming-text</artifactId>
   <packaging>jar</packaging>
   <version>0.1-SNAPSHOT</version>
-  <name>Taming Text</name>
+  <name>Taming Text Source</name>
   <url>http://www.tamingtext.com</url>
 
   <properties>

@@ -82,7 +82,8 @@ public class VectorExamplesTest extends TamingTextTestJ4 {
     Path path = new Path(tmpFile.getAbsolutePath());
     Configuration conf = new Configuration();//<co id="vec.examples.seq.conf"/>
     FileSystem fs = FileSystem.get(conf);
-    SequenceFile.Writer seqWriter = SequenceFile.createWriter(fs, conf, path, LongWritable.class, VectorWritable.class);//<co id="vec.examples.seq.writer"/>
+    SequenceFile.Writer seqWriter = SequenceFile.createWriter(fs, conf, path,
+            LongWritable.class, VectorWritable.class);//<co id="vec.examples.seq.writer"/>
     VectorWriter vecWriter = new SequenceFileVectorWriter(seqWriter);//<co id="vec.examples.seq.vecwriter"/>
     List<Vector> vectors = new ArrayList<Vector>();
     vectors.add(sparse);

@@ -22,11 +22,21 @@ package com.tamingtext.opennlp;
 import com.tamingtext.TamingTextTestJ4;
 import junit.framework.Assert;
 import junit.framework.TestCase;
+import EventStream;
+import GIS;
+import GISModel;
+import TwoPassDataIndexer;
+import io.BinaryGISModelReader;
+import io.PooledGISModelReader;
+import io.SuffixSensitiveGISModelWriter;
+import opennlp.maxent.EventStream;
 import opennlp.maxent.GIS;
 import opennlp.maxent.GISModel;
+import opennlp.maxent.PlainTextByLineDataStream;
 import opennlp.maxent.TwoPassDataIndexer;
 import opennlp.maxent.io.BinaryGISModelReader;
 import opennlp.maxent.io.PooledGISModelReader;
+import opennlp.maxent.io.SuffixSensitiveGISModelWriter;
 import opennlp.tools.namefind.AdaptiveFeatureGenerator;
 import opennlp.tools.namefind.DefaultNameContextGenerator;
 import opennlp.tools.namefind.NameContextGenerator;
@@ -219,8 +229,8 @@ public class NameFinderTest extends TamingTextTestJ4 {
     NameContextGenerator ncg = new DefaultNameContextGenerator(featureGenerators); //<co id="co.opennlp.name.createfeat"/> 
     /*
     <calloutlist>
-    <callout arearefs="co.opennlp.name.tokenfeat"><para>Creates a feature generator coresponding to the tokens in a 5-token widow (2 to the lef, and 2 to the right).</para></callout>
-    <callout arearefs="co.opennlp.name.tokenclassfeat"><para>Creates a feature generator coresponding to the token classes of the tokens in a 5-token widow (2 to the lef, and 2 to the right).</para></callout>
+    <callout arearefs="co.opennlp.name.tokenfeat"><para>Creates a feature generator corresponding to the tokens in a 5-token widow (2 to the lef, and 2 to the right).</para></callout>
+    <callout arearefs="co.opennlp.name.tokenclassfeat"><para>Creates a feature generator corresponding to the token classes of the tokens in a 5-token widow (2 to the lef, and 2 to the right).</para></callout>
     <callout arearefs="co.opennlp.name.prevfeat"><para>Creates a feature generator which specifies how this token was previously tagged.</para></callout>    
     <callout arearefs="co.opennlp.name.createfeat"><para>Creates a new context generator consisting of the 3 defined feature generators.</para></callout>    
     </calloutlist>    
@@ -271,10 +281,10 @@ public class NameFinderTest extends TamingTextTestJ4 {
     //<start id="ne-train"/>
     File inFile = new File("person.train");
     NameSampleStream nss = new NameSampleDataStream( //  <co id="co.opennlp.name.initnamestream"/>
-            new opennlp.maxent.PlainTextByLineDataStream(
+            new PlainTextByLineDataStream(
                     new java.io.FileReader(inFile)));
 
-    opennlp.maxent.EventStream es = new NameFinderEventStream(nss); //  <co id="co.opennlp.name.initeventstream"/>
+    EventStream es = new NameFinderEventStream(nss); //  <co id="co.opennlp.name.initeventstream"/>
 
     int iterations = 100;
     int cutoff = 5;
@@ -284,14 +294,14 @@ public class NameFinderTest extends TamingTextTestJ4 {
 
     File outFile = new File("person.bin.gz");
     System.out.println("Saving the model as: " + outFile.toString());
-    new opennlp.maxent.io.SuffixSensitiveGISModelWriter(mod, outFile)
+    new SuffixSensitiveGISModelWriter(mod, outFile)
             .persist();//  <co id="co.opennlp.name.persist3"/>
     /*
     <calloutlist>
     <callout arearefs="co.opennlp.name.initnamestream"><para>Initialize a stream of name based on annotated data in the "person.train" file.</para></callout>
     <callout arearefs="co.opennlp.name.initeventstream"><para>Initialize a stream of events based on the stream of names.</para></callout>
     <callout arearefs="co.opennlp.name.train"><para>Train the model.</para></callout>
-    <callout arearefs="co.opennlp.name.persist3"><para>Save the model to a file called "person.bin.gz".</para></callout>
+    <callout arearefs="co.opennlp.name.persist3"><para>Save the model.</para></callout>
     </calloutlist>
      */
 
@@ -310,11 +320,11 @@ public class NameFinderTest extends TamingTextTestJ4 {
     //<start id="ne-features-train"/>
     File inFile = new File("person.train");
     NameSampleStream nss = new NameSampleDataStream(
-            new opennlp.maxent.PlainTextByLineDataStream(
+            new PlainTextByLineDataStream(
                     new java.io.FileReader(inFile)));
 
 
-    opennlp.maxent.EventStream es = new NameFinderEventStream(nss, ncg); //<co id="co.opennlp.name.initfeat"/>
+    EventStream es = new NameFinderEventStream(nss, ncg); //<co id="co.opennlp.name.initfeat"/>
     int iterations = 100;
     int cutoff = 5;
     GISModel mod = GIS.trainModel(iterations,
@@ -322,7 +332,7 @@ public class NameFinderTest extends TamingTextTestJ4 {
 
     File outFile = new File("person.bin.gz");
     System.out.println("Saving the model as: " + outFile.toString());
-    new opennlp.maxent.io.SuffixSensitiveGISModelWriter(mod, outFile)
+    new SuffixSensitiveGISModelWriter(mod, outFile)
             .persist();//<co id="co.opennlp.name.persist2"/>
     
     /*

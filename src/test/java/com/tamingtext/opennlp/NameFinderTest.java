@@ -22,21 +22,14 @@ package com.tamingtext.opennlp;
 import com.tamingtext.TamingTextTestJ4;
 import junit.framework.Assert;
 import junit.framework.TestCase;
-import EventStream;
-import GIS;
-import GISModel;
-import TwoPassDataIndexer;
-import io.BinaryGISModelReader;
-import io.PooledGISModelReader;
-import io.SuffixSensitiveGISModelWriter;
 import opennlp.maxent.EventStream;
 import opennlp.maxent.GIS;
 import opennlp.maxent.GISModel;
-import opennlp.maxent.PlainTextByLineDataStream;
 import opennlp.maxent.TwoPassDataIndexer;
 import opennlp.maxent.io.BinaryGISModelReader;
 import opennlp.maxent.io.PooledGISModelReader;
 import opennlp.maxent.io.SuffixSensitiveGISModelWriter;
+import opennlp.maxent.PlainTextByLineDataStream;
 import opennlp.tools.namefind.AdaptiveFeatureGenerator;
 import opennlp.tools.namefind.DefaultNameContextGenerator;
 import opennlp.tools.namefind.NameContextGenerator;
@@ -61,7 +54,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NameFinderTest extends TamingTextTestJ4 {
-
 
 
   //<start id="ne-display1"/>
@@ -128,6 +120,7 @@ public class NameFinderTest extends TamingTextTestJ4 {
       }
     }
   }
+
   /*
   <calloutlist>
   <callout arearefs="co.opennlp.name.sort"><para>Sort the names based on their span's start index ascending then end index decending.</para></callout>
@@ -311,10 +304,10 @@ public class NameFinderTest extends TamingTextTestJ4 {
   public void training2() throws IOException {
     AdaptiveFeatureGenerator[] featureGenerators = new AdaptiveFeatureGenerator[]
             {
-                    new WindowFeatureGenerator(new TokenFeatureGenerator(), 2, 2), 
+                    new WindowFeatureGenerator(new TokenFeatureGenerator(), 2, 2),
                     new WindowFeatureGenerator(new TokenClassFeatureGenerator(), 2, 2),
-                    new PreviousMapFeatureGenerator() 
-            };  
+                    new PreviousMapFeatureGenerator()
+            };
     NameContextGenerator ncg = new DefaultNameContextGenerator(featureGenerators); //<co id="co.opennlp.name.createfg"/>
 
     //<start id="ne-features-train"/>
@@ -334,16 +327,17 @@ public class NameFinderTest extends TamingTextTestJ4 {
     System.out.println("Saving the model as: " + outFile.toString());
     new SuffixSensitiveGISModelWriter(mod, outFile)
             .persist();//<co id="co.opennlp.name.persist2"/>
-    
+
     /*
-    <calloutlist>
-    <callout arearefs="co.opennlp.name.initfeat"><para>Creates an event stream with a custom feature generator.</para></callout>
-    <callout arearefs="co.opennlp.name.train2"><para>Train the model.</para></callout>
-    <callout arearefs="co.opennlp.name.persist2"><para>Save the model to a file called "person.bin.gz".</para></callout>
-    </calloutlist>
-     */
+   <calloutlist>
+   <callout arearefs="co.opennlp.name.initfeat"><para>Creates an event stream with a custom feature generator.</para></callout>
+   <callout arearefs="co.opennlp.name.train2"><para>Train the model.</para></callout>
+   <callout arearefs="co.opennlp.name.persist2"><para>Save the model to a file called "person.bin.gz".</para></callout>
+   </calloutlist>
+    */
     //<end id="ne-features-train"/>
   }
+
   @Test
   public void test() throws IOException {
 

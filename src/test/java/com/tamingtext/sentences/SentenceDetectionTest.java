@@ -19,16 +19,21 @@
 
 package com.tamingtext.sentences;
 
-import com.tamingtext.TamingTextTestJ4;
-import junit.framework.TestCase;
-import opennlp.tools.lang.english.SentenceDetector;
-import org.junit.*;
-
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import opennlp.tools.sentdetect.SentenceDetector;
+import opennlp.tools.sentdetect.SentenceDetectorME;
+import opennlp.tools.sentdetect.SentenceModel;
+
+import org.junit.Test;
+
+import com.tamingtext.TamingTextTestJ4;
 
 public class SentenceDetectionTest extends TamingTextTestJ4 {
 
@@ -53,12 +58,15 @@ public class SentenceDetectionTest extends TamingTextTestJ4 {
   @Test
   public void testOpenNLP() throws Exception {
 
-    File sentenceDir = getSentDetectDir();
+    File modelDir = getModelDir();
 
     //<start id="openSentDetect"/>
     //... Setup the models
-    File model = new File(sentenceDir, "EnglishSD.bin.gz");
-    SentenceDetector detector = new SentenceDetector(model.getAbsolutePath());//<co id="openSentDetect.co.detect"/>
+    File modelFile = new File(modelDir, "en-sent.bin");
+    InputStream modelStream = new FileInputStream(modelFile);
+    SentenceModel model = new SentenceModel(modelStream);
+    SentenceDetector detector = new SentenceDetectorME(model);//<co id="openSentDetect.co.detect"/>
+    ;//<co id="openSentDetect.co.detect"/>
     String testString = "This is a sentence.  It has fruits, vegetables," +
             " etc. but does not have meat.  Mr. Smith went to Washington.";
     String[] result = detector.sentDetect(testString);//<co id="openSentDetect.co.run"/>
@@ -68,7 +76,7 @@ public class SentenceDetectionTest extends TamingTextTestJ4 {
     }
     /*
     <calloutlist>
-        <callout arearefs="openSentDetect.co.detect"><para>Create the <command>SentenceDetector</command> with the EnglishSD.bin.gz model</para></callout>
+        <callout arearefs="openSentDetect.co.detect"><para>Create the <command>SentenceDetector</command> with the en-sent.bin model</para></callout>
         <callout arearefs="openSentDetect.co.run"><para>Invoke the detection process</para></callout>
     </calloutlist>
     */

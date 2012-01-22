@@ -64,7 +64,7 @@ public final class NameFilter extends TokenFilter {
 
   public NameFilter(TokenStream in,String[] modelNames, NameFinderME[] finders) {
     super(in);
-    this.tokenizer = new SimpleTokenizer();
+    this.tokenizer = SimpleTokenizer.INSTANCE;
     this.finders = finders;
     this.tokenTypeNames = new String[modelNames.length];
     for (int i=0; i < modelNames.length; i++) {

@@ -25,21 +25,16 @@ import java.util.Map;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.solr.analysis.BaseTokenFilterFactory;
 
-import com.tamingtext.util.NameFinderEngine;
+import com.tamingtext.util.NameFinderFactory;
 
 public class NameFilterFactory extends BaseTokenFilterFactory {
-  private NameFinderEngine nameFinderEngine;
-  
-  public NameFilterFactory() {
-    
-  }
-  
+  private NameFinderFactory nameFinderEngine;
+
   public void init(Map<String, String> args) {
     super.init(args);
-    String modelDirectory = args.get("modelDirectory");
-    
+
     try {
-      nameFinderEngine = new NameFinderEngine(modelDirectory);
+      nameFinderEngine = new NameFinderFactory(args);
     }
     catch (IOException e) {
       throw (RuntimeException) new RuntimeException().initCause(e);

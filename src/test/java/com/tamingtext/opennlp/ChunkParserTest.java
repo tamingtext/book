@@ -20,32 +20,39 @@
 package com.tamingtext.opennlp;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
-import com.tamingtext.TamingTextTestJ4;
-import opennlp.tools.lang.english.ParserTagger;
-import opennlp.tools.lang.english.TreebankChunker;
-import opennlp.tools.lang.english.TreebankParser;
+import opennlp.tools.chunker.ChunkerME;
+import opennlp.tools.chunker.ChunkerModel;
+import opennlp.tools.cmdline.parser.ParserTool;
 import opennlp.tools.parser.Parse;
 import opennlp.tools.parser.Parser;
+import opennlp.tools.postag.POSModel;
+import opennlp.tools.postag.POSTaggerME;
 
+import org.junit.Test;
+
+import com.tamingtext.TamingTextTestJ4;
 import com.tamingtext.qa.ChunkParser;
-import org.junit.*;
 
 public class ChunkParserTest extends TamingTextTestJ4 {
 
   @Test
   public void test() throws IOException {
 
-    File parserDir = getChunkerDir();
+    File modelDir = getModelDir();
     //<start id="openChunkParse"/>
-    TreebankChunker chunker = new TreebankChunker(parserDir.getAbsolutePath()
-            + File.separator + "EnglishChunk.bin.gz");
-    File posDir = getPOSDir();
-    ParserTagger tagger =  new ParserTagger(posDir.getAbsolutePath() + File.separator + "tag.bin.gz",
-            posDir.getAbsolutePath() + File.separator + "tagdict", true);
+    FileInputStream chunkerStream = new FileInputStream(
+        new File(modelDir,"en-chunker.bin"));
+    ChunkerModel chunkerModel = new ChunkerModel(chunkerStream);
+    ChunkerME chunker = new ChunkerME(chunkerModel);
+    FileInputStream posStream = new FileInputStream(
+        new File(modelDir,"en-pos-maxent.bin"));
+    POSModel posModel = new POSModel(posStream);
+    POSTaggerME tagger =  new POSTaggerME(posModel);
     Parser parser = new ChunkParser(chunker, tagger);
-    Parse[] results = TreebankParser.parseLine("The Minnesota Twins , " +
+    Parse[] results = ParserTool.parseLine("The Minnesota Twins , " +
             "the 1991 World Series Champions , are currently in third place .",
             parser, 1);
     Parse p = results[0];

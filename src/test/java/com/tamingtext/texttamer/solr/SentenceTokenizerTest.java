@@ -21,18 +21,18 @@ package com.tamingtext.texttamer.solr;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Reader;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.tamingtext.TamingTextTestJ4;
 import junit.framework.TestCase;
 
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
 import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
 import org.junit.Test;
+
+import com.tamingtext.TamingTextTestJ4;
 
 
 public class SentenceTokenizerTest extends TamingTextTestJ4 {
@@ -43,10 +43,10 @@ public class SentenceTokenizerTest extends TamingTextTestJ4 {
      "Use the force Luke. ";
     
     String[] expectedStrings = {
-        "A man, a plan, a canal, Panama! ",
-        "No matter where you go, there you are. ",
-        "You are in a maze of twisty, little, passages. ",
-        "Use the force Luke. "
+        "A man, a plan, a canal, Panama!",
+        "No matter where you go, there you are.",
+        "You are in a maze of twisty, little, passages.",
+        "Use the force Luke."
     };
 
 
@@ -84,12 +84,12 @@ public class SentenceTokenizerTest extends TamingTextTestJ4 {
         System.err.println("--- pass: " + pass);
         
         String expected = expectedStrings[pos];
-        TestCase.assertEquals(expected, cta.toString());
-        TestCase.assertEquals(1, pta.getPositionIncrement());
-        TestCase.assertEquals(offset, oa.startOffset());
-        TestCase.assertEquals(offset + expected.length(), oa.endOffset());
+        TestCase.assertEquals("Strings don't match", expected, cta.toString());
+        TestCase.assertEquals("Positing increment is incorrect", 1, pta.getPositionIncrement());
+        TestCase.assertEquals("Start offset is incorrect", offset, oa.startOffset());
+        TestCase.assertEquals("End offset is incorrect",  offset + expected.length(), oa.endOffset());
         
-        offset += expected.length();
+        offset += expected.length() + 1; // space after end of sentence
         pos++;
       }
       

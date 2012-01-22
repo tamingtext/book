@@ -299,9 +299,14 @@
 
     <!-- OpenNLP -->
     <dependency>
-      <groupId>opennlp</groupId>
+      <groupId>org.apache.opennlp</groupId>
       <artifactId>opennlp-tools</artifactId>
-      <version>1.4.3</version>
+      <version>1.5.2-incubating</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.opennlp</groupId>
+      <artifactId>opennlp-maxent</artifactId>
+      <version>3.0.1-incubating</version>
     </dependency>
     <!-- End OpenNLP -->
 

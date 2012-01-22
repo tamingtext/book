@@ -56,32 +56,32 @@ public class TamingTextTestJ4 extends Assert {
     return new File(modelsDirProp);
   }
 
-  public static File getEnglishDir(){
-    return new File(getModelDir(), "english");
-  }
+  //public static File getEnglishDir(){
+  //  return new File(getModelDir(), "english");
+  //}
 
-  public static File getNameFindDir(){
-    return new File(getEnglishDir(), "namefind");
-  }
+  //public static File getNameFindDir(){
+  //  return new File(getModelDir(), "namefind");
+  //}
 
-  public static File getSentDetectDir(){
-    return new File(getEnglishDir(), "sentdetect");
-  }
+  //public static File getSentDetectDir(){
+  //  return new File(getModelDir(), "sentdetect");
+  //}
 
-  public static File getChunkerDir(){
-    return new File(getEnglishDir(), "chunker");
-  }
+  //public static File getChunkerDir(){
+  //  return new File(getModelDir(), "chunker");
+  //}
 
-  public static File getParserDir(){
-    return new File(getEnglishDir(), "parser");
-  }
+  //public static File getParserDir(){
+  //  return new File(getModelDir(), "parser");
+  //}
 
-  public static File getPOSDir(){
-    return new File(getEnglishDir(), "postag");
-  }
+  //public static File getPOSDir(){
+  //  return new File(getModelDir(), "postag");
+  //}
 
   public static File getPersonModel(){
-    return new File(getNameFindDir(), "person.bin.gz");
+    return new File(getModelDir(), "en-ner-person.bin");
   }
 
 

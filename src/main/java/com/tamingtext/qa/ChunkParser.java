@@ -19,13 +19,10 @@
 
 package com.tamingtext.qa;
 
-import java.io.File;
-import java.io.IOException;
-
-import opennlp.tools.lang.english.ParserTagger;
-import opennlp.tools.lang.english.TreebankChunker;
+import opennlp.tools.chunker.ChunkerME;
 import opennlp.tools.parser.Parse;
 import opennlp.tools.parser.Parser;
+import opennlp.tools.postag.POSTaggerME;
 import opennlp.tools.util.Span;
 
 /**
@@ -35,10 +32,10 @@ import opennlp.tools.util.Span;
  */
 public class ChunkParser implements Parser {
 
-  private TreebankChunker chunker;
-  private ParserTagger tagger;
+  private ChunkerME chunker;
+  private POSTaggerME tagger;
 
-  public ChunkParser(TreebankChunker chunker, ParserTagger tagger) {
+  public ChunkParser(ChunkerME chunker, POSTaggerME tagger) {
     this.chunker = chunker;
     this.tagger = tagger;
   }

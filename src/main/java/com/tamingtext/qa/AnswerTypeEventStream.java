@@ -24,15 +24,18 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import opennlp.maxent.Event;
-import opennlp.maxent.EventStream;
-import opennlp.tools.lang.english.ParserTagger;
-import opennlp.tools.lang.english.TreebankChunker;
-import opennlp.tools.lang.english.TreebankParser;
+import opennlp.model.Event;
+import opennlp.model.EventStream;
+import opennlp.tools.chunker.ChunkerME;
+import opennlp.tools.chunker.ChunkerModel;
+import opennlp.tools.cmdline.parser.ParserTool;
 import opennlp.tools.parser.Parse;
 import opennlp.tools.parser.Parser;
+import opennlp.tools.postag.POSModel;
+import opennlp.tools.postag.POSTaggerME;
 
 public class AnswerTypeEventStream implements EventStream {
 
@@ -75,11 +78,11 @@ public class AnswerTypeEventStream implements EventStream {
     }
   }
   
-  public Event nextEvent() {
+  public Event next() {
     int split = line.indexOf(' ');
     String outcome = line.substring(0,split);
     String question = line.substring(split+1);
-    Parse query = TreebankParser.parseLine(question,parser,1)[0];
+    Parse query = ParserTool.parseLine(question,parser,1)[0];
     return (new Event(outcome, atcg.getContext(query)));
   }
   
@@ -101,33 +104,28 @@ public class AnswerTypeEventStream implements EventStream {
   
   public static void main(String[] args) throws IOException {
     if (args.length == 0) {
-      System.err.println("Usage: AnswerTypeEventStream eventfile [iterations cutoff]");
+      System.err.println("Usage: AnswerTypeEventStream eventfile");
       System.exit(1);
     }
     int ai=0;
     String eventFile = args[ai++];
-    int iterations = 100;
-    int cutoff = 5;
-    if (ai < args.length) {
-      iterations = Integer.parseInt(args[ai++]);
-      cutoff = Integer.parseInt(args[ai++]);
-    }
-    String modelsDirProp = System.getProperty("models.dir", "book/src/main" + File.separator + "opennlp-tools-1.3.0" + File.separator + "models" +
+    String modelsDirProp = System.getProperty("models.dir", "book/src/main" + File.separator + "opennlp-models" +
         File.separator + "english");
     File modelsDir = new File(modelsDirProp);   
-    File parserDir = new File(modelsDir, "chunker");
     File wordnetDir = new File(System.getProperty("wordnet.dir", "book/src/main" + File.separator + "WordNet-3.0" + File.separator + "dict"));
-    String trainFile = args[0];
-    TreebankChunker chunker = new TreebankChunker(parserDir.getAbsolutePath()
-            + File.separator + "EnglishChunk.bin.gz");
-    File posDir = new File(modelsDir, "postag");
-    ParserTagger tagger =  new ParserTagger(posDir.getAbsolutePath() + File.separator + "tag.bin.gz",
-            posDir.getAbsolutePath() + File.separator + "tagdict", true);
+    InputStream chunkerStream = new FileInputStream(
+        new File(modelsDir,"en-chunker.bin"));
+    ChunkerModel chunkerModel = new ChunkerModel(chunkerStream);
+    ChunkerME chunker = new ChunkerME(chunkerModel);
+    InputStream posStream = new FileInputStream(
+        new File(modelsDir,"en-pos-maxent.bin"));
+    POSModel posModel = new POSModel(posStream);
+    POSTaggerME tagger =  new POSTaggerME(posModel);
     Parser parser = new ChunkParser(chunker, tagger);
     AnswerTypeContextGenerator actg = new AnswerTypeContextGenerator(wordnetDir);
     EventStream es = new AnswerTypeEventStream(eventFile,actg,parser);
     while(es.hasNext()) {
-      System.out.println(es.nextEvent().toString());
+      System.out.println(es.next().toString());
     }
   }
 }

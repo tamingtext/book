@@ -19,23 +19,28 @@
 
 package com.tamingtext.opennlp;
 
-import com.tamingtext.TamingTextTestJ4;
-import com.tamingtext.qa.AnswerTypeContextGenerator;
-import com.tamingtext.qa.ChunkParser;
-import opennlp.tools.lang.english.ParserTagger;
-import opennlp.tools.lang.english.TreebankChunker;
-import opennlp.tools.lang.english.TreebankParser;
-import opennlp.tools.parser.Parse;
-import opennlp.tools.parser.Parser;
-import org.junit.*;
-
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
+
+import opennlp.tools.chunker.ChunkerME;
+import opennlp.tools.chunker.ChunkerModel;
+import opennlp.tools.cmdline.parser.ParserTool;
+import opennlp.tools.parser.Parse;
+import opennlp.tools.parser.Parser;
+import opennlp.tools.postag.POSModel;
+import opennlp.tools.postag.POSTaggerME;
+
+import org.junit.Test;
+
+import com.tamingtext.TamingTextTestJ4;
+import com.tamingtext.qa.AnswerTypeContextGenerator;
+import com.tamingtext.qa.ChunkParser;
 
 public class AnswerTypeTest extends TamingTextTestJ4 {
 
@@ -43,17 +48,20 @@ public class AnswerTypeTest extends TamingTextTestJ4 {
   @Test
   public void test() throws IOException {
 
-    File parserDir = getChunkerDir();
+    File modelDir = getModelDir();
 
     AnswerTypeContextGenerator atcg = new AnswerTypeContextGenerator(new File(getWordNetDictionary().getAbsolutePath()));
     //<start id="answerType"/>
-    TreebankChunker chunker = new TreebankChunker(parserDir.getAbsolutePath()
-            + File.separator + "EnglishChunk.bin.gz");
-    File posDir = getPOSDir();
-    ParserTagger tagger =  new ParserTagger(posDir.getAbsolutePath() + File.separator + "tag.bin.gz",
-            posDir.getAbsolutePath() + File.separator + "tagdict", true);
+    FileInputStream chunkerStream = new FileInputStream(
+        new File(modelDir,"en-chunker.bin"));
+    ChunkerModel chunkerModel = new ChunkerModel(chunkerStream);
+    ChunkerME chunker = new ChunkerME(chunkerModel);
+    FileInputStream posStream = new FileInputStream(
+        new File(modelDir,"en-pos-maxent.bin"));
+    POSModel posModel = new POSModel(posStream);
+    POSTaggerME tagger =  new POSTaggerME(posModel);
     Parser parser = new ChunkParser(chunker, tagger);
-    Parse[] results = TreebankParser.parseLine("Who is the president of egypt ?", parser, 1);
+    Parse[] results = ParserTool.parseLine("Who is the president of egypt ?", parser, 1);
     String[] context = atcg.getContext(results[0]);
     List<String> features = Arrays.asList(context);
     assertTrue(features.contains("qw=who"));
@@ -65,22 +73,25 @@ public class AnswerTypeTest extends TamingTextTestJ4 {
 
   @Test
   public void demonstrateATCG() throws Exception {
-    File parserDir = getChunkerDir();
+    File modelDir = getModelDir();
 
     AnswerTypeContextGenerator atcg = new AnswerTypeContextGenerator(new File(getWordNetDictionary().getAbsolutePath()));
     //<start id="answerType"/>
-    TreebankChunker chunker = new TreebankChunker(parserDir.getAbsolutePath()
-            + File.separator + "EnglishChunk.bin.gz");
-    File posDir = getPOSDir();
-    ParserTagger tagger =  new ParserTagger(posDir.getAbsolutePath() + File.separator + "tag.bin.gz",
-            posDir.getAbsolutePath() + File.separator + "tagdict", true);
+    InputStream chunkerStream = new FileInputStream(
+        new File(modelDir,"en-chunker.bin"));
+    ChunkerModel chunkerModel = new ChunkerModel(chunkerStream);
+    ChunkerME chunker = new ChunkerME(chunkerModel);
+    InputStream posStream = new FileInputStream(
+        new File(modelDir,"en-pos-maxent.bin"));
+    POSModel posModel = new POSModel(posStream);
+    POSTaggerME tagger =  new POSTaggerME(posModel);
     Parser parser = new ChunkParser(chunker, tagger);
     InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("atcg-questions.txt");
     assertNotNull("input stream", is);
     BufferedReader reader = new BufferedReader(new InputStreamReader(is));
     String line = null;
     while ((line = reader.readLine()) != null){
-      Parse[] results = TreebankParser.parseLine(line, parser, 1);
+      Parse[] results = ParserTool.parseLine(line, parser, 1);
       String[] context = atcg.getContext(results[0]);
       List<String> features = Arrays.asList(context);
       System.out.println("Features: " + features);

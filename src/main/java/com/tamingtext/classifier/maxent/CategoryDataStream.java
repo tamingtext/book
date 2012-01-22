@@ -25,14 +25,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import opennlp.maxent.DataStream;
 import opennlp.tools.doccat.DocumentSample;
 import opennlp.tools.tokenize.SimpleTokenizer;
 import opennlp.tools.tokenize.Tokenizer;
+import opennlp.tools.util.ObjectStream;
 
 import org.slf4j.Logger;
 
-public class CategoryDataStream implements DataStream {
+public class CategoryDataStream implements ObjectStream<DocumentSample> {
 
   public static final Logger log = 
     org.slf4j.LoggerFactory.getLogger(CategoryDataStream.class);
@@ -56,7 +56,7 @@ public class CategoryDataStream implements DataStream {
     this.encoding   = encoding;
     
     if (tokenizer == null) {
-      this.tokenizer = new SimpleTokenizer();
+      this.tokenizer = SimpleTokenizer.INSTANCE;
     }
     else {
       this.tokenizer = tokenizer;
@@ -74,6 +74,23 @@ public class CategoryDataStream implements DataStream {
     inputFiles[0] = new File(fileName);
   }
 
+  public void reset() {
+    close();
+    line = null;
+    inputFilesIndex = 0;
+  }
+  
+  public void close() {
+    if (reader != null) {
+      try {
+        reader.close();
+      }
+      catch (IOException ex) {
+        log.warn("IOException on close", ex);
+      }
+    }
+  }
+  
   /** Set the current buffered line to null, and attempt to obtain the next 
    *  line of training data, if we run out of lines in one file, move on to
    *  the next. If we are out of files, line will remain null when this
@@ -121,7 +138,7 @@ public class CategoryDataStream implements DataStream {
   }
   
 //<start id="maxent.examples.train.event"/>
-  public DocumentSample nextToken() {  
+  public DocumentSample read() {  
     int split = line.indexOf('\t');
     if (split < 0) 
       throw new RuntimeException("Invalid line in " 

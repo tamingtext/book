@@ -19,39 +19,33 @@
 
 package com.tamingtext.opennlp;
 
-import com.tamingtext.TamingTextTestJ4;
-import junit.framework.Assert;
-import junit.framework.TestCase;
-import opennlp.maxent.EventStream;
-import opennlp.maxent.GIS;
-import opennlp.maxent.GISModel;
-import opennlp.maxent.TwoPassDataIndexer;
-import opennlp.maxent.io.BinaryGISModelReader;
-import opennlp.maxent.io.PooledGISModelReader;
-import opennlp.maxent.io.SuffixSensitiveGISModelWriter;
-import opennlp.maxent.PlainTextByLineDataStream;
-import opennlp.tools.namefind.AdaptiveFeatureGenerator;
-import opennlp.tools.namefind.DefaultNameContextGenerator;
-import opennlp.tools.namefind.NameContextGenerator;
-import opennlp.tools.namefind.NameFinderEventStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.namefind.NameSample;
 import opennlp.tools.namefind.NameSampleDataStream;
-import opennlp.tools.namefind.NameSampleStream;
-import opennlp.tools.namefind.PreviousMapFeatureGenerator;
-import opennlp.tools.namefind.TokenClassFeatureGenerator;
-import opennlp.tools.namefind.TokenFeatureGenerator;
-import opennlp.tools.namefind.WindowFeatureGenerator;
-import opennlp.tools.ngram.Token;
+import opennlp.tools.namefind.TokenNameFinderModel;
 import opennlp.tools.tokenize.SimpleTokenizer;
 import opennlp.tools.tokenize.Tokenizer;
+import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.Span;
-import org.junit.*;
+import opennlp.tools.util.featuregen.AdaptiveFeatureGenerator;
+import opennlp.tools.util.featuregen.AggregatedFeatureGenerator;
+import opennlp.tools.util.featuregen.PreviousMapFeatureGenerator;
+import opennlp.tools.util.featuregen.TokenClassFeatureGenerator;
+import opennlp.tools.util.featuregen.TokenFeatureGenerator;
+import opennlp.tools.util.featuregen.WindowFeatureGenerator;
+import opennlp.tools.util.model.ModelUtil;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import org.junit.Test;
+
+import com.tamingtext.TamingTextTestJ4;
 
 public class NameFinderTest extends TamingTextTestJ4 {
 
@@ -75,14 +69,14 @@ public class NameFinderTest extends TamingTextTestJ4 {
    */
 //<end id="ne-display1"/>
 
-  private Span[] mergeSpans(Span[][] spans) {
-    return null;
-  }
+  //private Span[] mergeSpans(Span[][] spans) {
+  //  return null;
+  //}
 
   //<start id="ne-remove-conflicts"/>
   private void removeConflicts(List<Annotation> allAnnotations) {
     java.util.Collections.sort(allAnnotations); //<co id="co.opennlp.name.sort"/>
-    List<Annotation> stack = new ArrayList(); //<co id="co.opennlp.name.stack"/>
+    List<Annotation> stack = new ArrayList<Annotation>(); //<co id="co.opennlp.name.stack"/>
     stack.add(allAnnotations.get(0));
     for (int ai = 1; ai < allAnnotations.size(); ai++) { //<co id="co.opennlp.name.eachname2"/>
       Annotation curr = (Annotation) allAnnotations.get(ai);
@@ -159,7 +153,7 @@ public class NameFinderTest extends TamingTextTestJ4 {
 
   public void multiModel() throws IOException {
 
-    File nameFindDir = getNameFindDir();
+    File modelDir = getModelDir();
     //<start id="ne-multi"/>    
     String[] sentences = {"Former first lady Nancy Reagan was taken " +
             "to a suburban Los Angeles hospital" +
@@ -173,14 +167,15 @@ public class NameFinderTest extends TamingTextTestJ4 {
     NameFinderME[] finders = new NameFinderME[3];
     String[] names = {"person", "location", "date"};
     for (int mi = 0; mi < names.length; mi++) {  //<co id="co.opennlp.name.init3"/>
-      finders[mi] = new NameFinderME(new BinaryGISModelReader(
-              new File(nameFindDir + "/" + names[mi] + ".bin.gz"))
-              .getModel());
+      finders[mi] = new NameFinderME(new TokenNameFinderModel(
+          new FileInputStream(
+              new File(modelDir, "en-ner-" + names[mi] + ".bin")
+              )));
     }
 
-    Tokenizer tokenizer = new SimpleTokenizer(); //<co id="co.opennlp.name.inittokenizer"/>
+    Tokenizer tokenizer = SimpleTokenizer.INSTANCE; //<co id="co.opennlp.name.inittokenizer"/>
     for (int si = 0; si < sentences.length; si++) { //<co id="co.opennlp.name.eachsent"/>
-      List allAnnotations = new ArrayList();
+      List<Annotation> allAnnotations = new ArrayList<Annotation>();
       String[] tokens = tokenizer.tokenize(sentences[si]);//<co id="co.opennlp.name.tokenize"/>
       for (int fi = 0; fi < finders.length; fi++) { //<co id="co.opennlp.name.eachfinder"/>
         Span[] spans = finders[fi].find(tokens); //<co id="co.opennlp.name.findnames2"/>
@@ -209,17 +204,17 @@ public class NameFinderTest extends TamingTextTestJ4 {
 
   }
 
+  @SuppressWarnings("unused")
   private void customFeatures() throws IOException {
 
-    File nameFindDir = getNameFindDir();
+    File modelDir = getModelDir();
     //<start id="ne-features"/>    
-    AdaptiveFeatureGenerator[] featureGenerators = new AdaptiveFeatureGenerator[]
-            {
+    AggregatedFeatureGenerator featureGenerators = new AggregatedFeatureGenerator
+            (
                     new WindowFeatureGenerator(new TokenFeatureGenerator(), 2, 2),//<co id="co.opennlp.name.tokenfeat"/>
                     new WindowFeatureGenerator(new TokenClassFeatureGenerator(), 2, 2),//<co id="co.opennlp.name.tokenclassfeat"/>
                     new PreviousMapFeatureGenerator() //<co id="co.opennlp.name.prevfeat"/>
-            };
-    NameContextGenerator ncg = new DefaultNameContextGenerator(featureGenerators); //<co id="co.opennlp.name.createfeat"/> 
+            ); //<co id="co.opennlp.name.createfeat"/> 
     /*
     <calloutlist>
     <callout arearefs="co.opennlp.name.tokenfeat"><para>Creates a feature generator corresponding to the tokens in a 5-token widow (2 to the lef, and 2 to the right).</para></callout>
@@ -231,35 +226,34 @@ public class NameFinderTest extends TamingTextTestJ4 {
     //<end id="ne-features"/>
     //<start id="ne-features-test"/>
     NameFinderME finder = new NameFinderME(
-            new BinaryGISModelReader(new File(nameFindDir +
-                    "/" + "name-type" + ".bin.gz")).getModel(), ncg);
+        new TokenNameFinderModel(
+            new FileInputStream(
+                new File(modelDir, "en-ner-" + "name-type" + ".bin")
+                )), featureGenerators, NameFinderME.DEFAULT_BEAM_SIZE);
     //<end id="ne-features-test"/>
   }
 
+  @SuppressWarnings("unused")
   private void multiNameSamples() {
     //<start id="ne-namesample-type"/>
     String sent = "Britney Spears was reunited with her sons Saturday .";
     String[] words = sent.split(" ");
-    Token[] tokens = new Token[words.length];
-    for (int wi = 0; wi < words.length; wi++) {
-      tokens[wi] = Token.create(words[wi]);
-    }
-    NameSample nameSample = new NameSample(tokens, new Span[]{
-            new Span(0, 2), new Span(7, 8)},
-            new String[]{"person", "date"}, false);
+    NameSample personSample = new NameSample(words, new Span[]{ new Span(0,2) }, false);
+    NameSample dateSample   = new NameSample(words, new Span[]{ new Span(7,8) }, false);
     //<end id="ne-namesample-type"/>
   }
 
+  @SuppressWarnings("unused")
   private void multiPooledModel() throws IOException {
-
-    File nameFindDir = getNameFindDir();
+    File modelDir = getModelDir();
     //<start id="ne-pool"/>
     NameFinderME[] finders = new NameFinderME[3];
     String[] names = {"person", "location", "date"};
     for (int mi = 0; mi < names.length; mi++) { //<co id="co.opennlp.name.init4"/>
-      finders[mi] = new NameFinderME(new PooledGISModelReader( //<co id="co.opennlp.name.pool"/>
-              new File(nameFindDir + "/" + names[mi] + ".bin.gz"))
-              .getModel());
+      finders[mi] = new NameFinderME(new TokenNameFinderModel( //<co id="co.opennlp.name.pool"/>
+          new FileInputStream(
+              new File(modelDir, "en-ner-" + names[mi] + ".bin")
+              )));
     }
     /*
     <calloutlist>
@@ -273,22 +267,25 @@ public class NameFinderTest extends TamingTextTestJ4 {
   public void training() throws IOException {
     //<start id="ne-train"/>
     File inFile = new File("person.train");
-    NameSampleStream nss = new NameSampleDataStream( //  <co id="co.opennlp.name.initnamestream"/>
-            new PlainTextByLineDataStream(
-                    new java.io.FileReader(inFile)));
-
-    EventStream es = new NameFinderEventStream(nss); //  <co id="co.opennlp.name.initeventstream"/>
+    NameSampleDataStream nss = new NameSampleDataStream( //  <co id="co.opennlp.name.initnamestream"/>
+        new PlainTextByLineStream(
+                new java.io.FileReader(inFile)));
 
     int iterations = 100;
     int cutoff = 5;
-    GISModel mod = GIS.trainModel(iterations,
-            new TwoPassDataIndexer(es, cutoff));//  <co id="co.opennlp.name.train"/>
-
-
-    File outFile = new File("person.bin.gz");
+    TokenNameFinderModel model = NameFinderME.train( //<co id="co.opennlp.name.train"/>
+        "en", // language
+        "person", // type
+        nss, 
+        ModelUtil.createTrainingParameters(iterations, cutoff), 
+        (AdaptiveFeatureGenerator) null, 
+        new HashMap<String,Object>());
+    
+    File outFile = new File("my-person.bin");
     System.out.println("Saving the model as: " + outFile.toString());
-    new SuffixSensitiveGISModelWriter(mod, outFile)
-            .persist();//  <co id="co.opennlp.name.persist3"/>
+    FileOutputStream outFileStream = new FileOutputStream(outFile);
+    model.serialize(outFileStream); //<co id="co.opennlp.name.persist3"/>
+
     /*
     <calloutlist>
     <callout arearefs="co.opennlp.name.initnamestream"><para>Initialize a stream of name based on annotated data in the "person.train" file.</para></callout>
@@ -302,46 +299,48 @@ public class NameFinderTest extends TamingTextTestJ4 {
   }
 
   public void training2() throws IOException {
-    AdaptiveFeatureGenerator[] featureGenerators = new AdaptiveFeatureGenerator[]
-            {
-                    new WindowFeatureGenerator(new TokenFeatureGenerator(), 2, 2),
-                    new WindowFeatureGenerator(new TokenClassFeatureGenerator(), 2, 2),
-                    new PreviousMapFeatureGenerator()
-            };
-    NameContextGenerator ncg = new DefaultNameContextGenerator(featureGenerators); //<co id="co.opennlp.name.createfg"/>
+    AggregatedFeatureGenerator generator = new AggregatedFeatureGenerator(
+                new WindowFeatureGenerator(new TokenFeatureGenerator(), 2, 2),
+                new WindowFeatureGenerator(new TokenClassFeatureGenerator(), 2, 2),
+                new PreviousMapFeatureGenerator()
+    );
 
     //<start id="ne-features-train"/>
     File inFile = new File("person.train");
-    NameSampleStream nss = new NameSampleDataStream(
-            new PlainTextByLineDataStream(
+    NameSampleDataStream nss = new NameSampleDataStream( //<co id="co.opennlp.name.initfeat"/>
+            new PlainTextByLineStream(
                     new java.io.FileReader(inFile)));
 
-
-    EventStream es = new NameFinderEventStream(nss, ncg); //<co id="co.opennlp.name.initfeat"/>
     int iterations = 100;
     int cutoff = 5;
-    GISModel mod = GIS.trainModel(iterations,
-            new TwoPassDataIndexer(es, cutoff)); //<co id="co.opennlp.name.train2"/>
+    TokenNameFinderModel model = NameFinderME.train( //<co id="co.opennlp.name.train2"/>
+        "en", // language
+        "person", // type
+        nss, 
+        generator, 
+        null, 
+        iterations, 
+        cutoff);
 
-    File outFile = new File("person.bin.gz");
+    File outFile = new File("my-person.bin");
     System.out.println("Saving the model as: " + outFile.toString());
-    new SuffixSensitiveGISModelWriter(mod, outFile)
-            .persist();//<co id="co.opennlp.name.persist2"/>
+    FileOutputStream outFileStream = new FileOutputStream(outFile);
+    model.serialize(outFileStream); //<co id="co.opennlp.name.persist2"/>
 
     /*
    <calloutlist>
-   <callout arearefs="co.opennlp.name.initfeat"><para>Creates an event stream with a custom feature generator.</para></callout>
-   <callout arearefs="co.opennlp.name.train2"><para>Train the model.</para></callout>
+   <callout arearefs="co.opennlp.name.initfeat"><para>Creates an sample stream..</para></callout>
+   <callout arearefs="co.opennlp.name.train2"><para>Train the model with a custom feature genrator.</para></callout>
    <callout arearefs="co.opennlp.name.persist2"><para>Save the model to a file called "person.bin.gz".</para></callout>
    </calloutlist>
     */
     //<end id="ne-features-train"/>
   }
 
+  @SuppressWarnings("unused")
   @Test
   public void test() throws IOException {
-
-
+    
     //<start id="ne-setup"/>
     String[] sentences = {"Former first lady Nancy Reagan was taken to" +
             " a suburban Los Angeles hospital" +
@@ -352,9 +351,9 @@ public class NameFinderTest extends TamingTextTestJ4 {
                     "California, " +
                     "said Joanne Drake, chief of staff for the " +
                     "Reagan Foundation."};
-    NameFinderME finder = new NameFinderME(new BinaryGISModelReader(
-            getPersonModel()).getModel()); //<co id="co.opennlp.name.initmodel"/>
-    Tokenizer tokenizer = new SimpleTokenizer(); //<co id="co.opennlp.name.inittokenizer2"/>
+    NameFinderME finder = new NameFinderME(new TokenNameFinderModel(
+        new FileInputStream(getPersonModel()))); //<co id="co.opennlp.name.initmodel"/>
+    Tokenizer tokenizer = SimpleTokenizer.INSTANCE; //<co id="co.opennlp.name.inittokenizer2"/>
     for (int si = 0; si < sentences.length; si++) {
       String[] tokens = tokenizer.tokenize(sentences[si]); //<co id="co.opennlp.name.tokenize2"/>
       Span[] names = finder.find(tokens); //<co id="co.opennlp.name.findnames3"/>
@@ -416,7 +415,7 @@ public class NameFinderTest extends TamingTextTestJ4 {
   }
 }
 
-class Annotation implements Comparable {
+class Annotation implements Comparable<Annotation> {
   private Span span;
   private String type;
   private double prob;
@@ -439,8 +438,7 @@ class Annotation implements Comparable {
     return prob;
   }
 
-  public int compareTo(Object o) {
-    Annotation a = (Annotation) o;
+  public int compareTo(Annotation a) {
     int c = span.compareTo(a.span);
     if (c == 0) {
       c = Double.compare(prob, a.prob);

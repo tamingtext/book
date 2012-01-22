@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.Reader;
 
 import opennlp.tools.sentdetect.SentenceDetector;
+import opennlp.tools.util.Span;
 
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
@@ -38,9 +39,9 @@ public final class SentenceTokenizer extends Tokenizer {
   private final OffsetAttribute offsetAtt = addAttribute(OffsetAttribute.class);
 
   private SentenceDetector detector;
-  private String[] sentences = null;
+  private Span[] sentences = null;
+  private char[] inputSentence;
   private int tokenOffset = 0;
-  private int charOffset  = 0;
   
   public SentenceTokenizer(Reader in, SentenceDetector detector) {
     super(in);
@@ -61,9 +62,10 @@ public final class SentenceTokenizer extends Tokenizer {
       b.append(c, 0, sz);
     }
     
-    sentences = detector.sentDetect(b.toString());
+    String tmp = b.toString();
+    inputSentence = tmp.toCharArray();
+    sentences = detector.sentPosDetect(tmp);
     tokenOffset = 0;
-    charOffset  = 0;
   }
   
   @Override
@@ -76,12 +78,13 @@ public final class SentenceTokenizer extends Tokenizer {
       return false;
     }
     
-    String sentence = sentences[tokenOffset];
+    Span sentenceSpan = sentences[tokenOffset];
     clearAttributes();
-    termAtt.setEmpty().append(sentence);
+    int start = sentenceSpan.getStart();
+    int end   = sentenceSpan.getEnd();
+    termAtt.copyBuffer(inputSentence, start, end-start);
     posIncrAtt.setPositionIncrement(1);
-    offsetAtt.setOffset(charOffset, charOffset + sentence.length());
-    charOffset += sentence.length();
+    offsetAtt.setOffset(start, end);
     tokenOffset++;
     
     return true;

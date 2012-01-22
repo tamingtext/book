@@ -21,19 +21,18 @@ package com.tamingtext.classifier.maxent;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import opennlp.maxent.GISModel;
-import opennlp.maxent.io.SuffixSensitiveGISModelReader;
 import opennlp.tools.doccat.BagOfWordsFeatureGenerator;
+import opennlp.tools.doccat.DoccatModel;
 import opennlp.tools.doccat.DocumentCategorizer;
 import opennlp.tools.doccat.DocumentCategorizerME;
-import opennlp.tools.doccat.FeatureGenerator;
-import opennlp.tools.lang.english.SentenceDetector;
 import opennlp.tools.tokenize.SimpleTokenizer;
 import opennlp.tools.tokenize.Tokenizer;
 
@@ -53,7 +52,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.tamingtext.util.FileUtil;
-import com.tamingtext.util.NameFinderEngine;
 
 public class TestMaxent {
   
@@ -107,22 +105,20 @@ public class TestMaxent {
     
   }
 
-  private static void execute(File[] inputFiles, File modelDir)
+  private static void execute(File[] inputFiles, File modelFile)
       throws IOException, FileNotFoundException {
     //<start id="maxent.examples.test.setup"/> 
     NameFinderFeatureGenerator nffg //<co id="tmx.feature"/>
       = new NameFinderFeatureGenerator(); 
     BagOfWordsFeatureGenerator bowfg 
       = new BagOfWordsFeatureGenerator(); 
-    FeatureGenerator[] gens = new FeatureGenerator[2]; 
-    gens[0] = nffg;  
-    gens[1] = bowfg; 
-    
-    GISModel model //<co id="tmx.modelreader"/>
-      = new SuffixSensitiveGISModelReader(modelDir).getModel();
+
+    InputStream modelStream = //<co id="tmx.modelreader"/>
+        new FileInputStream(modelFile);
+    DoccatModel model = new DoccatModel(modelStream);
     DocumentCategorizer categorizer //<co id="tmx.categorizer"/>
-      = new DocumentCategorizerME(model, gens);
-    Tokenizer tokenizer = new SimpleTokenizer();
+      = new DocumentCategorizerME(model, nffg, bowfg);
+    Tokenizer tokenizer = SimpleTokenizer.INSTANCE;
    
     int catCount = categorizer.getNumberOfCategories(); //<co id="tmx.results"/>
     Collection<String> categories 

@@ -20,23 +20,26 @@
 package com.tamingtext.qa;
 
 
-import opennlp.maxent.GISModel;
-import opennlp.maxent.MaxentModel;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+
 import opennlp.maxent.io.SuffixSensitiveGISModelReader;
-import opennlp.tools.chunker.Chunker;
-import opennlp.tools.lang.english.ParserTagger;
-import opennlp.tools.lang.english.TreebankChunker;
+import opennlp.model.MaxentModel;
+import opennlp.tools.chunker.ChunkerME;
+import opennlp.tools.chunker.ChunkerModel;
 import opennlp.tools.parser.Parser;
+import opennlp.tools.postag.POSModel;
+import opennlp.tools.postag.POSTaggerME;
+
 import org.apache.solr.common.params.SolrParams;
 import org.apache.solr.common.util.NamedList;
 import org.apache.solr.request.SolrQueryRequest;
 import org.apache.solr.search.QParser;
 import org.apache.solr.search.QParserPlugin;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  *
@@ -48,8 +51,8 @@ public class QuestionQParserPlugin extends QParserPlugin {
   protected MaxentModel model;
   protected double[] probs;
   protected AnswerTypeContextGenerator atcg;
-  private ParserTagger tagger;
-  private TreebankChunker treebankChunker;
+  private POSTaggerME tagger;
+  private ChunkerME chunker;
 
   //<start id="qqpp.create"/>
   @Override
@@ -64,9 +67,9 @@ public class QuestionQParserPlugin extends QParserPlugin {
     if (params.getBool(QAParams.COMPONENT_NAME, false) == true //<co id="qqpp.explainif"/>
             && qStr.equals("*:*") == false) {
       AnswerTypeClassifier atc = new AnswerTypeClassifier(model, probs, atcg);//<co id="qqpp.atc"/>
-      Parser chunker = new ChunkParser(treebankChunker, tagger);//<co id="qqpp.parser"/>
+      Parser parser = new ChunkParser(chunker, tagger);//<co id="qqpp.parser"/>
       qParser = new QuestionQParser(qStr, localParams, //<co id="qqpp.construct"/>
-              params, req, chunker, atc, answerTypeMap);
+              params, req, parser, atc, answerTypeMap);
     } else {
       //just do a regular query if qa is turned off
       qParser = req.getCore().getQueryPlugin("edismax")
@@ -91,20 +94,20 @@ public class QuestionQParserPlugin extends QParserPlugin {
     String modelDirectory = params.get("modelDirectory", System.getProperty("model.dir"));//<co id="qqpp.model"/>
     String wordnetDirectory = params.get("wordnetDirectory", System.getProperty("wordnet.dir"));//<co id="qqpp.wordnet"/>
     if (modelDirectory != null) {
-      modelDirectory += File.separator + "english";
       File modelsDir = new File(modelDirectory);
-      File parserDir = new File(modelsDir, "chunker");
-      File posDir = new File(modelsDir, "postag");
       try {
-        treebankChunker = new TreebankChunker(parserDir.getAbsolutePath()
-            + File.separator + "EnglishChunk.bin.gz"); //<co id="qqpp.chunker"/>
-        tagger =  new ParserTagger(posDir.getAbsolutePath() + File.separator + "tag.bin.gz", posDir.getAbsolutePath() + File.separator + "tagdict", true);//<co id="qqpp.tagger"/>
+        InputStream chunkerStream = new FileInputStream(
+            new File(modelsDir,"en-chunker.bin"));
+        ChunkerModel chunkerModel = new ChunkerModel(chunkerStream);
+        chunker = new ChunkerME(chunkerModel); //<co id="qqpp.chunker"/>
+        InputStream posStream = new FileInputStream(
+            new File(modelsDir,"en-pos-maxent.bin"));
+        POSModel posModel = new POSModel(posStream);
+        tagger =  new POSTaggerME(posModel); //<co id="qqpp.tagger"/>
         model = new SuffixSensitiveGISModelReader(new File(modelDirectory + File.separator + "qa" +
                 File.separator + "answer.bin.gz")).getModel();//<co id="qqpp.theModel"/>
         probs = new double[model.getNumOutcomes()];
         atcg = new AnswerTypeContextGenerator(new File(wordnetDirectory, "dict"));//<co id="qqpp.context"/>
-
-
       } catch (IOException e) {
         throw new RuntimeException(e);
       }

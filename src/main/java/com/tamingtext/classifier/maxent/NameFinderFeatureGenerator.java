@@ -27,20 +27,20 @@ import opennlp.tools.doccat.FeatureGenerator;
 import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.util.Span;
 
-import com.tamingtext.util.NameFinderEngine;
+import com.tamingtext.util.NameFinderFactory;
 
 public class NameFinderFeatureGenerator implements FeatureGenerator {
 
-  NameFinderEngine eng;
+  NameFinderFactory eng;
   
   public NameFinderFeatureGenerator() throws IOException {
     this(null);
   }
   
-  public NameFinderFeatureGenerator(NameFinderEngine eng) {
+  public NameFinderFeatureGenerator(NameFinderFactory eng) {
     if (eng == null) {
       try {
-        eng = new NameFinderEngine();
+        eng = new NameFinderFactory();
       }
       catch (IOException e) {
         throw (RuntimeException) new RuntimeException().initCause(e);

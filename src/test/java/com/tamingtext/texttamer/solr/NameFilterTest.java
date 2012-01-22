@@ -20,15 +20,18 @@
 package com.tamingtext.texttamer.solr;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
 
-import com.tamingtext.TamingTextTestJ4;
 import junit.framework.TestCase;
-import opennlp.maxent.io.BinaryGISModelReader;
-import opennlp.tools.lang.english.SentenceDetector;
 import opennlp.tools.namefind.NameFinderME;
+import opennlp.tools.namefind.TokenNameFinderModel;
+import opennlp.tools.sentdetect.SentenceDetector;
+import opennlp.tools.sentdetect.SentenceDetectorME;
+import opennlp.tools.sentdetect.SentenceModel;
 
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
@@ -36,6 +39,8 @@ import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
 import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.tamingtext.TamingTextTestJ4;
 
 
 public class NameFilterTest extends TamingTextTestJ4 {
@@ -54,23 +59,23 @@ public class NameFilterTest extends TamingTextTestJ4 {
   private static SentenceDetector detector;
   private static NameFinderME[] finder;
 
-  @BeforeClass public static void setupModels() throws IOException {
+  @BeforeClass 
+  public static void setupModels() throws IOException {
 
-
-    File nameFindDir = getNameFindDir();
+    File modelDir = getModelDir();
      
     finder = new NameFinderME[modelName.length];
     for (int i=0; i < modelName.length; i++) {
-      finder[i] = new NameFinderME(
-          new BinaryGISModelReader(
-              new File(nameFindDir + File.separator + modelName[i] + ".bin.gz"))
-          .getModel()
-      );
+      finder[i] = new NameFinderME(new TokenNameFinderModel(
+          new FileInputStream(
+              new File(modelDir, "en-ner-" + modelName[i] + ".bin")
+              )));
     }
-    
-    File sentenceDir = getSentDetectDir();
-    File model = new File(sentenceDir, "EnglishSD.bin.gz");
-    detector = new SentenceDetector(model.getAbsolutePath());
+
+    File modelFile = new File(modelDir, "en-sent.bin");
+    InputStream modelStream = new FileInputStream(modelFile);
+    SentenceModel model = new SentenceModel(modelStream);
+    detector = new SentenceDetectorME(model);
   }
   
   String[] tokenStrings = {

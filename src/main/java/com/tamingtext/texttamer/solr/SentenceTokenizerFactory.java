@@ -19,44 +19,31 @@
 
 package com.tamingtext.texttamer.solr;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Map;
 
-import opennlp.tools.lang.english.SentenceDetector;
-
 import org.apache.solr.analysis.BaseTokenizerFactory;
 
+import com.tamingtext.util.SentenceDetectorFactory;
+
 public class SentenceTokenizerFactory extends BaseTokenizerFactory {
-  
-  SentenceDetector detector;
+
+  SentenceDetectorFactory sentenceDetectorFactory;
   
   @Override
   public void init(Map<String,String> args) {
     super.init(args);
-    String modelDirectory = args.get("modelDirectory");
-    if (modelDirectory == null || modelDirectory.equals("")){
-      modelDirectory = System.getProperty("model.dir");
-    }
-    if (modelDirectory != null) {
-      modelDirectory += File.separator + "english" + File.separator + "sentdetect";
-      log.info("Loading models from {}", modelDirectory);
-    } else {
-      throw new RuntimeException("Configuration Error: modelDirectory argument or model.dir system property not set "+modelDirectory);
-    }
-    File sentenceDir = new File(modelDirectory);
-    File model = new File(sentenceDir, "EnglishSD.bin.gz");
     
     try {
-     detector = new SentenceDetector(model.getAbsolutePath());
+      sentenceDetectorFactory = new SentenceDetectorFactory(args);
     }
     catch (IOException e) {
-      throw new RuntimeException("Configuration Error: " + model.getAbsolutePath(), e);
+      throw (RuntimeException) new RuntimeException().initCause(e);
     }
   }
 
   public SentenceTokenizer create(Reader input) {
-    return new SentenceTokenizer(input, detector);
+    return new SentenceTokenizer(input, sentenceDetectorFactory.getSentenceDetector());
   }
 }

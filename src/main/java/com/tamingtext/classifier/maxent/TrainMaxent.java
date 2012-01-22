@@ -20,14 +20,12 @@
 package com.tamingtext.classifier.maxent;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
-import opennlp.maxent.GISModel;
-import opennlp.maxent.io.SuffixSensitiveGISModelWriter;
 import opennlp.tools.doccat.BagOfWordsFeatureGenerator;
-import opennlp.tools.doccat.DocumentCategorizerEventStream;
+import opennlp.tools.doccat.DoccatModel;
 import opennlp.tools.doccat.DocumentCategorizerME;
-import opennlp.tools.doccat.FeatureGenerator;
 import opennlp.tools.tokenize.SimpleTokenizer;
 import opennlp.tools.tokenize.Tokenizer;
 
@@ -58,33 +56,32 @@ public class TrainMaxent {
   
   public TrainMaxent(Tokenizer tokenizer) {
     if (tokenizer == null) 
-      this.tokenizer = new SimpleTokenizer();
+      this.tokenizer = SimpleTokenizer.INSTANCE;
     
   }
   public void train(String source, String destination) throws IOException {
-//<start id="maxent.examples.train.setup"/> 
+    //<start id="maxent.examples.train.setup"/> 
     File[] inputFiles = FileUtil.buildFileList(new File(source));
     File modelFile = new File(destination);
     
-    Tokenizer tokenizer = new SimpleTokenizer(); //<co id="tm.tok"/>
+    Tokenizer tokenizer = SimpleTokenizer.INSTANCE; //<co id="tm.tok"/>
     CategoryDataStream ds = new CategoryDataStream(inputFiles, tokenizer);
-    
+
+    int cutoff = 5;
+    int iterations = 100;
     NameFinderFeatureGenerator nffg //<co id="tm.fg"/>
       = new NameFinderFeatureGenerator();
     BagOfWordsFeatureGenerator bowfg 
       = new BagOfWordsFeatureGenerator();
-    FeatureGenerator[] gens = new FeatureGenerator[2];
-    gens[0] = nffg; gens[1] = bowfg;
-    DocumentCategorizerEventStream es 
-      = new DocumentCategorizerEventStream(ds, gens);
-    
-    GISModel model = DocumentCategorizerME.train(es);//<co id="tm.train"/>
-    new SuffixSensitiveGISModelWriter(model, modelFile).persist();
+
+    DoccatModel model = DocumentCategorizerME.train("en", 
+        ds, cutoff, iterations, nffg, bowfg); //<co id="tm.train"/>
+    model.serialize(new FileOutputStream(modelFile));
     
 /*<calloutlist>
-<callout arearefs="tm.tok">Setup Data Stream</callout>
-<callout arearefs="tm.fg">Setup Event Stream</callout> 
-<callout arearefs="tm.train">Train Categorizer</callout>  
+<callout arearefs="tm.tok">Create data stream</callout>
+<callout arearefs="tm.fg">Set up features generators</callout> 
+<callout arearefs="tm.train">Train categorizer</callout>  
 </calloutlist>*/
 //<end id="maxent.examples.train.setup"/>
   }

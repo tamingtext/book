@@ -20,19 +20,21 @@
 package com.tamingtext.qa;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
-import loci.formats.Location;
 import opennlp.maxent.GIS;
 import opennlp.maxent.GISModel;
-import opennlp.maxent.MaxentModel;
-import opennlp.maxent.TwoPassDataIndexer;
-import opennlp.maxent.io.SuffixSensitiveGISModelReader;
 import opennlp.maxent.io.SuffixSensitiveGISModelWriter;
-import opennlp.tools.lang.english.ParserTagger;
-import opennlp.tools.lang.english.TreebankChunker;
+import opennlp.model.MaxentModel;
+import opennlp.model.TwoPassDataIndexer;
+import opennlp.tools.chunker.ChunkerME;
+import opennlp.tools.chunker.ChunkerModel;
 import opennlp.tools.parser.Parse;
 import opennlp.tools.parser.Parser;
+import opennlp.tools.postag.POSModel;
+import opennlp.tools.postag.POSTaggerME;
 
 public class AnswerTypeClassifier {
 
@@ -78,14 +80,16 @@ public class AnswerTypeClassifier {
     File outFile = new File(args[1]);
     String modelsDirProp = System.getProperty("model.dir");
     File modelsDir = new File(new File(modelsDirProp), "english");
-    File parserDir = new File(modelsDir, "chunker");
     String wordnetDir = System.getProperty("wordnet.dir", "book/src/main" + File.separator + "WordNet-3.0"
             + File.separator + "dict");
-    TreebankChunker chunker = new TreebankChunker(parserDir.getAbsolutePath()
-            + File.separator + "EnglishChunk.bin.gz");
-    File posDir = new File(modelsDir, "postag");
-    ParserTagger tagger =  new ParserTagger(posDir.getAbsolutePath() + File.separator + "tag.bin.gz",
-            posDir.getAbsolutePath() + File.separator + "tagdict", true);
+    InputStream chunkerStream = new FileInputStream(
+        new File(modelsDir,"en-chunker.bin"));
+    ChunkerModel chunkerModel = new ChunkerModel(chunkerStream);
+    ChunkerME chunker = new ChunkerME(chunkerModel);
+    InputStream posStream = new FileInputStream(
+        new File(modelsDir,"en-pos-maxent.bin"));
+    POSModel posModel = new POSModel(posStream);
+    POSTaggerME tagger =  new POSTaggerME(posModel);
     Parser parser = new ChunkParser(chunker, tagger);
     AnswerTypeContextGenerator actg = new AnswerTypeContextGenerator(new File(wordnetDir));
     //<start id="atc.train"/>

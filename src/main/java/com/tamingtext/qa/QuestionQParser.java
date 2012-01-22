@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import opennlp.tools.lang.english.TreebankParser;
+import opennlp.tools.cmdline.parser.ParserTool;
 import opennlp.tools.parser.Parse;
 import opennlp.tools.parser.Parser;
 
@@ -36,7 +36,6 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.spans.SpanNearQuery;
-import org.apache.lucene.search.spans.SpanOrQuery;
 import org.apache.lucene.search.spans.SpanQuery;
 import org.apache.lucene.search.spans.SpanTermQuery;
 import org.apache.solr.common.SolrException;
@@ -69,7 +68,7 @@ public class QuestionQParser extends QParser implements QAParams  {
   public Query parse() throws ParseException {
 
     //<start id="qqp.parse"/>
-    Parse parse = TreebankParser.parseLine(qstr, parser, 1)[0];//<co id="qqp.parseLine"/>
+    Parse parse = ParserTool.parseLine(qstr, parser, 1)[0];//<co id="qqp.parseLine"/>
     /*
     <calloutlist>
         <callout arearefs="qqp.parseLine"><para>Parse the question using the <classname>TreebankParser</classname>.  The resulting <classname>Parse</classname> object can then be utilized by the classifier to determine the Answer Type.</para></callout>

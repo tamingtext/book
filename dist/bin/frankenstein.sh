@@ -9,6 +9,9 @@ fi
 for jar in ./target/dependency/*.jar;do
  export CLASSPATH=$CLASSPATH:$jar
 done
+for jar in ./lib/*.jar;do
+ export CLASSPATH=$CLASSPATH:$jar
+done
 for jar in ./lib/dependency/*.jar;do
  export CLASSPATH=$CLASSPATH:$jar
 done

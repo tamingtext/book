@@ -29,6 +29,7 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
@@ -81,7 +82,7 @@ public class Frankenstein {
   /**
    * Search for the queryStr in the text
    * @param queryStr The query string
-   * @return
+   * @return The Results
    * @throws IOException
    * @throws ParseException
    */
@@ -92,15 +93,13 @@ public class Frankenstein {
     }
     Results result = new Results();
     QueryParser qp = new QueryParser(Version.LUCENE_34, "paragraph", new StandardAnalyzer(Version.LUCENE_34));
-    org.apache.lucene.search.Query query = qp.parse(queryStr);
+    Query query = qp.parse(queryStr);
     TopDocs topDocs = searcher.search(query, 10);
     System.out.println("Found " + topDocs.totalHits + " total hits.");
     for (int i = 0; i < topDocs.scoreDocs.length; i++){
       Document theDoc = searcher.doc(topDocs.scoreDocs[i].doc);
-      String paragraph = theDoc.get("paragraph");
-      result.matches.add(paragraph);
+      result.matches.add(theDoc);
     }
-
     return result;
   }
 
@@ -155,17 +154,24 @@ public class Frankenstein {
     doc.add(startLine);
     NumericField finishLine = new NumericField("finishLine", Field.Store.YES, true);
     finishLine.setIntValue(lines);
-    doc.add(startLine);
-    NumericField paragraphNumber = new NumericField("paragraph", Field.Store.YES, true);
-    finishLine.setIntValue(paragraphs);
+    doc.add(finishLine);
+    NumericField paragraphNumber = new NumericField("paragraphNumber", Field.Store.YES, true);
+    paragraphNumber.setIntValue(paragraphs);
     doc.add(paragraphNumber);
   }
 
   private static void displayResults(Results results) {
+    for (Document document : results.matches) {
+      System.out.println("-----------------------------------");
+      System.out.println("Paragraph: " + document.get("paragraphNumber"));
+      System.out.println("Lines: " + document.get("startLine") + "-" + document.get("finishLine"));
+      System.out.println("\t" + document.get("paragraph"));
+    }
   }
 
   private static String getQuery() throws IOException {
-    System.out.println("Type your query.  Hit Enter to process the query (the empty string will exit the program): ");
+    System.out.println("");
+    System.out.println("Type your query.  Hit Enter to process the query (the empty string will exit the program):> ");
     BufferedReader in = new BufferedReader(new InputStreamReader(System.in, "UTF-8"));
     String line = in.readLine();
 
@@ -178,6 +184,6 @@ public class Frankenstein {
 }
 
 class Results {
-  public List<String> matches = new ArrayList<String>();
+  public List<Document> matches = new ArrayList<Document>();
 
 }

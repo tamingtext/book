@@ -385,6 +385,22 @@
           <include>**/*.utf8</include>
         </includes>
       </resource>
+      <resource>
+        <directory>../manuscript</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>**/*.docbook</include>
+          <include>**/*.eps</include>
+          <include>**/*.gif</include>
+          <include>**/*.png</include>
+          <include>**/*.tiff</include>
+          <include>**/*.tif</include>
+          <include>**/*.xml</include>
+        </includes>
+        <excludes>
+          <exclude>notes</exclude>
+        </excludes>
+      </resource>
     </resources>
     <testResources>
       <testResource>

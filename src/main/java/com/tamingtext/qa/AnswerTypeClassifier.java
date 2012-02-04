@@ -21,16 +21,17 @@ package com.tamingtext.qa;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import opennlp.maxent.GIS;
 import opennlp.maxent.GISModel;
-import opennlp.maxent.io.SuffixSensitiveGISModelWriter;
 import opennlp.model.MaxentModel;
 import opennlp.model.TwoPassDataIndexer;
 import opennlp.tools.chunker.ChunkerME;
 import opennlp.tools.chunker.ChunkerModel;
+import opennlp.tools.doccat.DoccatModel;
 import opennlp.tools.parser.Parse;
 import opennlp.tools.parser.Parser;
 import opennlp.tools.postag.POSModel;
@@ -71,6 +72,18 @@ public class AnswerTypeClassifier {
   */
   //<end id="atc.compute"/>
 
+  /** Train the answer model
+   * <p>
+   *  Hint:
+   *  <pre>
+   *  mvn exec:java -Dexec.mainClass=com.tamingtext.qa.AnswerTypeClassifier \
+   *    -Dexec.args="dist/data/questions-train.txt en-answer.bin" \
+   *    -Dmodel.dir=../../opennlp-models \
+   *    -Dwordnet.dir=../../Wordnet-3.0/dict
+   *  </pre>
+   * @param args
+   * @throws IOException
+   */
   public static void main(String[] args) throws IOException {
     if (args.length < 2) {
       System.err.println("Usage: AnswerTypeClassifier trainFile modelFile");
@@ -79,9 +92,8 @@ public class AnswerTypeClassifier {
     String trainFile = args[0];
     File outFile = new File(args[1]);
     String modelsDirProp = System.getProperty("model.dir");
-    File modelsDir = new File(new File(modelsDirProp), "english");
-    String wordnetDir = System.getProperty("wordnet.dir", "book/src/main" + File.separator + "WordNet-3.0"
-            + File.separator + "dict");
+    File modelsDir = new File(modelsDirProp);
+    String wordnetDir = System.getProperty("wordnet.dir");
     InputStream chunkerStream = new FileInputStream(
         new File(modelsDir,"en-chunker.bin"));
     ChunkerModel chunkerModel = new ChunkerModel(chunkerStream);
@@ -95,7 +107,7 @@ public class AnswerTypeClassifier {
     //<start id="atc.train"/>
     AnswerTypeEventStream es = new AnswerTypeEventStream(trainFile, actg, parser);
     GISModel model = GIS.trainModel(100, new TwoPassDataIndexer(es, 3));//<co id="atc.train.do"/>
-    new SuffixSensitiveGISModelWriter(model, outFile).persist();
+    new DoccatModel("en", model).serialize(new FileOutputStream(outFile));
     /*
     <calloutlist>
         <callout arearefs="atc.train.do"><para>Using the event stream, which feeds us training examples, do the actual training using OpenNLP's Maxent classifier.</para></callout>

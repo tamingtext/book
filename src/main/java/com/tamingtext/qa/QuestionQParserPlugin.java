@@ -31,6 +31,7 @@ import opennlp.maxent.io.SuffixSensitiveGISModelReader;
 import opennlp.model.MaxentModel;
 import opennlp.tools.chunker.ChunkerME;
 import opennlp.tools.chunker.ChunkerModel;
+import opennlp.tools.doccat.DoccatModel;
 import opennlp.tools.parser.Parser;
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSTaggerME;
@@ -104,8 +105,9 @@ public class QuestionQParserPlugin extends QParserPlugin {
             new File(modelsDir,"en-pos-maxent.bin"));
         POSModel posModel = new POSModel(posStream);
         tagger =  new POSTaggerME(posModel); //<co id="qqpp.tagger"/>
-        model = new SuffixSensitiveGISModelReader(new File(modelDirectory + File.separator + "qa" +
-                File.separator + "answer.bin.gz")).getModel();//<co id="qqpp.theModel"/>
+        model = new DoccatModel(new FileInputStream( //<co id="qqpp.theModel"/>
+            new File(modelDirectory,"en-answer.bin")))
+            .getChunkerModel();
         probs = new double[model.getNumOutcomes()];
         atcg = new AnswerTypeContextGenerator(new File(wordnetDirectory, "dict"));//<co id="qqpp.context"/>
       } catch (IOException e) {

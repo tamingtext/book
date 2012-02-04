@@ -41,7 +41,6 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
-import org.apache.poi.hwpf.usermodel.Paragraph;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -63,13 +62,14 @@ public class Frankenstein {
   protected RAMDirectory directory;
   protected IndexSearcher searcher;
   protected SentenceDetector sentenceDetector;
-  protected Map<String, NameFinderME> finders;
+  protected NameFinderME nameFinder;
   protected Tokenizer tokenizer;
 
   public static void main(String[] args) throws Exception {
-    //<start id="frank.start"/>
+    //Index the book
     Frankenstein frankenstein = new Frankenstein();
     frankenstein.init();
+    //<start id="frank.start"/>
     frankenstein.index();//<co id="frank.index"/>
     String query = null;
     while (true) {
@@ -105,21 +105,17 @@ public class Frankenstein {
         for (int i = 0; i < sentencesStr.length; i++) {
           sentences[i] = new Sentence(sentencesStr[i]);
           String[] tokens = tokenizer.tokenize(sentencesStr[i]);
-          for (Map.Entry<String, NameFinderME> finder : finders.entrySet()) {
-            String label = finder.getKey();
-            Span[] names = finder.getValue().find(tokens);
-            //spans index into the tokens array
-            if (names != null && names.length > 0) {
-              List<String> values = new ArrayList<String>();
-              for (int j = 0; j < names.length; j++) {
-                StringBuffer cb = new StringBuffer();
-                for (int ti = names[j].getStart(); ti < names[j].getEnd(); ti++) {
-                  cb.append(tokens[ti]).append(" ");
-                }
-                values.add(cb.toString());
+          Span[] names = nameFinder.find(tokens);
+          //spans index into the tokens array
+          if (names != null && names.length > 0) {
+            StringBuffer cb = new StringBuffer();
+            for (int j = 0; j < names.length; j++) {
+              for (int ti = names[j].getStart(); ti < names[j].getEnd(); ti++) {
+                cb.append(tokens[ti]).append(" ");
               }
-              sentences[i].names.put(label, values);
+
             }
+            sentences[i].names.add(cb.toString());
           }
         }
       }
@@ -142,7 +138,7 @@ public class Frankenstein {
     Results result = new Results();
     QueryParser qp = new QueryParser(Version.LUCENE_34, "paragraph", new StandardAnalyzer(Version.LUCENE_34));
     Query query = qp.parse(queryStr);
-    TopDocs topDocs = searcher.search(query, 20);
+    TopDocs topDocs = searcher.search(query, 10);
     System.out.println("Found " + topDocs.totalHits + " total hits.");
     for (int i = 0; i < topDocs.scoreDocs.length; i++) {
       Document theDoc = searcher.doc(topDocs.scoreDocs[i].doc);
@@ -157,7 +153,6 @@ public class Frankenstein {
    * @throws IOException
    */
   private void index() throws IOException {
-    System.out.println("Indexing Frankenstein");
     InputStream stream = getClass().getClassLoader().getResourceAsStream("frankenstein-gutenberg.txt");
     BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
     //let's index paragraphs at a time
@@ -180,14 +175,10 @@ public class Frankenstein {
       if (line.matches("^\\s*$") && paraBuffer.length() > 0) {
         Document doc = new Document();
         //We can retrieve by paragraph number if we want
-        String theString = paraBuffer.toString();
-        theString.trim();
-        if (theString.length() > 0 && theString.matches("^\\s*$") == false) {
-          addMetadata(doc, lines, paragraphs, paragraphLines);
-          doc.add(new Field("paragraph", theString, Field.Store.YES, Field.Index.ANALYZED));//add the main content
-          iw.addDocument(doc);//Index the document
-          paragraphs++;
-        }
+        addMetadata(doc, paraBuffer, lines, paragraphs, paragraphLines);
+        doc.add(new Field("paragraph", paraBuffer.toString(), Field.Store.YES, Field.Index.ANALYZED));//add the main content
+        iw.addDocument(doc);//Index the document
+        paragraphs++;
         //reset some of our state
         paraBuffer.setLength(0);//we are done w/ this paragraph
         paragraphLines = 0;
@@ -201,7 +192,7 @@ public class Frankenstein {
     iw.close();
   }
 
-  private void addMetadata(Document doc, int lines, int paragraphs, int paragraphLines) {
+  private void addMetadata(Document doc, StringBuilder paraBuffer, int lines, int paragraphs, int paragraphLines) {
     doc.add(new Field("id", "frank_" + paragraphs, Field.Store.YES, Field.Index.NOT_ANALYZED));
     NumericField startLine = new NumericField("startLine", Field.Store.YES, true);
     startLine.setIntValue(lines - paragraphLines);
@@ -214,12 +205,7 @@ public class Frankenstein {
     doc.add(paragraphNumber);
   }
 
-  /**
-   * Initialize OpenNLP libraries and other resources
-   * @throws IOException
-   */
   private void init() throws IOException {
-    System.out.println("Initializing Frankenstein");
     File models = new File("../../opennlp-models");
     File wordnet = new File("../../WordNet-3.0");
     if (models.exists() == false) {
@@ -232,22 +218,15 @@ public class Frankenstein {
     InputStream modelStream = new FileInputStream(modelFile);
     SentenceModel model = new SentenceModel(modelStream);
     sentenceDetector = new SentenceDetectorME(model);
-    finders = new HashMap<String, NameFinderME>();
-    finders.put("Names", new NameFinderME(new TokenNameFinderModel(
-            new FileInputStream(getPersonModel()))));
-    finders.put("Dates", new NameFinderME(new TokenNameFinderModel(
-            new FileInputStream(getDateModel()))));
-    finders.put("Locations", new NameFinderME(new TokenNameFinderModel(
-            new FileInputStream(getLocationModel()))));
 
+    nameFinder = new NameFinderME(new TokenNameFinderModel(
+            new FileInputStream(getPersonModel())));
     tokenizer = SimpleTokenizer.INSTANCE;
   }
 
   private static String getQuery() throws IOException {
     System.out.println("");
-    System.out.println("Type your query.  Hit Enter to process the query (the empty string will exit the program):");
-    System.out.print('>');
-    System.out.flush();
+    System.out.println("Type your query.  Hit Enter to process the query (the empty string will exit the program):> ");
     BufferedReader in = new BufferedReader(new InputStreamReader(System.in, "UTF-8"));
     String line = in.readLine();
 
@@ -258,10 +237,9 @@ public class Frankenstein {
   }
 
   private static void displayResults(Results results) {
-    int k = 0;
     for (Document document : results.matches) {
       System.out.println("-----------------------------------");
-      System.out.println("Match: [" + k + "] Paragraph: " + document.get("paragraphNumber"));
+      System.out.println("Paragraph: " + document.get("paragraphNumber"));
       System.out.println("Lines: " + document.get("startLine") + "-" + document.get("finishLine"));
       System.out.println("\t" + document.get("paragraph"));
       System.out.println("\t----- Sentences ----");
@@ -270,22 +248,12 @@ public class Frankenstein {
         Sentence sentence = sentences[i];
         System.out.println("\t\t[" + i + "] " + sentence.sentence);
         if (sentence.names.isEmpty() == false) {
-          for (Map.Entry<String, List<String>> entry : sentence.names.entrySet()) {
-            System.out.println("\t\t>>>> " + entry.getKey());
-            StringBuffer buff = new StringBuffer();
-
-            if (entry.getValue().isEmpty() == false) {
-              for (String val : entry.getValue()) {
-                buff.append(val.trim()).append(", ");
-              }
-              buff.setLength(buff.length() - 2);//drop the last comma and space
-              System.out.println("\t\t\t" + buff);
-            }
+          System.out.println("\t\t----- Names ----");
+          for (String name : sentence.names) {
+            System.out.println("\t\t\t" + name);
           }
-          System.out.println("");
         }
       }
-      k++;
     }
   }
 
@@ -308,14 +276,6 @@ public class Frankenstein {
     return new File(getModelDir(), "en-ner-person.bin");
   }
 
-  public static File getDateModel() {
-    return new File(getModelDir(), "en-ner-date.bin");
-  }
-
-  public static File getLocationModel() {
-    return new File(getModelDir(), "en-ner-location.bin");
-  }
-
 }
 
 class Results {
@@ -326,7 +286,7 @@ class Results {
 
 class Sentence {
   public String sentence;
-  public Map<String, List<String>> names = new HashMap<String, List<String>>();
+  public List<String> names = new ArrayList<String>();
 
   public Sentence(String sent) {
     sentence = sent;

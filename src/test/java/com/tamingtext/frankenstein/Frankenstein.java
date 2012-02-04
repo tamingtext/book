@@ -20,14 +20,6 @@
 package com.tamingtext.frankenstein;
 
 
-import opennlp.tools.namefind.NameFinderME;
-import opennlp.tools.namefind.TokenNameFinderModel;
-import opennlp.tools.sentdetect.SentenceDetector;
-import opennlp.tools.sentdetect.SentenceDetectorME;
-import opennlp.tools.sentdetect.SentenceModel;
-import opennlp.tools.tokenize.SimpleTokenizer;
-import opennlp.tools.tokenize.Tokenizer;
-import opennlp.tools.util.Span;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -43,32 +35,23 @@ import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Parse Frankenstein book (located in the test resources folder), identifies sentences and then
  * indexes them into Lucene.
  */
 public class Frankenstein {
-  protected RAMDirectory directory;
-  protected IndexSearcher searcher;
-  protected SentenceDetector sentenceDetector;
-  protected NameFinderME nameFinder;
-  protected Tokenizer tokenizer;
+  private RAMDirectory directory;
+  private IndexSearcher searcher;
 
   public static void main(String[] args) throws Exception {
     //Index the book
     Frankenstein frankenstein = new Frankenstein();
-    frankenstein.init();
     //<start id="frank.start"/>
     frankenstein.index();//<co id="frank.index"/>
     String query = null;
@@ -94,37 +77,10 @@ public class Frankenstein {
   }
 
   private void examineResults(Results results) {
-    for (Document match : results.matches) {
-      //we have a paragraph, let's break sentences and then do NER
-      String[] sentencesStr = sentenceDetector.sentDetect(match.get("paragraph"));
-
-      if (sentencesStr != null && sentencesStr.length > 0) {
-        Sentence[] sentences = new Sentence[sentencesStr.length];
-        results.sentences.put(match.get("id"), sentences);
-        //for each sentence, find named entities
-        for (int i = 0; i < sentencesStr.length; i++) {
-          sentences[i] = new Sentence(sentencesStr[i]);
-          String[] tokens = tokenizer.tokenize(sentencesStr[i]);
-          Span[] names = nameFinder.find(tokens);
-          //spans index into the tokens array
-          if (names != null && names.length > 0) {
-            StringBuffer cb = new StringBuffer();
-            for (int j = 0; j < names.length; j++) {
-              for (int ti = names[j].getStart(); ti < names[j].getEnd(); ti++) {
-                cb.append(tokens[ti]).append(" ");
-              }
-
-            }
-            sentences[i].names.add(cb.toString());
-          }
-        }
-      }
-    }
   }
 
   /**
    * Search for the queryStr in the text
-   *
    * @param queryStr The query string
    * @return The Results
    * @throws IOException
@@ -132,7 +88,7 @@ public class Frankenstein {
    */
   private Results search(String queryStr) throws IOException, ParseException {
     System.out.println("Searching for: " + queryStr);
-    if (searcher == null) {
+    if (searcher == null){
       searcher = new IndexSearcher(directory, true);
     }
     Results result = new Results();
@@ -140,7 +96,7 @@ public class Frankenstein {
     Query query = qp.parse(queryStr);
     TopDocs topDocs = searcher.search(query, 10);
     System.out.println("Found " + topDocs.totalHits + " total hits.");
-    for (int i = 0; i < topDocs.scoreDocs.length; i++) {
+    for (int i = 0; i < topDocs.scoreDocs.length; i++){
       Document theDoc = searcher.doc(topDocs.scoreDocs[i].doc);
       result.matches.add(theDoc);
     }
@@ -149,7 +105,6 @@ public class Frankenstein {
 
   /**
    * Index the content of Frankenstein
-   *
    * @throws IOException
    */
   private void index() throws IOException {
@@ -193,7 +148,7 @@ public class Frankenstein {
   }
 
   private void addMetadata(Document doc, StringBuilder paraBuffer, int lines, int paragraphs, int paragraphLines) {
-    doc.add(new Field("id", "frank_" + paragraphs, Field.Store.YES, Field.Index.NOT_ANALYZED));
+    doc.add(new Field("frank_" + paragraphs, paraBuffer.toString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
     NumericField startLine = new NumericField("startLine", Field.Store.YES, true);
     startLine.setIntValue(lines - paragraphLines);
     doc.add(startLine);
@@ -205,23 +160,13 @@ public class Frankenstein {
     doc.add(paragraphNumber);
   }
 
-  private void init() throws IOException {
-    File models = new File("../../opennlp-models");
-    File wordnet = new File("../../WordNet-3.0");
-    if (models.exists() == false) {
-      throw new FileNotFoundException("../../opennlp-models");
+  private static void displayResults(Results results) {
+    for (Document document : results.matches) {
+      System.out.println("-----------------------------------");
+      System.out.println("Paragraph: " + document.get("paragraphNumber"));
+      System.out.println("Lines: " + document.get("startLine") + "-" + document.get("finishLine"));
+      System.out.println("\t" + document.get("paragraph"));
     }
-    System.setProperty("model.dir", "../../opennlp-models");
-    System.setProperty("wordnet.dir", "../../WordNet-3.0");
-
-    File modelFile = new File(models, "en-sent.bin");
-    InputStream modelStream = new FileInputStream(modelFile);
-    SentenceModel model = new SentenceModel(modelStream);
-    sentenceDetector = new SentenceDetectorME(model);
-
-    nameFinder = new NameFinderME(new TokenNameFinderModel(
-            new FileInputStream(getPersonModel())));
-    tokenizer = SimpleTokenizer.INSTANCE;
   }
 
   private static String getQuery() throws IOException {
@@ -236,59 +181,9 @@ public class Frankenstein {
     return line;
   }
 
-  private static void displayResults(Results results) {
-    for (Document document : results.matches) {
-      System.out.println("-----------------------------------");
-      System.out.println("Paragraph: " + document.get("paragraphNumber"));
-      System.out.println("Lines: " + document.get("startLine") + "-" + document.get("finishLine"));
-      System.out.println("\t" + document.get("paragraph"));
-      System.out.println("\t----- Sentences ----");
-      Sentence[] sentences = results.sentences.get(document.get("id"));
-      for (int i = 0; i < sentences.length; i++) {
-        Sentence sentence = sentences[i];
-        System.out.println("\t\t[" + i + "] " + sentence.sentence);
-        if (sentence.names.isEmpty() == false) {
-          System.out.println("\t\t----- Names ----");
-          for (String name : sentence.names) {
-            System.out.println("\t\t\t" + name);
-          }
-        }
-      }
-    }
-  }
-
-  public static File getWordNetDir() {
-    String wordnetDir = System.getProperty("wordnet.dir");
-
-    return new File(wordnetDir);
-  }
-
-  public static File getWordNetDictionary() {
-    return new File(getWordNetDir(), "dict");
-  }
-
-  public static File getModelDir() {
-    String modelsDirProp = System.getProperty("model.dir");
-    return new File(modelsDirProp);
-  }
-
-  public static File getPersonModel() {
-    return new File(getModelDir(), "en-ner-person.bin");
-  }
-
 }
 
 class Results {
   public List<Document> matches = new ArrayList<Document>();
-  public Map<String, Sentence[]> sentences = new HashMap<String, Sentence[]>();
 
-}
-
-class Sentence {
-  public String sentence;
-  public List<String> names = new ArrayList<String>();
-
-  public Sentence(String sent) {
-    sentence = sent;
-  }
 }

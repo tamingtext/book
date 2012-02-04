@@ -1,4 +1,7 @@
 #/bin/sh
+cd ../..
+mvn compile
+mvn dependency:copy-dependencies
 if  [ -z $JAVA_HOME ] ; then
  export JAVA_HOME="/Library/Java/Home"
 fi

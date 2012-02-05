@@ -65,21 +65,20 @@ public class SentenceDetectionTest extends TamingTextTestJ4 {
     File modelFile = new File(modelDir, "en-sent.bin");
     InputStream modelStream = new FileInputStream(modelFile);
     SentenceModel model = new SentenceModel(modelStream);
-    SentenceDetector detector = new SentenceDetectorME(model);//<co id="openSentDetect.co.detect"/>
-    String testString = "This is a sentence.  It has fruits, vegetables," +
-            " etc. but does not have meat.  Mr. Smith went to Washington.";
-    String[] result = detector.sentDetect(testString);//<co id="openSentDetect.co.run"/>
-    assertTrue("result Size: " + result.length + " is not: " + 3, result.length == 3);
+    SentenceDetector detector = //<co id="openSentDetect.co.detect"/>
+      new SentenceDetectorME(model);
+    String testString = "This is a sentence. It has fruits, vegetables," +
+      " etc. but does not have meat. Mr. Smith went to Washington.";
+    String[] result = detector.sentDetect(testString); //<co id="openSentDetect.co.run"/>
     for (int i = 0; i < result.length; i++) {
       System.out.println("Sentence: " + result[i]);
     }
-    /*
-    <calloutlist>
+    /*<calloutlist>
         <callout arearefs="openSentDetect.co.detect"><para>Create the <command>SentenceDetector</command> with the en-sent.bin model</para></callout>
         <callout arearefs="openSentDetect.co.run"><para>Invoke the detection process</para></callout>
-    </calloutlist>
-    */
+    </calloutlist>*/
     //<end id="openSentDetect"/>
+    assertTrue("result Size: " + result.length + " is not: " + 3, result.length == 3);
   }
 
 }

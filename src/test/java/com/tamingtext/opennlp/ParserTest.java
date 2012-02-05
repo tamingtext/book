@@ -47,8 +47,8 @@ public class ParserTest extends TamingTextTestJ4 {
     
     Parser parser = ParserFactory.create(
             model, 
-            20 /* beamSize */, 
-            0.95 /* advancePercentage */);
+            20, // beam size 
+            0.95); // advance percentage
 
     Parse[] results = ParserTool.parseLine("The Minnesota Twins , " +
             "the 1991 World Series Champions , are currently in third place .",

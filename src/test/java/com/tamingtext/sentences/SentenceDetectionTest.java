@@ -66,7 +66,6 @@ public class SentenceDetectionTest extends TamingTextTestJ4 {
     InputStream modelStream = new FileInputStream(modelFile);
     SentenceModel model = new SentenceModel(modelStream);
     SentenceDetector detector = new SentenceDetectorME(model);//<co id="openSentDetect.co.detect"/>
-    ;//<co id="openSentDetect.co.detect"/>
     String testString = "This is a sentence.  It has fruits, vegetables," +
             " etc. but does not have meat.  Mr. Smith went to Washington.";
     String[] result = detector.sentDetect(testString);//<co id="openSentDetect.co.run"/>

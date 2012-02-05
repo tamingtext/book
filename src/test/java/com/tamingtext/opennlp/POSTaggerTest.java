@@ -25,7 +25,7 @@ import java.io.IOException;
 
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSTaggerME;
-import opennlp.tools.tokenize.WhitespaceTokenizer;
+import opennlp.tools.tokenize.SimpleTokenizer;
 
 import org.junit.Test;
 
@@ -46,11 +46,12 @@ public class POSTaggerTest extends TamingTextTestJ4 {
     POSModel model = new POSModel(posModelStream);
     
     POSTaggerME tagger = new POSTaggerME(model);
-    String[] words = WhitespaceTokenizer.INSTANCE.tokenize("The quick, red fox jumped over the lazy, brown dogs");//<co id="opennlpPOS.co.tokenize"/>
+    String[] words = SimpleTokenizer.INSTANCE.tokenize("The quick, red fox jumped over the lazy, brown dogs.");//<co id="opennlpPOS.co.tokenize"/>
     String[] result = tagger.tag(words);//<co id="opennlpPOS.co.tag"/>
     for (int i=0 ; i < words.length; i++) {
-      System.err.println(words[i] + "\t" + result[i]);
+      System.err.print(words[i] + "/" + result[i] + " ");
     }
+    System.err.println("\n");
     /*
 <calloutlist>
 <callout arearefs="opennlpPOS.co.tagger"><para>Give the path to the POS Model</para></callout>

@@ -50,23 +50,21 @@ import com.tamingtext.TamingTextTestJ4;
 public class NameFinderTest extends TamingTextTestJ4 {
 
 
-  //<start id="ne-display1"/>
+//<start id="ne-display1"/>
   private void displayNames(Span[] names, String[] tokens) {
     for (int si = 0; si < names.length; si++) { //<co id="co.opennlp.name.eachname"/>
-      StringBuffer cb = new StringBuffer();
+      StringBuilder cb = new StringBuilder();
       for (int ti = names[si].getStart(); ti < names[si].getEnd(); ti++) {
         cb.append(tokens[ti]).append(" "); //<co id="co.opennlp.name.eachtoken"/>
       }
       System.out.println(cb.substring(0, cb.length() - 1)); //<co id="co.opennlp.name.extra"/>
     }
   }
-  /*
-  <calloutlist>
-  <callout arearefs="co.opennlp.name.eachname"><para>Iterate over each name.</para></callout>
-  <callout arearefs="co.opennlp.name.eachtoken"><para>Iterate over each token in the name.</para></callout>
-  <callout arearefs="co.opennlp.name.extra"><para>Remove the extra space at the end of the name and print.</para></callout>
-  </calloutlist>
-   */
+/*<calloutlist>
+<callout arearefs="co.opennlp.name.eachname"><para>Iterate over each name.</para></callout>
+<callout arearefs="co.opennlp.name.eachtoken"><para>Iterate over each token in the name.</para></callout>
+<callout arearefs="co.opennlp.name.extra"><para>Remove the extra space at the end of the name and print.</para></callout>
+</calloutlist>*/
 //<end id="ne-display1"/>
 
   //private Span[] mergeSpans(Span[][] spans) {
@@ -121,8 +119,8 @@ public class NameFinderTest extends TamingTextTestJ4 {
   <callout arearefs="co.opennlp.name.stack"><para>Initialize a stack to keep track of previous names.</para></callout>
   <callout arearefs="co.opennlp.name.eachname2"><para>Iterate over each name.</para></callout>
   <callout arearefs="co.opennlp.name.eachstack"><para>Iterate over each item in the stack.</para></callout>
-  <callout arearefs="co.opennlp.name.change4delete co.opennlp.name.change4delete2 co.opennlp.name.change4delete3"><para>Change index of name after deletion to negate ai++ at end of for-loop.</para></callout>
   <callout arearefs="co.opennlp.name.isequal"><para>Test if a name span is identical to another name span, and if so remove the less probable one.</para></callout>
+  <callout arearefs="co.opennlp.name.change4delete co.opennlp.name.change4delete2 co.opennlp.name.change4delete3"><para>Update index of name after deletion to negate ai++ at end of for-loop.</para></callout>
   <callout arearefs="co.opennlp.name.iscrossing"><para>Test if a name span is over-lapping another name span, and if so remove the less probable one.</para></callout>
   <callout arearefs="co.opennlp.name.issubsumed"><para>Test if a name span is subsumed by another name span, and if so exit loop.</para></callout>
   <callout arearefs="co.opennlp.name.ispast"><para>Test if a name span is past another name span, and if so remove previous name from the stack.</para></callout>
@@ -155,51 +153,75 @@ public class NameFinderTest extends TamingTextTestJ4 {
 
     File modelDir = getModelDir();
     //<start id="ne-multi"/>    
-    String[] sentences = {"Former first lady Nancy Reagan was taken " +
-            "to a suburban Los Angeles hospital" +
-            "  \"as a precaution\" Sunday after a fall at her home, " +
-            "an aide said.",
-            "The 86-year-old Reagan will remain overnight for " +
-                    "observation at a hospital in Santa Monica, California, " +
-                    "said Joanne Drake, chief of staff for the " +
-                    "Reagan Foundation."};
-
+    String[] sentences = {
+      "Former first lady Nancy Reagan was taken to a suburban Los Angeles " +
+      "hospital \"as a precaution\" Sunday after a fall at her home, an " +
+      "aide said. ",
+        
+      "The 86-year-old Reagan will remain overnight for " +
+      "observation at a hospital in Santa Monica, California, said Joanne " +
+      "Drake, chief of staff for the Reagan Foundation."};
     NameFinderME[] finders = new NameFinderME[3];
     String[] names = {"person", "location", "date"};
-    for (int mi = 0; mi < names.length; mi++) {  //<co id="co.opennlp.name.init3"/>
+    for (int mi = 0; mi < names.length; mi++) {  //<co id="co.opennlp.name.1"/>
       finders[mi] = new NameFinderME(new TokenNameFinderModel(
           new FileInputStream(
               new File(modelDir, "en-ner-" + names[mi] + ".bin")
-              )));
+          )));
     }
 
-    Tokenizer tokenizer = SimpleTokenizer.INSTANCE; //<co id="co.opennlp.name.inittokenizer"/>
-    for (int si = 0; si < sentences.length; si++) { //<co id="co.opennlp.name.eachsent"/>
+    Tokenizer tokenizer = SimpleTokenizer.INSTANCE; //<co id="co.opennlp.name.2"/>
+    for (int si = 0; si < sentences.length; si++) { //<co id="co.opennlp.name.3"/>
       List<Annotation> allAnnotations = new ArrayList<Annotation>();
-      String[] tokens = tokenizer.tokenize(sentences[si]);//<co id="co.opennlp.name.tokenize"/>
-      for (int fi = 0; fi < finders.length; fi++) { //<co id="co.opennlp.name.eachfinder"/>
-        Span[] spans = finders[fi].find(tokens); //<co id="co.opennlp.name.findnames2"/>
-        double[] probs = finders[fi].probs(spans); //<co id="co.opennlp.name.findprobs"/>
+      String[] tokens = tokenizer.tokenize(sentences[si]);//<co id="co.opennlp.name.4"/>
+      for (int fi = 0; fi < finders.length; fi++) { //<co id="co.opennlp.name.5"/>
+        Span[] spans = finders[fi].find(tokens); //<co id="co.opennlp.name.6"/>
+        double[] probs = finders[fi].probs(spans); //<co id="co.opennlp.name.7"/>
         for (int ni = 0; ni < spans.length; ni++) {
-          allAnnotations.add(new Annotation(names[fi], spans[ni], probs[ni])); //<co id="co.opennlp.name.collect"/>
+          allAnnotations.add( //<co id="co.opennlp.name.8"/>
+              new Annotation(names[fi], spans[ni], probs[ni])
+          ); 
         }
       }
-      removeConflicts(allAnnotations); //<co id="co.opennlp.name.removeconflicts"/>
+      removeConflicts(allAnnotations); //<co id="co.opennlp.name.9"/>
     }
-    /*
-    <calloutlist>
-    <callout arearefs="co.opennlp.name.init3"><para>Initialize a new model for identifying people, locations, and dates based on the binary compressed model in the file "person.bin.gz", "location.bin.gz", "date.bin.gz".</para></callout>
-    <callout arearefs="co.opennlp.name.eachsent"><para>Iterate over each sentence.</para></callout>
-    <callout arearefs="co.opennlp.name.inittokenizer"><para>Initialize a tokenizer to split the sentence into individual words and symbols.</para></callout>
-    <callout arearefs="co.opennlp.name.tokenize"><para>Split the sentence into an array of tokens.</para></callout>
-    <callout arearefs="co.opennlp.name.eachfinder"><para>Iterate over each of the name finders (person, location, date).</para></callout>
-    <callout arearefs="co.opennlp.name.findnames2"><para>Identify the names in the sentence and return token-based offsets to these names.</para></callout>
-    <callout arearefs="co.opennlp.name.findprobs"><para>Clear data structures which store which words have been seen previously in the document and whether these words were considered part of a person's name.</para></callout>
-    <callout arearefs="co.opennlp.name.collect"><para>Collect each of the identified names from each of the name finders.</para></callout>
-    <callout arearefs="co.opennlp.name.removeconflicts"><para>Resolve any cases of overlapping names in favor of the more probably name.</para></callout>                
-    </calloutlist>
-
-     */
+    /*<calloutlist>
+    <callout arearefs="co.opennlp.name.1">
+      <para>Initialize a new model for identifying people, locations, and dates
+        based on the binary compressed model in the file "en-ner-person.bin", 
+        "en-ner-location.bin", "en-ner-date.bin".
+      </para>
+    </callout>
+    <callout arearefs="co.opennlp.name.2">
+      <para>Obtain a reference to a tokenizer to split the sentence into 
+        individual words and symbols.
+      </para>
+    </callout>
+    <callout arearefs="co.opennlp.name.3">
+      <para>Iterate over each sentence.</para>
+    </callout>
+    <callout arearefs="co.opennlp.name.4">
+      <para>Split the sentence into an array of tokens.</para>
+    </callout>
+    <callout arearefs="co.opennlp.name.5">
+      <para>Iterate over each of the name finders (person, location, date).</para>
+    </callout>
+    <callout arearefs="co.opennlp.name.6">
+      <para>Identify the names in the sentence and return token-based offsets
+         to these names.</para>
+    </callout>
+    <callout arearefs="co.opennlp.name.7">
+      <para>Clear data structures which store which words have been seen 
+        previously in the document and whether these words were considered part
+         of a person's name.</para>
+    </callout>
+    <callout arearefs="co.opennlp.name.8">
+      <para>Collect each of the identified names from each of the name 
+        finders.</para></callout>
+    <callout arearefs="co.opennlp.name.9">
+      <para>Resolve any cases of overlapping names in favor of the more 
+        probably name.</para></callout>                
+    </calloutlist>*/
     //<end id="ne-multi"/>
 
   }
@@ -342,33 +364,50 @@ public class NameFinderTest extends TamingTextTestJ4 {
   public void test() throws IOException {
     
     //<start id="ne-setup"/>
-    String[] sentences = {"Former first lady Nancy Reagan was taken to" +
-            " a suburban Los Angeles hospital" +
-            "  \"as a precaution\" Sunday after a fall at her home, an" +
-            " aide said.",
-            "The 86-year-old Reagan will remain overnight for " +
-                    "observation at a hospital in Santa Monica, " +
-                    "California, " +
-                    "said Joanne Drake, chief of staff for the " +
-                    "Reagan Foundation."};
-    NameFinderME finder = new NameFinderME(new TokenNameFinderModel(
-        new FileInputStream(getPersonModel()))); //<co id="co.opennlp.name.initmodel"/>
+    String[] sentences = {
+      "Former first lady Nancy Reagan was taken to a suburban Los Angeles " +
+      "hospital \"as a precaution\" Sunday after a fall at her home, an " +
+      "aide said. ",
+      
+      "The 86-year-old Reagan will remain overnight for " +
+      "observation at a hospital in Santa Monica, California, said Joanne " +
+      "Drake, chief of staff for the Reagan Foundation."};
+    
+    NameFinderME finder = new NameFinderME(  //<co id="co.opennlp.name.initmodel"/>
+      new TokenNameFinderModel(new FileInputStream(getPersonModel()))
+    );
+    
     Tokenizer tokenizer = SimpleTokenizer.INSTANCE; //<co id="co.opennlp.name.inittokenizer2"/>
+    
     for (int si = 0; si < sentences.length; si++) {
       String[] tokens = tokenizer.tokenize(sentences[si]); //<co id="co.opennlp.name.tokenize2"/>
       Span[] names = finder.find(tokens); //<co id="co.opennlp.name.findnames3"/>
       displayNames(names, tokens);
     }
+    
     finder.clearAdaptiveData(); //<co id="co.opennlp.name.clear"/>
-    /*
-    <calloutlist>
-    <callout arearefs="co.opennlp.name.initmodel"><para>Initialize a new model for identifying people names based on the binary compressed model in the file "person.bin.gz".</para></callout>
-    <callout arearefs="co.opennlp.name.inittokenizer2"><para>Initialize a tokenizer to split the sentence into individual words and symbols.</para></callout>
-    <callout arearefs="co.opennlp.name.tokenize2"><para>Split the sentence into an array of tokens.</para></callout>
-    <callout arearefs="co.opennlp.name.findnames3"><para>Identify the names in the sentence and return token-based offsets to these names.</para></callout>
-    <callout arearefs="co.opennlp.name.clear"><para>Clear data structures which store which words have been seen previously in the document and whether these words were considered part of a person's name.</para></callout>    
-    </calloutlist>
-     */
+    /*<calloutlist>
+    <callout arearefs="co.opennlp.name.initmodel">
+      <para>Initialize a new model for identifying people names based on the 
+        binary compressed model in the file "en-ner-person.bin".</para>
+    </callout>
+    <callout arearefs="co.opennlp.name.inittokenizer2">
+      <para>Initialize a tokenizer to split the sentence into individual words 
+        and symbols.</para>
+    </callout>
+    <callout arearefs="co.opennlp.name.tokenize2">
+      <para>Split the sentence into an array of tokens.</para>
+    </callout>
+    <callout arearefs="co.opennlp.name.findnames3">
+      <para>Identify the names in the sentence and return token-based offsets
+      to these names.</para>
+    </callout>
+    <callout arearefs="co.opennlp.name.clear">
+      <para>Clear data structures that store which words have been seen 
+      previously in the document and whether these words were considered part 
+      of a person's name.</para>
+    </callout>    
+    </calloutlist>*/
     //<end id="ne-setup"/>
 
     //<start id="ne-display2"/>
@@ -376,24 +415,47 @@ public class NameFinderTest extends TamingTextTestJ4 {
       Span[] tokenSpans = tokenizer.tokenizePos(sentences[si]); //<co id="co.opennlp.name.tokenizepos"/>
       String[] tokens = Span.spansToStrings(tokenSpans, sentences[si]); //<co id="co.opennlp.name.convert2strings"/>
       Span[] names = finder.find(tokens); //<co id="co.opennlp.name.findnames4"/>
-      // display names
+
       for (int ni = 0; ni < names.length; ni++) {
-        int nameStart = tokenSpans[names[ni].getStart()].getStart(); //<co id="co.opennlp.name.computestart"/>
-        int nameEnd = tokenSpans[names[ni].getEnd() - 1].getEnd();//<co id="co.opennlp.name.computeend"/>
+        Span startSpan = tokenSpans[names[ni].getStart()]; //<co id="co.opennlp.name.computestart"/>
+        int nameStart  = startSpan.getStart(); 
+        
+        Span endSpan   = tokenSpans[names[ni].getEnd() - 1]; //<co id="co.opennlp.name.computeend"/>
+        int nameEnd    = endSpan.getEnd();
+        
         String name = sentences[si].substring(nameStart, nameEnd); //<co id="co.opennlp.name.namestring"/>
         System.out.println(name);
       }
     }
-    /*
-    <calloutlist>
-    <callout arearefs="co.opennlp.name.eachsent2"><para>Iterate over each sentence.</para></callout>
-    <callout arearefs="co.opennlp.name.tokenizepos"><para>Split the sentence into an array of tokens and return the character offsets (spans) of those tokens.</para></callout>
-    <callout arearefs="co.opennlp.name.findnames4"><para>Identify the names in the sentence and return token-based offsets to these names.</para></callout>
-    <callout arearefs="co.opennlp.name.computestart"><para>Compute the start character index of the name.</para></callout>    
-    <callout arearefs="co.opennlp.name.computeend"><para>Compute the end character index (last character +1) of the name.</para></callout>
-    <callout arearefs="co.opennlp.name.computeend"><para>Compute the string which represents the name.</para></callout>
-    </calloutlist>
-     */
+    /*<calloutlist>
+    <callout arearefs="co.opennlp.name.eachsent2">
+      <para>Iterate over each sentence.</para>
+    </callout>
+    <callout arearefs="co.opennlp.name.tokenizepos">
+      <para>Split the sentence into an array of tokens and return the 
+        character offsets (spans) of those tokens.</para>
+    </callout>
+    <callout arearefs="co.opennlp.name.findnames4">
+      <para>
+      Identify the names in the sentence and return token-based offsets to these names.
+      </para>
+    </callout>
+    <callout arearefs="co.opennlp.name.computestart">
+      <para>
+      Compute the start character index of the name.
+      </para>
+    </callout>    
+    <callout arearefs="co.opennlp.name.computeend">
+      <para>
+      Compute the end character index (last character +1) of the name.
+      </para>
+    </callout>
+    <callout arearefs="co.opennlp.name.computeend">
+      <para>
+      Compute the string which represents the name.
+      </para>
+    </callout>
+    </calloutlist>*/
     //<end id="ne-display2"/>
     //<start id="ne-prob"/>
     for (int si = 0; si < sentences.length; si++) {//<co id="co.opennlp.name.eachsent3"/>
@@ -401,17 +463,13 @@ public class NameFinderTest extends TamingTextTestJ4 {
       Span[] names = finder.find(tokens); //<co id="co.opennlp.name.findnames1"/>
       double[] spanProbs = finder.probs(names); //<co id="co.opennlp.name.probs"/>
     }
-    /*
-    <calloutlist>
+    /*<calloutlist>
     <callout arearefs="co.opennlp.name.eachsent3"><para>Iterate over each sentence.</para></callout>
     <callout arearefs="co.opennlp.name.tokenize3"><para>Split the sentence into an array of tokens.</para></callout>
     <callout arearefs="co.opennlp.name.findnames1"><para>Identify the names in the sentence and return token-based offsets to these names.</para></callout>
     <callout arearefs="co.opennlp.name.probs"><para>Return the probability associated with each name.</para></callout>
-    </calloutlist>
-     */
-
+    </calloutlist>*/
     //<end id="ne-prob"/>
-
   }
 }
 

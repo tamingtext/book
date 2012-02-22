@@ -556,10 +556,19 @@
         <updatePolicy>always</updatePolicy>
       </snapshots>
     </repository>
+
     <repository>
-      <id>carrot2.org</id>
-      <name>Carrot2 Maven2 repository</name>
-      <url>http://download.carrot2.org/maven2/</url>
+      <!-- carrot can be found here -->
+      <id>sonatype-nexus-public</id>
+      <name>SonaType public snapshots and releases repository</name>
+      <url>https://oss.sonatype.org/content/groups/public</url>
+      <releases> 
+          <enabled>true</enabled>
+      </releases> 
+      <snapshots>
+          <enabled>true</enabled>
+      </snapshots>
     </repository>
+
   </repositories>
 </project>

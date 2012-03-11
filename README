@@ -4,7 +4,7 @@ This directory contains the full source code for all the Taming Text examples.
 Most of the code is setup to be run via JUnit tests, though they are not
 completely automated at this stage of the book.
 
-All instructions are relative to the tamingText-src directory, called TT_HOME from here on out.
+All instructions are relative to the base directory, called TT_HOME from here on out.
 
 Taming Text uses Maven for building and running the code.  To get started, you will
 need:
@@ -28,3 +28,6 @@ TODO: Make friendly for Windows.
       rm index.html*
       tar -xf Wordnet-3.0.tar.gz
 
+5. Many of the examples can be run via the 'tt' script in the TT_HOME/bin directory. Running this script without arguments will display a list of the example names.
+
+6. Some of the samples are powered by pre-configured instances of solr. These can be started with the TT_HOME/bin/start-solr.sh script, which takes a single argument, the name of the instance to start. Available instances include solr-qa, solr-clustering and solr-tagging.

@@ -51,13 +51,6 @@ while [ -h "$THIS" ]; do
   fi
 done
 
-IS_CORE=0
-#check for -core option
-if [ "$1" == "-core" ] ; then
-  IS_CORE=1
-  shift
-fi
-
 # some directories
 THIS_DIR=`dirname "$THIS"`
 TT_HOME=`cd "$THIS_DIR/.." ; pwd`
@@ -94,22 +87,25 @@ CLASSPATH=${CLASSPATH}:$JAVA_HOME/lib/tools.jar
 # so that filenames w/ spaces are handled correctly in loops below
 IFS=
 
-if [ $IS_CORE == 0 ] 
-then
-  # add release dependencies to CLASSPATH
-  for f in $TT_HOME/lib/taming-text-*.jar; do
+if [ -d $TT_HOME/lib ] ; then
+  # running in release context
+  for f in $TT_HOME/lib/taming-text-*.jar
+  do
     CLASSPATH=${CLASSPATH}:$f;
   done
   
-  # add release dependencies to CLASSPATH
-  for f in $TT_HOME/lib/dependency/*.jar; do
+  for f in $TT_HOME/lib/dependency/*.jar
+  do
     CLASSPATH=${CLASSPATH}:$f;
   done
-else
-  CLASSPATH=${CLASSPATH}:$TT_HOME/../target/classes
+fi
 
-  # add development dependencies to CLASSPATH
-  for f in $TT_HOME/../target/dependency/*.jar; do
+if [ -d $TT_HOME/target/classes ] ; then
+  # running in development context
+  CLASSPATH=${CLASSPATH}:$TT_HOME/target/classes
+
+  for f in $TT_HOME/target/dependency/*.jar
+  do
     CLASSPATH=${CLASSPATH}:$f;
   done
 fi
@@ -122,11 +118,11 @@ fi
 # restore ordinary behaviour
 unset IFS
 
-if [ "x$JAVA_LIBRARY_PATH" != "x" ]; then
+if [ "x$JAVA_LIBRARY_PATH" != "x" ] ; then
   TT_OPTS="$TT_OPTS -Djava.library.path=$JAVA_LIBRARY_PATH"
 fi
 
-TT_OPTS="$TT_OPTS -Dmodel.dir=$TT_HOME/opennlp-models"
+TT_OPTS="$TT_OPTS -Dmodel.dir=$TT_HOME/../../opennlp-models"
 
 CLASS=com.tamingtext.util.TamingTextDriver
 exec "$JAVA" $JAVA_HEAP_MAX $TT_OPTS -classpath "$CLASSPATH" $CLASS "$@"

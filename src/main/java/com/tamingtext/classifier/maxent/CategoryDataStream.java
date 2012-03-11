@@ -142,7 +142,6 @@ public class CategoryDataStream implements ObjectStream<DocumentSample> {
     if (line == null && !hasNext()) {
       return null;
     }
-    System.err.println("line: " + line);
     int split = line.indexOf('\t');
     if (split < 0) 
       throw new RuntimeException("Invalid line in " 

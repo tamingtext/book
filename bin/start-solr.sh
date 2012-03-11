@@ -14,7 +14,7 @@ if [ "x$INSTANCE" == "x" ]; then
   exit
 fi
 
-IDIR=$(readlink -f "../../$INSTANCE");
+IDIR=$(readlink "../$INSTANCE");
 
 if [ ! -d $IDIR ]; then
   echo "Instance $INSTANCE does not exist in $IDIR"
@@ -28,8 +28,8 @@ DEBUG_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=104
 
 exec java \
   -Xmx1024M $DEBUG_OPTS \
-  -Dsolr.solr.home=../../${INSTANCE} \
-  -Dsolr.data.dir=../../${INSTANCE}/data \
+  -Dsolr.solr.home=../${INSTANCE} \
+  -Dsolr.data.dir=../${INSTANCE}/data \
   -Dmodel.dir=../../opennlp-models \
   -Dwordnet.dir=../../WordNet-3.0 \
   -jar start.jar

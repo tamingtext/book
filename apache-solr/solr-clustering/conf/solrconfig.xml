@@ -56,6 +56,8 @@
     -->
   <lib dir="../lib" regex="taming-text-.*\.jar"/>
   <lib dir="../lib/dependency" />
+  <lib dir="../../target" regex="taming-text-.*\.jar"/>
+  <lib dir="../../target/dependency" />
 
   <!-- an exact path can be used to specify a specific file.  This will cause
        a serious error to be logged if it can't be loaded.

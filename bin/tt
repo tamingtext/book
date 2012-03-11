@@ -122,7 +122,7 @@ if [ "x$JAVA_LIBRARY_PATH" != "x" ] ; then
   TT_OPTS="$TT_OPTS -Djava.library.path=$JAVA_LIBRARY_PATH"
 fi
 
-TT_OPTS="$TT_OPTS -Dmodel.dir=$TT_HOME/../../opennlp-models"
+TT_OPTS="$TT_OPTS -Dmodel.dir=$TT_HOME/opennlp-models -Dwordnet.dir=$TT_HOME/WordNet-3.0"
 
 CLASS=com.tamingtext.util.TamingTextDriver
 exec "$JAVA" $JAVA_HEAP_MAX $TT_OPTS -classpath "$CLASSPATH" $CLASS "$@"

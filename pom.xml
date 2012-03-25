@@ -14,6 +14,7 @@
      <mahout.version>0.5</mahout.version>
      <release.update.interval>daily</release.update.interval>
      <snapshot.update.interval>interval:60</snapshot.update.interval>
+     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <build>

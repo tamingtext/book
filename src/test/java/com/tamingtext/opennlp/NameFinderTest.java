@@ -46,6 +46,7 @@ import opennlp.tools.util.model.ModelUtil;
 import org.junit.Test;
 
 import com.tamingtext.TamingTextTestJ4;
+import com.tamingtext.util.MemoryStatus;
 
 public class NameFinderTest extends TamingTextTestJ4 {
 
@@ -265,14 +266,49 @@ public class NameFinderTest extends TamingTextTestJ4 {
     //<end id="ne-namesample-type"/>
   }
 
-  @SuppressWarnings("unused")
-  private void multiPooledModel() throws IOException {
+  @Test
+  public void testMemoryUsageNonPooled() throws IOException {
     File modelDir = getModelDir();
+    MemoryStatus memStatus = new MemoryStatus();
+    memStatus.dumpMemory("before non-pooled model load");
+    NameFinderME[] finders = new NameFinderME[3];
+    String[] names = {"person", "location", "date"};
+    for (int mi = 0; mi < names.length; mi++) {
+      finders[mi] = new NameFinderME(new TokenNameFinderModel(
+          new FileInputStream(
+              new File(modelDir, "en-ner-" + names[mi] + ".bin")
+              )));
+    }
+    memStatus.dumpMemory("after non-pooled model load");
+    
+    //    ----------before non-pooled model load----------
+    //    Code Cache 511.88 KBytes
+    //    Par Eden Space 6.32 MBytes
+    //    Par Survivor Space 0.00 Bytes
+    //    CMS Old Gen 0.00 Bytes
+    //    CMS Perm Gen 5.88 MBytes
+    //    Total 12.70 MBytes
+    //    ---------------------------------
+    //    ----------after non-pooled model load----------
+    //    Code Cache 622.19 KBytes
+    //    Par Eden Space 4.29 MBytes
+    //    Par Survivor Space 3.19 MBytes
+    //    CMS Old Gen 142.21 MBytes
+    //    CMS Perm Gen 6.22 MBytes
+    //    Total 156.51 MBytes
+    //    ---------------------------------
+  }
+  
+  @Test
+  public void testMemoryUsagePooled() throws IOException {
+    File modelDir = getModelDir();
+    MemoryStatus memStatus = new MemoryStatus();
+    memStatus.dumpMemory("before pooled model load");
     //<start id="ne-pool"/>
     NameFinderME[] finders = new NameFinderME[3];
     String[] names = {"person", "location", "date"};
     for (int mi = 0; mi < names.length; mi++) { //<co id="co.opennlp.name.init4"/>
-      finders[mi] = new NameFinderME(new TokenNameFinderModel( //<co id="co.opennlp.name.pool"/>
+      finders[mi] = new NameFinderME(new PooledTokenNameFinderModel( //<co id="co.opennlp.name.pool"/>
           new FileInputStream(
               new File(modelDir, "en-ner-" + names[mi] + ".bin")
               )));
@@ -284,6 +320,24 @@ public class NameFinderTest extends TamingTextTestJ4 {
     </calloutlist>
      */
     //<end id="ne-pool"/>
+    memStatus.dumpMemory("after pooled model load");
+    
+    //    ----------before pooled model load----------
+    //    Code Cache 514.13 KBytes
+    //    Par Eden Space 6.18 MBytes
+    //    Par Survivor Space 0.00 Bytes
+    //    CMS Old Gen 0.00 Bytes
+    //    CMS Perm Gen 5.88 MBytes
+    //    Total 12.57 MBytes
+    //    ---------------------------------
+    //    ----------after pooled model load----------
+    //    Code Cache 626.75 KBytes
+    //    Par Eden Space 7.16 MBytes
+    //    Par Survivor Space 2.06 MBytes
+    //    CMS Old Gen 61.59 MBytes
+    //    CMS Perm Gen 32.95 MBytes
+    //    Total 104.37 MBytes
+    //    ---------------------------------
   }
 
   public void training() throws IOException {

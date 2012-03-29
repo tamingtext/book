@@ -23,7 +23,6 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.7.2</version>
         <configuration>
-          <!--<argLine>-Xmx1024M -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000</argLine>-->
           <argLine>-Xmx1024M</argLine>
           <forkMode>always</forkMode>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>
@@ -59,7 +58,7 @@
           </execution>
         </executions>
       </plugin>
-    </plugins>
+   </plugins>
 
     <pluginManagement>
       <plugins>
@@ -94,6 +93,35 @@
       </plugins>
     </pluginManagement>
   </build>
+
+  <profiles>
+    <profile>
+      <id>tar</id>
+      <build>
+        <plugins>
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <configuration>
+              <tarLongFileMode>gnu</tarLongFileMode>
+              <descriptors>
+                <descriptor>src/main/assembly/project.xml</descriptor>
+             </descriptors>
+            </configuration>
+            <executions>
+              <execution>
+                <id>project</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>single</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
   
   <dependencies>
 

@@ -96,6 +96,29 @@
 
   <profiles>
     <profile>
+      <id>manuscript</id>
+      <build>
+          <resources>
+            <resource>
+              <directory>../manuscript</directory>
+              <filtering>true</filtering>
+              <includes>
+                <include>**/*.docbook</include>
+                <include>**/*.eps</include>
+                <include>**/*.gif</include>
+                <include>**/*.png</include>
+                <include>**/*.tiff</include>
+                <include>**/*.tif</include>
+                <include>**/*.xml</include>
+              </includes>
+            <excludes>
+             <exclude>notes</exclude>
+            </excludes>
+          </resource>
+        </resources>
+      </build>
+    </profile>
+    <profile>
       <id>tar</id>
       <build>
         <plugins>

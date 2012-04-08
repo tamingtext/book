@@ -26,6 +26,7 @@ import java.util.List;
 import com.tamingtext.TamingTextTestJ4;
 import junit.framework.TestCase;
 
+import opennlp.tools.tokenize.SimpleTokenizer;
 import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
@@ -49,8 +50,8 @@ public class StringUtilTest extends TamingTextTestJ4 {
   }
   @Test
   public void testLuceneStandardTokenizer() throws Exception {
-    String[] gold = {"I", "can't", "beleive", "that", "the", "Carolina", "Hurricanes", "won", "the", "2005", "2006", "Stanley", "Cup",};
-    StandardTokenizer tokenizer = new StandardTokenizer(Version.LUCENE_31, new StringReader("I can't beleive that the Carolina Hurricanes won the 2005-2006 Stanley Cup."));
+    String[] gold = {"I", "can't", "believe", "that", "the", "Carolina", "Hurricanes", "won", "the", "2005", "2006", "Stanley", "Cup",};
+    StandardTokenizer tokenizer = new StandardTokenizer(Version.LUCENE_31, new StringReader("I can't believe that the Carolina Hurricanes won the 2005-2006 Stanley Cup."));
     List<String> result = new ArrayList<String>();
     while (tokenizer.incrementToken()) {
       result.add(((CharTermAttribute) tokenizer.getAttribute(CharTermAttribute.class)).toString());
@@ -62,6 +63,18 @@ public class StringUtilTest extends TamingTextTestJ4 {
       i++;
     }
   }
+
+  @Test
+  public void testOpenNLPSimple() throws Exception {
+    SimpleTokenizer st = SimpleTokenizer.INSTANCE;
+    String[] gold = {"I", "can", "'", "t", "believe", "that", "the", "Carolina", "Hurricanes", "won", "the", "2005", "-", "2006", "Stanley", "Cup", "."};
+    String[] tokens = st.tokenize("I can't believe that the Carolina Hurricanes won the 2005-2006 Stanley Cup.");
+    for (int i = 0; i < tokens.length; i++) {
+      System.out.println("Token[" + i + "] " + tokens[i]);
+      assertEquals(gold[i], tokens[i]);
+    }
+  }
+
   @Test
   public void testVikings() throws Exception {
     String[] gold = {"Last", "week", "the", "National", "Football", "League", "crowned", "a", "new", "Super", "Bowl", "Champion",

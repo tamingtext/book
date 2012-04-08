@@ -43,7 +43,7 @@ public class SnowballStemmerTest extends TamingTextTestJ4 {
 <calloutlist>
 <callout arearefs="stemmer.co.test"><para>Setup some tokens to be stemmed</para></callout>
 <callout arearefs="stemmer.co.gold"><para>Define our expectations for results</para></callout>
-<callout arearefs="stemmer.co.set"><para>Tell the english what to stem</para></callout>
+<callout arearefs="stemmer.co.set"><para>Tell the stemmer what to stem</para></callout>
 <callout arearefs="stemmer.co.stem"><para>Do the stemming</para></callout>
 </calloutlist>
     */

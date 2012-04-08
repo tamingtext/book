@@ -441,15 +441,15 @@ requests in that range can be satisfied via the cache.  -->
 
   <requestHandler name="/update/extract" class="org.apache.solr.handler.extraction.ExtractingRequestHandler">
     <lst name="defaults">
-      <str name="map.Last-Modified">lastModified</str>
-      <str name="map.Page-Count">pageCount</str>
-      <str name="map.Author">creator</str>
-      <str name="map.Creation-Date">created</str>
-      <str name="map.Last-Save-Date">date</str>
-      <str name="map.Word-Count">wordCount</str>
-      <str name="map.Application-Name">generator</str>
-      <str name="map.Content-Type">mimeType</str>
-      <str name="map.content">fullText</str>
+      <str name="fmap.Last-Modified">lastModified</str>
+      <str name="fmap.Page-Count">pageCount</str>
+      <str name="fmap.Author">creator</str>
+      <str name="fmap.Creation-Date">created</str>
+      <str name="fmap.Last-Save-Date">date</str>
+      <str name="fmap.Word-Count">wordCount</str>
+      <str name="fmap.Application-Name">generator</str>
+      <str name="fmap.Content-Type">mimeType</str>
+      <str name="fmap.content">fullText</str>
       <!-- Map everything else to ignored -->
       <str name="uprefix">ignored_</str>
     </lst>

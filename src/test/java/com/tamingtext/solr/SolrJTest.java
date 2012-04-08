@@ -134,7 +134,7 @@ public class SolrJTest extends BaseDistributedSearchTestCase {
       <callout arearefs="co.solrj.title"><para>Add a Title field to our document and boost it to be 5 times as important as the other fields</para></callout>
       <callout arearefs="co.solrj.date"><para>Dates must be formatted in a specific way for Solr.</para></callout>
       <callout arearefs="co.solrj.dynamic.field"><para>A dynamic field allows for the addition of unknown fields to Solr.  The "_t" tells Solr this should be treated as a text field.</para></callout>
-      <callout arearefs="co.solrj.add"><para>Send the newly created document to Solr.  Solr takes care of creating a correctly formatted XML message and sending it to Solr using Apache Jakarta Commons HTTPClient.</para></callout>
+      <callout arearefs="co.solrj.add"><para>Send the newly created document to Solr.  Solrj takes care of creating a correctly formatted XML message and sending it to Solr using Apache Jakarta Commons HTTPClient.</para></callout>
       <callout arearefs="co.solrj.commit"><para>After you have added all your documents and wish to make them available for searching, send a commit message to Solr</para></callout>
     </calloutlist>
     */
@@ -264,6 +264,7 @@ public class SolrJTest extends BaseDistributedSearchTestCase {
     SolrDocumentList results = (SolrDocumentList) response.getResponse().get("match");
     assertTrue("results Size: " + results.size() + " is not: " + 1,
             results.size() == 1);
+    //<end id="solrj-search-more-like-this"/>
     /*
 <calloutlist>
     <callout arearefs="solrj-search.co.mlt"><para>Create a "MoreLikeThis" search to find similar documents to the specified document.</para></callout>
@@ -271,7 +272,6 @@ public class SolrJTest extends BaseDistributedSearchTestCase {
     <callout arearefs="solrj-search.co.mlt.off"><para>Specify which document in the original results to use as the "similar" document. </para></callout>
 </calloutlist>
 */
-    //<end id="solrj-search-more-like-this"/>
 
     log.info("--------------------end test()---------------------");
   }

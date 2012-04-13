@@ -24,7 +24,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import opennlp.tools.namefind.NameFinderME;
@@ -41,7 +42,6 @@ import opennlp.tools.util.featuregen.PreviousMapFeatureGenerator;
 import opennlp.tools.util.featuregen.TokenClassFeatureGenerator;
 import opennlp.tools.util.featuregen.TokenFeatureGenerator;
 import opennlp.tools.util.featuregen.WindowFeatureGenerator;
-import opennlp.tools.util.model.ModelUtil;
 
 import org.junit.Test;
 
@@ -228,35 +228,6 @@ public class NameFinderTest extends TamingTextTestJ4 {
   }
 
   @SuppressWarnings("unused")
-  private void customFeatures() throws IOException {
-
-    File modelDir = getModelDir();
-    //<start id="ne-features"/>    
-    AggregatedFeatureGenerator featureGenerators = new AggregatedFeatureGenerator
-            (
-                    new WindowFeatureGenerator(new TokenFeatureGenerator(), 2, 2),//<co id="co.opennlp.name.tokenfeat"/>
-                    new WindowFeatureGenerator(new TokenClassFeatureGenerator(), 2, 2),//<co id="co.opennlp.name.tokenclassfeat"/>
-                    new PreviousMapFeatureGenerator() //<co id="co.opennlp.name.prevfeat"/>
-            ); //<co id="co.opennlp.name.createfeat"/> 
-    /*
-    <calloutlist>
-    <callout arearefs="co.opennlp.name.tokenfeat"><para>Creates a feature generator corresponding to the tokens in a 5-token widow (2 to the lef, and 2 to the right).</para></callout>
-    <callout arearefs="co.opennlp.name.tokenclassfeat"><para>Creates a feature generator corresponding to the token classes of the tokens in a 5-token widow (2 to the lef, and 2 to the right).</para></callout>
-    <callout arearefs="co.opennlp.name.prevfeat"><para>Creates a feature generator which specifies how this token was previously tagged.</para></callout>    
-    <callout arearefs="co.opennlp.name.createfeat"><para>Creates a new context generator consisting of the 3 defined feature generators.</para></callout>    
-    </calloutlist>    
-     */
-    //<end id="ne-features"/>
-    //<start id="ne-features-test"/>
-    NameFinderME finder = new NameFinderME(
-        new TokenNameFinderModel(
-            new FileInputStream(
-                new File(modelDir, "en-ner-" + "name-type" + ".bin")
-                )), featureGenerators, NameFinderME.DEFAULT_BEAM_SIZE);
-    //<end id="ne-features-test"/>
-  }
-
-  @SuppressWarnings("unused")
   private void multiNameSamples() {
     //<start id="ne-namesample-type"/>
     String sent = "Britney Spears was reunited with her sons Saturday .";
@@ -271,15 +242,17 @@ public class NameFinderTest extends TamingTextTestJ4 {
     File modelDir = getModelDir();
     MemoryStatus memStatus = new MemoryStatus();
     memStatus.dumpMemory("before non-pooled model load");
-    NameFinderME[] finders = new NameFinderME[3];
-    String[] names = {"person", "location", "date"};
+    //String[] names = {"person"};
+    //String[] names = {"date","location","money","organization","percentage","person","time"};
+    String[] names = {"person","location","date"};
+    NameFinderME[] finders = new NameFinderME[names.length];
     for (int mi = 0; mi < names.length; mi++) {
       finders[mi] = new NameFinderME(new TokenNameFinderModel(
           new FileInputStream(
               new File(modelDir, "en-ner-" + names[mi] + ".bin")
               )));
     }
-    memStatus.dumpMemory("after non-pooled model load");
+    memStatus.dumpMemory("after non-pooled model load of " + Arrays.toString(names));
     
     //    ----------before non-pooled model load----------
     //    Code Cache 511.88 KBytes
@@ -289,7 +262,7 @@ public class NameFinderTest extends TamingTextTestJ4 {
     //    CMS Perm Gen 5.88 MBytes
     //    Total 12.70 MBytes
     //    ---------------------------------
-    //    ----------after non-pooled model load----------
+    //    ----------after non-pooled model load of person, money, date----------
     //    Code Cache 622.19 KBytes
     //    Par Eden Space 4.29 MBytes
     //    Par Survivor Space 3.19 MBytes
@@ -304,23 +277,23 @@ public class NameFinderTest extends TamingTextTestJ4 {
     File modelDir = getModelDir();
     MemoryStatus memStatus = new MemoryStatus();
     memStatus.dumpMemory("before pooled model load");
+    //String[] names = {"person"};
+    //String[] names = {"date","location","money","organization","percentage","person","time"};
     //<start id="ne-pool"/>
-    NameFinderME[] finders = new NameFinderME[3];
-    String[] names = {"person", "location", "date"};
+    String[] names = {"person","location","date"};
+    NameFinderME[] finders = new NameFinderME[names.length];
     for (int mi = 0; mi < names.length; mi++) { //<co id="co.opennlp.name.init4"/>
-      finders[mi] = new NameFinderME(new PooledTokenNameFinderModel( //<co id="co.opennlp.name.pool"/>
+      finders[mi] = new NameFinderME(
+        new PooledTokenNameFinderModel( //<co id="co.opennlp.name.pool"/>
           new FileInputStream(
-              new File(modelDir, "en-ner-" + names[mi] + ".bin")
-              )));
+              new File(modelDir, "en-ner-" + names[mi] + ".bin"))));
     }
-    /*
-    <calloutlist>
-    <callout arearefs="co.opennlp.name.init4"><para>Initialize a new model for identifying people, locations, and dates based on the binary compressed model in the file "person.bin.gz", "location.bin.gz", "date.bin.gz".</para></callout>
-    <callout arearefs="co.opennlp.name.eachsent"><para>Use string-pooling model reader to reduce memory footprint.</para></callout>
-    </calloutlist>
-     */
+    /*<calloutlist>
+    <callout arearefs="co.opennlp.name.init4"><para>Initialize namfinders for identifying people, locations, and dates</para></callout>
+    <callout arearefs="co.opennlp.name.pool"><para>Use the string-pooling model to reduce memory footprint.</para></callout>
+    </calloutlist>*/
     //<end id="ne-pool"/>
-    memStatus.dumpMemory("after pooled model load");
+    memStatus.dumpMemory("after pooled model load of " + Arrays.toString(names));
     
     //    ----------before pooled model load----------
     //    Code Cache 514.13 KBytes
@@ -340,12 +313,15 @@ public class NameFinderTest extends TamingTextTestJ4 {
     //    ---------------------------------
   }
 
-  public void training() throws IOException {
+  @Test
+  public void trainNameFinder() throws IOException {
+    File baseDir = new File("src/test/resources");
+    File destDir = new File("target");
     //<start id="ne-train"/>
-    File inFile = new File("person.train");
-    NameSampleDataStream nss = new NameSampleDataStream( //  <co id="co.opennlp.name.initnamestream"/>
-        new PlainTextByLineStream(
-                new java.io.FileReader(inFile)));
+    File inFile = new File(baseDir,"person.train");
+    NameSampleDataStream nss = new NameSampleDataStream( //<co id="co.opennlp.name.initnamestream"/>
+      new PlainTextByLineStream(
+        new java.io.FileReader(inFile)));
 
     int iterations = 100;
     int cutoff = 5;
@@ -353,39 +329,51 @@ public class NameFinderTest extends TamingTextTestJ4 {
         "en", // language
         "person", // type
         nss, 
-        ModelUtil.createTrainingParameters(iterations, cutoff), 
-        (AdaptiveFeatureGenerator) null, 
-        new HashMap<String,Object>());
+        (AdaptiveFeatureGenerator) null,
+        Collections.<String,Object>emptyMap(),
+        iterations,
+        cutoff);
     
-    File outFile = new File("my-person.bin");
-    System.out.println("Saving the model as: " + outFile.toString());
+    File outFile = new File(destDir, "person-custom.bin");
     FileOutputStream outFileStream = new FileOutputStream(outFile);
     model.serialize(outFileStream); //<co id="co.opennlp.name.persist3"/>
-
-    /*
-    <calloutlist>
-    <callout arearefs="co.opennlp.name.initnamestream"><para>Initialize a stream of name based on annotated data in the "person.train" file.</para></callout>
-    <callout arearefs="co.opennlp.name.initeventstream"><para>Initialize a stream of events based on the stream of names.</para></callout>
+    /*<calloutlist>
+    <callout arearefs="co.opennlp.name.initnamestream"><para>Create a stream of name samples based on annotated data in the "person.train" file.</para></callout>
     <callout arearefs="co.opennlp.name.train"><para>Train the model.</para></callout>
-    <callout arearefs="co.opennlp.name.persist3"><para>Save the model.</para></callout>
-    </calloutlist>
-     */
+    <callout arearefs="co.opennlp.name.persist3"><para>Save the model to a file.</para></callout>
+    </calloutlist>*/
 
     //<end id="ne-train"/>
   }
 
-  public void training2() throws IOException {
-    AggregatedFeatureGenerator generator = new AggregatedFeatureGenerator(
-                new WindowFeatureGenerator(new TokenFeatureGenerator(), 2, 2),
-                new WindowFeatureGenerator(new TokenClassFeatureGenerator(), 2, 2),
-                new PreviousMapFeatureGenerator()
-    );
+  @Test
+  @SuppressWarnings("unused")
+  public void trainNameFinderWithCustomFeatures() throws IOException {
+    File baseDir = new File("src/test/resources");
+    File destDir = new File("target");
+    
+    //<start id="ne-features"/>    
+    AggregatedFeatureGenerator featureGenerators = 
+      new AggregatedFeatureGenerator( //<co id="co.opennlp.name.createfeat"/>
+        new WindowFeatureGenerator(
+          new TokenFeatureGenerator(), 2, 2), //<co id="co.opennlp.name.tokenfeat"/>
+        new WindowFeatureGenerator(
+          new TokenClassFeatureGenerator(), 2, 2), //<co id="co.opennlp.name.tokenclassfeat"/>
+        new PreviousMapFeatureGenerator() //<co id="co.opennlp.name.prevfeat"/>
+      );  
+    /*<calloutlist>
+    <callout arearefs="co.opennlp.name.createfeat"><para>Creates an aggregated feature generator containing the 3 generators defined below</para></callout>
+    <callout arearefs="co.opennlp.name.tokenfeat"><para>Creates a feature generator corresponding to the tokens in a 5-token widow (2 to the lef, and 2 to the right).</para></callout>
+    <callout arearefs="co.opennlp.name.tokenclassfeat"><para>Creates a feature generator corresponding to the token classes of the tokens in a 5-token widow (2 to the lef, and 2 to the right).</para></callout>
+    <callout arearefs="co.opennlp.name.prevfeat"><para>Creates a feature generator which specifies how this token was previously tagged.</para></callout>     
+    </calloutlist>*/
+    //<end id="ne-features"/>
 
     //<start id="ne-features-train"/>
-    File inFile = new File("person.train");
+    File inFile = new File(baseDir,"person.train");
     NameSampleDataStream nss = new NameSampleDataStream( //<co id="co.opennlp.name.initfeat"/>
-            new PlainTextByLineStream(
-                    new java.io.FileReader(inFile)));
+      new PlainTextByLineStream(
+        new java.io.FileReader(inFile)));
 
     int iterations = 100;
     int cutoff = 5;
@@ -393,24 +381,28 @@ public class NameFinderTest extends TamingTextTestJ4 {
         "en", // language
         "person", // type
         nss, 
-        generator, 
-        null, 
+        featureGenerators, 
+        Collections.<String,Object>emptyMap(),
         iterations, 
         cutoff);
 
-    File outFile = new File("my-person.bin");
-    System.out.println("Saving the model as: " + outFile.toString());
+    File outFile = new File(destDir,"person-custom2.bin");
     FileOutputStream outFileStream = new FileOutputStream(outFile);
     model.serialize(outFileStream); //<co id="co.opennlp.name.persist2"/>
-
-    /*
-   <calloutlist>
-   <callout arearefs="co.opennlp.name.initfeat"><para>Creates an sample stream..</para></callout>
+    /*<calloutlist>
+   <callout arearefs="co.opennlp.name.initfeat"><para>Create the sample stream..</para></callout>
    <callout arearefs="co.opennlp.name.train2"><para>Train the model with a custom feature genrator.</para></callout>
-   <callout arearefs="co.opennlp.name.persist2"><para>Save the model to a file called "person.bin.gz".</para></callout>
-   </calloutlist>
-    */
+   <callout arearefs="co.opennlp.name.persist2"><para>Save the model to a file.</para></callout>
+   </calloutlist>*/
     //<end id="ne-features-train"/>
+    
+    //<start id="ne-features-test"/>
+    NameFinderME finder = new NameFinderME(
+        new TokenNameFinderModel(
+            new FileInputStream(
+                new File(destDir, "person-custom2.bin")
+                )), featureGenerators, NameFinderME.DEFAULT_BEAM_SIZE);
+    //<end id="ne-features-test"/>
   }
 
   @SuppressWarnings("unused")

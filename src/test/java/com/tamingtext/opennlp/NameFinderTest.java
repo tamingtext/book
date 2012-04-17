@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -34,6 +35,7 @@ import opennlp.tools.namefind.NameSampleDataStream;
 import opennlp.tools.namefind.TokenNameFinderModel;
 import opennlp.tools.tokenize.SimpleTokenizer;
 import opennlp.tools.tokenize.Tokenizer;
+import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.Span;
 import opennlp.tools.util.featuregen.AdaptiveFeatureGenerator;
@@ -59,6 +61,7 @@ public class NameFinderTest extends TamingTextTestJ4 {
         cb.append(tokens[ti]).append(" "); //<co id="co.opennlp.name.eachtoken"/>
       }
       System.out.println(cb.substring(0, cb.length() - 1)); //<co id="co.opennlp.name.extra"/>
+      System.out.println("\ttype: " + names[si].getType());
     }
   }
 /*<calloutlist>
@@ -227,14 +230,39 @@ public class NameFinderTest extends TamingTextTestJ4 {
 
   }
 
-  @SuppressWarnings("unused")
-  private void multiNameSamples() {
+  @Test
+  public void testMultiNameSamples() throws IOException {
+    File destDir = new File("target");
+    
     //<start id="ne-namesample-type"/>
-    String sent = "Britney Spears was reunited with her sons Saturday .";
-    String[] words = sent.split(" ");
-    NameSample personSample = new NameSample(words, new Span[]{ new Span(0,2) }, false);
-    NameSample dateSample   = new NameSample(words, new Span[]{ new Span(7,8) }, false);
+    String taggedSent = 
+      "<START:person> Britney Spears <END> was reunited " +
+      "with her sons <START:date> Saturday <END> ";
+    ObjectStream<NameSample> nss = new NameSampleDataStream(
+        new PlainTextByLineStream(new StringReader(taggedSent)));
+    TokenNameFinderModel model = NameFinderME.train( 
+        "en", 
+        "default" ,
+        nss, 
+        (AdaptiveFeatureGenerator) null,
+        Collections.<String,Object>emptyMap(),
+        70 , 1 );
+    
+    File outFile = new File(destDir,"multi-custom.bin");
+    FileOutputStream outFileStream = new FileOutputStream(outFile);
+    model.serialize(outFileStream); 
+    
+    NameFinderME nameFinder = new NameFinderME(model);
+    
+    String[] tokens = 
+        (" Britney Spears was reunited with her sons Saturday .")
+        .split("\\s+");
+    Span[] names = nameFinder.find(tokens);
+    displayNames(names, tokens);
     //<end id="ne-namesample-type"/>
+    
+    assertEquals("person", names[0].getType());
+    assertEquals("date", names[1].getType());
   }
 
   @Test

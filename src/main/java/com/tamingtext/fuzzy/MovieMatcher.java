@@ -65,7 +65,7 @@ public Iterator<SolrDocument> getCandidates(String title)
 /*
 <calloutlist>
 <callout arearefs="co.rm.escape"><para>Escaped the title.</para></callout>
-<callout arearefs="co.rm.quotes"><para>Title in quotes to prevent tokenization".</para></callout>    
+<callout arearefs="co.rm.quotes"><para>Title in quotes to prevent tokenization.</para></callout>
 </calloutlist>
 */
 //<end id="record-matching.candidates"/>

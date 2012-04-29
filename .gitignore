@@ -1,0 +1,13 @@
+.DS_store
+output.log
+solr
+target
+*.iml
+.classpath
+.project
+.settings
+WordNet-3.0
+opennlp-models
+apache-solr/solr-qa/data
+apache-solr/solr-tagging/data
+apache-solr/solr-clustering/data

@@ -1,0 +1,26 @@
+<dataConfig>
+
+  <dataSource type="FileDataSource" encoding="UTF-8"/>
+  <document>
+    <entity name="post"
+        processor="XPathEntityProcessor"
+        forEach="/posts/row"
+        url="classification-examples/stackoverflow-corpus/training-data.xml" 
+        transformer="DateFormatTransformer,HTMLStripTransformer,com.tamingtext.tagrecommender.StackOverflowTagTransformer">
+      <field column="id"               xpath="/posts/row/@Id"/>
+      <field column="title"            xpath="/posts/row/@Title"/>
+      <field column="body"             xpath="/posts/row/@Body" stripHTML="true"/>
+      <field column="tags"             xpath="/posts/row/@Tags"/>
+      <field column="creationDate"     xpath="/posts/row/@CreationDate" dateTimeFormat="yyyy-MM-dd'T'hh:mm:ss.SSS"/>
+      <field column="parentId"         xpath="/posts/row/@ParentId"/>
+      <field column="postTypeId"       xpath="/posts/row/@PostTypeId"/>
+      <field column="acceptedAnswerId" xpath="/posts/row/@AcceptedAnswerId"/>
+      <field column="ownerUserId"      xpath="/posts/row/@OwnerUserId"/>
+      <field column="score"            xpath="/posts/row/@Score"/>
+      <field column="viewCount"        xpath="/posts/row/@ViewCount"/>
+      <field column="answerCount"      xpath="/posts/row/@AnswerCount"/>
+      <field column="commentCount"     xpath="/posts/row/@ComentCount"/>
+      <field column="favoriteCount"    xpath="/posts/row/@FavoriteCount"/>
+      </entity>
+  </document>
+</dataConfig>

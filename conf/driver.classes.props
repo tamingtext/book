@@ -1,0 +1,11 @@
+com.tamingtext.qa.WikipediaWexIndexer = wikipediaIndexer : index wikipedia into solr
+com.tamingtext.classifier.mlt.TestMoreLikeThis = testMlt : test 'more like this' categorizer
+com.tamingtext.classifier.mlt.TrainMoreLikeThis = trainMlt : train 'more like this' categorizer
+com.tamingtext.classifier.maxent.TestMaxent = testMaxent : test Maxent document categorizer
+com.tamingtext.classifier.maxent.TrainMaxent = trainMaxent : train Maxent document categorizer 
+com.tamingtext.classifier.bayes.ExtractTrainingData = extractTrainingData : extract training data
+com.tamingtext.classifier.bayes.SplitBayesInput = splitBayesInput : split bayes input into training and test sets
+com.tamingtext.classifier.bayes.ClassifyDocument = bayesClassifyDocument : categorize a document using a bayes model
+com.tamingtext.tagrecommender.ExtractStackOverflowData = extractStackOverflow : extract training and test data from a stack overflow dump
+com.tamingtext.tagrecommender.CountStackOverflowTags = countStackOverflow : count tags found in the stack overflow data
+com.tamingtext.tagrecommender.TestStackOverflowTagger = testStackOverflow : test the stack overflow tagger

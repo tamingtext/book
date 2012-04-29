@@ -1,0 +1,647 @@
+<dataConfig>
+
+  <dataSource name="rss" type="HttpDataSource" encoding="UTF-8"/>
+	<document>
+    <!-- New York Times Sports feed -->
+		<entity name="nytSportsFeed"
+				pk="link"
+				url="http://feeds1.nytimes.com/nyt/rss/Sports"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/guid" />
+			<field column="link" xpath="/rss/channel/item/link" />
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="nytWorld"
+				pk="link"
+				url="http://feeds.nytimes.com/nyt/rss/World"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/guid" />
+			<field column="link" xpath="/rss/channel/item/link" />
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="nytTech"
+				pk="link"
+				url="http://feeds.nytimes.com/nyt/rss/Technology"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/guid" />
+			<field column="link" xpath="/rss/channel/item/link" />
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="nytHealth"
+				pk="link"
+				url="http://feeds.nytimes.com/nyt/rss/Health"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/guid" />
+			<field column="link" xpath="/rss/channel/item/link" />
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="nytArts"
+				pk="link"
+				url="http://feeds.nytimes.com/nyt/rss/Arts"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/guid" />
+			<field column="link" xpath="/rss/channel/item/link" />
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+
+
+    <entity name="reutersFeed"
+				pk="link"
+				url="http://feeds.reuters.com/reuters/sportsNews"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/guid" />
+			<field column="link" xpath="/rss/channel/item/link" />
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="phillySports"
+				pk="link"
+				url="http://www.philly.com/philly_sports.rss"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/guid" />
+			<field column="link" xpath="/rss/channel/item/link" />
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="phillyNews"
+				pk="link"
+				url="http://www.philly.com/philly_news.rss"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/guid" />
+			<field column="link" xpath="/rss/channel/item/link" />
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="phillyPolitics"
+				pk="link"
+				url="http://www.philly.com/philly_politics.rss"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/guid" />
+			<field column="link" xpath="/rss/channel/item/link" />
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="phillyBiz"
+				pk="link"
+				url="http://www.philly.com/philly_business.rss"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/guid" />
+			<field column="link" xpath="/rss/channel/item/link" />
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+
+    <entity name="starTribSports"
+				pk="link"
+				url="http://www.startribune.com/sports/index.rss2"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,TemplateTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" template="MSP Star Tribune" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/guid" />
+			<field column="link" xpath="/rss/channel/item/link" />
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="starTribNews"
+				pk="link"
+				url="http://www.startribune.com/nation/index.rss2"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,TemplateTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" template="MSP Star Tribune" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/guid" />
+			<field column="link" xpath="/rss/channel/item/link" />
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="starTribPolitics"
+				pk="link"
+				url="http://www.startribune.com/politics/national/index.rss2"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,TemplateTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" template="MSP Star Tribune" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/guid" />
+			<field column="link" xpath="/rss/channel/item/link" />
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="starTribEntertainment"
+				pk="link"
+				url="http://www.startribune.com/entertainment/index.rss2"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,TemplateTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" template="MSP Star Tribune" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/guid" />
+			<field column="link" xpath="/rss/channel/item/link" />
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="starTribLifestyle"
+				pk="link"
+				url="http://www.startribune.com/lifestyle/index.rss2"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,TemplateTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" template="MSP Star Tribune" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/guid" />
+			<field column="link" xpath="/rss/channel/item/link" />
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+
+
+    <entity name="seattleTimesSports"
+				pk="link"
+				url="http://seattletimes.nwsource.com/rss/sports.xml"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/guid" />
+			<field column="link" xpath="/rss/channel/item/link" />
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="seattleTimesPolitics"
+				pk="link"
+				url="http://seattletimes.nwsource.com/rss/politics.xml"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/guid" />
+			<field column="link" xpath="/rss/channel/item/link" />
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="seattleTimesEntertainment"
+				pk="link"
+				url="http://seattletimes.nwsource.com/rss/artsentertainment.xml"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/guid" />
+			<field column="link" xpath="/rss/channel/item/link" />
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="seattleTimesNews"
+				pk="link"
+				url="http://seattletimes.nwsource.com/rss/nationworld.xml"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/guid" />
+			<field column="link" xpath="/rss/channel/item/link" />
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+
+    <entity name="laTimesSports"
+				pk="link"
+				url="http://feeds.latimes.com/latimes/sports?format=xml"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/link" />
+			<!--<field column="link" xpath="/rss/channel/item/link" />-->
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="laTimesScience"
+				pk="link"
+				url="http://feeds.latimes.com/latimes/news/science?format=xml"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/link" />
+			<!--<field column="link" xpath="/rss/channel/item/link" />-->
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="laTimesPolitics"
+				pk="link"
+				url="http://feeds.latimes.com/latimes/news/politics?format=xml"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/link" />
+			<!--<field column="link" xpath="/rss/channel/item/link" />-->
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="laTimesEntertainment"
+				pk="link"
+				url="http://feeds.latimes.com/latimes/entertainment?format=xml"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/link" />
+			<!--<field column="link" xpath="/rss/channel/item/link" />-->
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="laTimesNews"
+				pk="link"
+				url="http://feeds.latimes.com/latimes/news?format=xml"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/link" />
+			<!--<field column="link" xpath="/rss/channel/item/link" />-->
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+
+
+    <entity name="sfgateSports"
+				pk="link"
+				url="http://www.sfgate.com/rss/feeds/sports.xml"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/guid" />
+			<field column="link" xpath="/rss/channel/item/link" />
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="sfgateNews"
+				pk="link"
+				url="http://www.sfgate.com/rss/feeds/news.xml"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/guid" />
+			<field column="link" xpath="/rss/channel/item/link" />
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="sfgateEntertainment"
+				pk="link"
+				url="http://www.sfgate.com/rss/feeds/entertainment.xml"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/guid" />
+			<field column="link" xpath="/rss/channel/item/link" />
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="sfgateBusiness"
+				pk="link"
+				url="http://www.sfgate.com/rss/feeds/business.xml"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/guid" />
+			<field column="link" xpath="/rss/channel/item/link" />
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="sfgatePolitics"
+				pk="link"
+				url="http://www.sfgate.com/rss/feeds/news_politics.xml"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/guid" />
+			<field column="link" xpath="/rss/channel/item/link" />
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+
+
+    <entity name="chiTribNews"
+				pk="link"
+				url="http://feeds.chicagotribune.com/chicagotribune/news/"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/link" />
+			<!--<field column="link" xpath="/rss/channel/item/link" />-->
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="chiTribEntertainment"
+				pk="link"
+				url="http://feeds.chicagotribune.com/chicagotribune/entertainment/"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/link" />
+			<!--<field column="link" xpath="/rss/channel/item/link" />-->
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="chiTribBusiness"
+				pk="link"
+				url="http://feeds.chicagotribune.com/chicagotribune/business/"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/link" />
+			<!--<field column="link" xpath="/rss/channel/item/link" />-->
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="chiTribSports"
+				pk="link"
+				url="http://feeds.chicagotribune.com/chicagotribune/sports/"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/link" />
+			<!--<field column="link" xpath="/rss/channel/item/link" />-->
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="espnFeed"
+				pk="link"
+				url="http://sports-ak.espn.go.com/espn/rss/news"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/guid" />
+			<field column="link" xpath="/rss/channel/item/link" />
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+    <entity name="cbsSportsFeed"
+				pk="link"
+				url="http://feeds.cbssports.com/cbssportsline/home_news"
+				processor="XPathEntityProcessor"
+				forEach="/rss/channel | /rss/channel/item"
+            dataSource="rss"
+        transformer="RegexTransformer,DateFormatTransformer,HTMLStripTransformer">
+			<field column="source" xpath="/rss/channel/title" commonField="true" />
+			<field column="source-link" xpath="/rss/channel/link" commonField="true" />
+			<field column="title" xpath="/rss/channel/item/title" />
+			<field column="id" xpath="/rss/channel/item/guid" />
+			<field column="link" xpath="/rss/channel/item/link" />
+      <!-- Use the RegexTransformer to strip out ads -->
+			<field column="description" xpath="/rss/channel/item/description" stripHTML="true"/>
+			<field column="category" xpath="/rss/channel/item/category" />
+      <!-- 'Sun, 18 May 2008 11:23:11 +0000' -->
+      <field column="pubDate" xpath="/rss/channel/item/pubDate" dateTimeFormat="EEE, dd MMM yyyy HH:mm:ss Z" />
+    </entity>
+	</document>
+</dataConfig>

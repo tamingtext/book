@@ -1,5 +1,6 @@
 Taming Text, by Grant Ingersoll, Thomas Morton and Drew Farris is designed to teach software engineers the basic concepts of working with text to solve search and Natural Language Processing problems.  The book focuses on teaching using existing open source libraries like Apache Solr, Apache Mahout and Apache OpenNLP to manipulate text.  To learn more, visit http://www.manning.com/ingersoll.
 
+<<<<<<< HEAD
 Getting Started
 
 
@@ -10,3 +11,35 @@ Running the Tests
 
 
 Next Steps
+=======
+This directory contains the full source code for all the Taming Text examples.
+Most of the code is setup to be run via JUnit tests, though they are not
+completely automated at this stage of the book.
+
+All instructions are relative to the base directory, called TT_HOME from here on out.
+
+Taming Text uses Maven for building and running the code.  To get started, you will
+need:
+
+TODO: Make friendly for Windows.
+1. JDK 1.6+
+2. Maven 3.0 or higher
+3. The OpenNLP English models, available at http://maven.tamingtext.com/opennlp-models/models-1.5.  Place them in the TT_HOME directory in a directory named opennlp-models.
+  This can be done by using the following commands on UNIX:
+  From the TT_HOME directory:
+      mkdir opennlp-models
+      cd opennlp-models
+      wget -nd -np -r http://maven.tamingtext.com/opennlp-models/models-1.5/
+      rm index.html*
+
+4. Get WordNet 3.0 and place it in the TT_HOME directory. 
+  This can be done by using the following commands on UNIX:
+  From the TT_HOME directory:
+      wget -nd -np -m http://maven.tamingtext.com/wordnet/
+      rm index.html*
+      tar -xf Wordnet-3.0.tar.gz
+
+5. Many of the examples can be run via the 'tt' script in the TT_HOME/bin directory. Running this script without arguments will display a list of the example names.
+
+6. Some of the samples are powered by pre-configured instances of solr. These can be started with the TT_HOME/bin/start-solr.sh script, which takes a single argument, the name of the instance to start. Available instances include solr-qa, solr-clustering and solr-tagging.
+>>>>>>> 61f1c7bafc1bb6e537269ed45a5faea01a784a98

@@ -79,7 +79,7 @@ public class TrieNode {
       children = new TrieNode[26];
       addWord(tmp,0); //<co id="co.trie.split-suffix"/>
     }
-    int ci = word.charAt(index)-97;
+    int ci = word.charAt(index)-(int)'a';
     TrieNode child = children[ci];
     if (child == null) {
       if (word.length() == index -1) {
@@ -113,7 +113,7 @@ public class TrieNode {
     TrieNode prefixRoot = this;
     for (int i=0;i<prefix.length();i++) {
       if (prefixRoot.suffix == null) {
-        int ci = prefix.charAt(i)-97;
+        int ci = prefix.charAt(i)-(int)'a';
         prefixRoot = prefixRoot.children[ci];
         if (prefixRoot == null) {
           break;
@@ -144,7 +144,7 @@ public class TrieNode {
       return;
     }
     for (int ci=0;ci<children.length;ci++) {
-      String nextPrefix = prefix+(char) (ci+97);
+      String nextPrefix = prefix+(char) (ci+(int)'a');
       if (children[ci] != null) {
         children[ci].collectWords(words, numWords, nextPrefix);
         if (words.size() == numWords) return;
@@ -164,7 +164,7 @@ public class TrieNode {
     StringBuffer cs = new StringBuffer(children.length);
     for (int ci=0;ci<children.length;ci++) {
       if (children[ci] != null) {
-        cs.append((char) (ci+97));
+        cs.append((char) (ci+(int)'a'));
       }
     }
     return "word="+isWord+" suffix="+suffix+" cs="+cs;

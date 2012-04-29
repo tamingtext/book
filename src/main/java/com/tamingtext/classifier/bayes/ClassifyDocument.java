@@ -123,7 +123,7 @@ public class ClassifyDocument {
       ctx.initialize();
       
       //TODO: make the analyzer configurable
-      StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_31);
+      StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_36);
       TokenStream ts = analyzer.tokenStream(null, new InputStreamReader(new FileInputStream(inputFile), "UTF-8"));
      
       ArrayList<String> tokens = new ArrayList<String>(1000);

@@ -139,7 +139,7 @@ public class TestMoreLikeThis {
       Directory directory = FSDirectory.open(new File(modelPath));
       IndexReader indexReader = IndexReader.open(directory);
       Analyzer analyzer   //<co id="mlt.analyzersetup"/>
-        = new StandardAnalyzer(Version.LUCENE_30);
+        = new StandardAnalyzer(Version.LUCENE_36);
       
       MoreLikeThisCategorizer categorizer 
         = new MoreLikeThisCategorizer(indexReader, categoryField);

@@ -250,7 +250,7 @@ public class TrainMoreLikeThis {
     Directory directory //<co id="luc.index.dir"/>
       = FSDirectory.open(new File(pathname));
     Analyzer analyzer   //<co id="luc.index.analyzer"/>
-      = new StandardAnalyzer(Version.LUCENE_30);
+      = new StandardAnalyzer(Version.LUCENE_36);
     
     if (nGramSize > 1) { //<co id="luc.index.shingle"/>
       ShingleAnalyzerWrapper sw 
@@ -262,7 +262,7 @@ public class TrainMoreLikeThis {
     }
     
     IndexWriterConfig config //<co id="luc.index.create"/>
-      = new IndexWriterConfig(Version.LUCENE_30, analyzer);
+      = new IndexWriterConfig(Version.LUCENE_36, analyzer);
     config.setOpenMode(OpenMode.CREATE);
     IndexWriter writer =  new IndexWriter(directory, config);
     /* <calloutlist>

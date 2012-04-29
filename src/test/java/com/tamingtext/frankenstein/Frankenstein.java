@@ -140,7 +140,7 @@ public class Frankenstein {
       searcher = new IndexSearcher(directory, true);
     }
     Results result = new Results();
-    QueryParser qp = new QueryParser(Version.LUCENE_34, "paragraph", new StandardAnalyzer(Version.LUCENE_34));
+    QueryParser qp = new QueryParser(Version.LUCENE_36, "paragraph", new StandardAnalyzer(Version.LUCENE_36));
     Query query = qp.parse(queryStr);
     TopDocs topDocs = searcher.search(query, 20);
     System.out.println("Found " + topDocs.totalHits + " total hits.");
@@ -161,7 +161,7 @@ public class Frankenstein {
     InputStream stream = getClass().getClassLoader().getResourceAsStream("frankenstein-gutenberg.txt");
     BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
     //let's index paragraphs at a time
-    IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_34, new StandardAnalyzer(Version.LUCENE_34));
+    IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_36, new StandardAnalyzer(Version.LUCENE_36));
     directory = new RAMDirectory();
     IndexWriter iw = new IndexWriter(directory, conf);
     String line;

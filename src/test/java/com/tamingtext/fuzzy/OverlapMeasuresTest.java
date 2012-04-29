@@ -21,9 +21,12 @@ package com.tamingtext.fuzzy;
 
 import com.tamingtext.TamingTextTestJ4;
 import junit.framework.TestCase;
+import org.apache.lucene.search.TopDocs;
 import org.junit.*;
 
 public class OverlapMeasuresTest extends TamingTextTestJ4 {
+
+
   @Test
   public void testJaccard() {
     OverlapMeasures om = new OverlapMeasures();
@@ -34,4 +37,16 @@ public class OverlapMeasuresTest extends TamingTextTestJ4 {
     assertEquals(om.jaccard("zooto".toCharArray(), "zoomo".toCharArray()),(float) 2/4);
   }
 
+  //just a simple test of the cosine overlap discussion in the Fuzzy chapter.
+  @Test
+  public void testCosine() throws Exception {
+    OverlapMeasures om = new OverlapMeasures();
+    TopDocs docs = om.cosine("chars:mob", 10, "bob", "fob", "job", "cob", "bobo");
+    if (docs != null) {
+      System.out.println("Total hits: " + docs.totalHits);
+      for (int i = 0; i < docs.scoreDocs.length; i++){
+        System.out.println("Id: " + docs.scoreDocs[i].doc + " score: " + docs.scoreDocs[i].score);
+      }
+    }
+  }
 }

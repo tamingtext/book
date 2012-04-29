@@ -19,6 +19,32 @@
 
 package com.tamingtext.fuzzy;
 
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.miscellaneous.PatternAnalyzer;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.index.TermEnum;
+import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.MatchAllDocsQuery;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.RAMDirectory;
+import org.apache.lucene.util.Version;
+import org.apache.solr.analysis.PatternTokenizer;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.util.Collections;
+import java.util.regex.Pattern;
+
 public class OverlapMeasures {
   
   //<start id="jaccard_end"/>
@@ -70,4 +96,37 @@ public class OverlapMeasures {
   </calloutlist>
    */
   //<end id="jaccard_end"/>
+
+  public TopDocs cosine(String queryTerm, int n, String... terms) throws IOException, ParseException {
+    Directory directory = new RAMDirectory();
+    final Pattern pattern = Pattern.compile(".");
+    Analyzer analyzer = new Analyzer() {
+      @Override
+      public TokenStream tokenStream(String fieldName, Reader reader) {
+        TokenStream result = null;
+        try {
+          result = new PatternTokenizer(reader, pattern, 0);
+        } catch (IOException e) {
+        }
+        return result;
+      }
+    };
+    IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_36, analyzer);
+    IndexWriter writer = new IndexWriter(directory, conf);
+    for (String term : terms) {
+      Document doc = new Document();
+      doc.add(new Field("chars", term, Field.Store.YES, Field.Index.ANALYZED));
+      writer.addDocument(doc);
+    }
+    writer.close();
+    IndexReader reader = IndexReader.open(directory);
+    IndexSearcher searcher = new IndexSearcher(reader);
+    TopDocs topDocs = searcher.search(new MatchAllDocsQuery(), terms.length);
+    for (int i = 0; i < topDocs.scoreDocs.length; i++){
+        System.out.println("Id: " + topDocs.scoreDocs[i].doc + " Val: " + searcher.doc(topDocs.scoreDocs[i].doc).get("chars"));
+    }
+    QueryParser qp = new QueryParser(Version.LUCENE_36, "chars", analyzer);
+    Query query = qp.parse(queryTerm);
+    return searcher.search(query, n);
+  }
 }

@@ -9,7 +9,7 @@
   <url>http://www.tamingtext.com</url>
 
   <properties>
-     <lucene.version>3.4.0</lucene.version>
+     <lucene.version>3.6.0</lucene.version>
      <tika.version>0.10</tika.version>
      <mahout.version>0.5</mahout.version>
      <release.update.interval>daily</release.update.interval>
@@ -448,7 +448,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.7</version>
+      <version>4.10</version>
       <scope>test</scope>
     </dependency>
 

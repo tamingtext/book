@@ -390,9 +390,9 @@ public class NameFinderTest extends TamingTextTestJ4 {
         new PreviousMapFeatureGenerator() //<co id="co.opennlp.name.prevfeat"/>
       );  
     /*<calloutlist>
-    <callout arearefs="co.opennlp.name.createfeat"><para>Creates an aggregated feature generator containing the 3 generators defined below</para></callout>
-    <callout arearefs="co.opennlp.name.tokenfeat"><para>Creates a feature generator corresponding to the tokens in a 5-token widow (2 to the lef, and 2 to the right).</para></callout>
-    <callout arearefs="co.opennlp.name.tokenclassfeat"><para>Creates a feature generator corresponding to the token classes of the tokens in a 5-token widow (2 to the lef, and 2 to the right).</para></callout>
+    <callout arearefs="co.opennlp.name.createfeat"><para>Creates an aggregated feature generator containing the 3 generators defined below.</para></callout>
+    <callout arearefs="co.opennlp.name.tokenfeat"><para>Creates a feature generator corresponding to the tokens in a 5-token widow (2 to the left, and 2 to the right).</para></callout>
+    <callout arearefs="co.opennlp.name.tokenclassfeat"><para>Creates a feature generator corresponding to the token classes of the tokens in a 5-token widow (2 to the left, and 2 to the right).</para></callout>
     <callout arearefs="co.opennlp.name.prevfeat"><para>Creates a feature generator which specifies how this token was previously tagged.</para></callout>     
     </calloutlist>*/
     //<end id="ne-features"/>

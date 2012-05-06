@@ -9,5 +9,9 @@ target
 WordNet-3.0
 opennlp-models
 apache-solr/solr-qa/data
+apache-solr/solr-qa/conf/dataimport.properties
 apache-solr/solr-tagging/data
+apache-solr/solr-tagging/conf/dataimport.properties
 apache-solr/solr-clustering/data
+apache-solr/solr-clustering/conf/dataimport.properties
+

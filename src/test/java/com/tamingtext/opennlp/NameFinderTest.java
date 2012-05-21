@@ -192,7 +192,7 @@ public class NameFinderTest extends TamingTextTestJ4 {
     /*<calloutlist>
     <callout arearefs="co.opennlp.name.1">
       <para>Initialize a new model for identifying people, locations, and dates
-        based on the binary compressed model in the file "en-ner-person.bin", 
+        based on the binary compressed model in the files "en-ner-person.bin",
         "en-ner-location.bin", "en-ner-date.bin".
       </para>
     </callout>
@@ -215,16 +215,14 @@ public class NameFinderTest extends TamingTextTestJ4 {
          to these names.</para>
     </callout>
     <callout arearefs="co.opennlp.name.7">
-      <para>Clear data structures which store which words have been seen 
-        previously in the document and whether these words were considered part
-         of a person's name.</para>
+      <para>Get the probabilities associated with the associated matches.</para>
     </callout>
     <callout arearefs="co.opennlp.name.8">
       <para>Collect each of the identified names from each of the name 
         finders.</para></callout>
     <callout arearefs="co.opennlp.name.9">
       <para>Resolve any cases of overlapping names in favor of the more 
-        probably name.</para></callout>                
+        probable name.</para></callout>
     </calloutlist>*/
     //<end id="ne-multi"/>
 
@@ -317,7 +315,7 @@ public class NameFinderTest extends TamingTextTestJ4 {
               new File(modelDir, "en-ner-" + names[mi] + ".bin"))));
     }
     /*<calloutlist>
-    <callout arearefs="co.opennlp.name.init4"><para>Initialize namfinders for identifying people, locations, and dates</para></callout>
+    <callout arearefs="co.opennlp.name.init4"><para>Initialize name finders for identifying people, locations, and dates</para></callout>
     <callout arearefs="co.opennlp.name.pool"><para>Use the string-pooling model to reduce memory footprint.</para></callout>
     </calloutlist>*/
     //<end id="ne-pool"/>
@@ -419,7 +417,7 @@ public class NameFinderTest extends TamingTextTestJ4 {
     model.serialize(outFileStream); //<co id="co.opennlp.name.persist2"/>
     /*<calloutlist>
    <callout arearefs="co.opennlp.name.initfeat"><para>Create the sample stream..</para></callout>
-   <callout arearefs="co.opennlp.name.train2"><para>Train the model with a custom feature genrator.</para></callout>
+   <callout arearefs="co.opennlp.name.train2"><para>Train the model with a custom feature generator.</para></callout>
    <callout arearefs="co.opennlp.name.persist2"><para>Save the model to a file.</para></callout>
    </calloutlist>*/
     //<end id="ne-features-train"/>

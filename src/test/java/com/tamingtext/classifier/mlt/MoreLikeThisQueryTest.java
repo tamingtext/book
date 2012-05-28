@@ -27,8 +27,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.analysis.shingle.ShingleAnalyzerWrapper;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Fieldable;
 import org.apache.lucene.index.IndexReader;
@@ -68,7 +68,7 @@ public class MoreLikeThisQueryTest {
     IndexSearcher indexSearcher = new IndexSearcher(indexReader);
 
     Analyzer analyzer //<co id="mlt.analyzersetup"/>
-      = new StandardAnalyzer(Version.LUCENE_36);
+      = new EnglishAnalyzer(Version.LUCENE_36);
     
     if (nGramSize > 1) { //<co id="mlt.ngramsetup"/>
       analyzer = new ShingleAnalyzerWrapper(analyzer, nGramSize, nGramSize);

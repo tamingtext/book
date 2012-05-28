@@ -40,8 +40,8 @@ import org.apache.commons.cli2.builder.DefaultOptionBuilder;
 import org.apache.commons.cli2.builder.GroupBuilder;
 import org.apache.commons.cli2.commandline.Parser;
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.analysis.shingle.ShingleAnalyzerWrapper;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexWriter;
@@ -213,6 +213,7 @@ public class TrainMoreLikeThis {
         String[] parts = line.split("\t"); //<co id="luc.tf.content"/>
         if (parts.length != 2) continue;
         category = parts[0];
+        categories.add(category);
         content.append(parts[1]).append(" ");
         lineCount++;
       }
@@ -250,14 +251,16 @@ public class TrainMoreLikeThis {
     Directory directory //<co id="luc.index.dir"/>
       = FSDirectory.open(new File(pathname));
     Analyzer analyzer   //<co id="luc.index.analyzer"/>
-      = new StandardAnalyzer(Version.LUCENE_36);
+      = new EnglishAnalyzer(Version.LUCENE_36);
     
     if (nGramSize > 1) { //<co id="luc.index.shingle"/>
       ShingleAnalyzerWrapper sw 
-        = new ShingleAnalyzerWrapper(analyzer);
-      sw.setMaxShingleSize(nGramSize);
-      sw.setMinShingleSize(nGramSize);
-      sw.setTokenSeparator("-");
+        = new ShingleAnalyzerWrapper(analyzer,
+            nGramSize, // min shingle size
+            nGramSize, // max shingle size
+            "-",       // token separator
+            true,      // output unigrams
+            true);     // output unigrams if no shingles
       analyzer = sw;
     }
     

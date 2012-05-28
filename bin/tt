@@ -134,6 +134,9 @@ if [ "x$JAVA_LIBRARY_PATH" != "x" ] ; then
   TT_OPTS="$TT_OPTS -Djava.library.path=$JAVA_LIBRARY_PATH"
 fi
 
+if $cygwin; then
+  TT_HOME=`cygpath -w "$TT_HOME"`
+fi
 TT_OPTS="$TT_OPTS -Dmodel.dir=$TT_HOME/opennlp-models -Dwordnet.dir=$TT_HOME/WordNet-3.0"
 
 CLASS=com.tamingtext.util.TamingTextDriver

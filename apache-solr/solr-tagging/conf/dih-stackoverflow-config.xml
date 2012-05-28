@@ -5,7 +5,7 @@
     <entity name="post"
         processor="XPathEntityProcessor"
         forEach="/posts/row"
-        url="classification-examples/stackoverflow-corpus/training-data.xml" 
+        url="/path/to/stackoverflow-training-posts.xml" 
         transformer="DateFormatTransformer,HTMLStripTransformer,com.tamingtext.tagrecommender.StackOverflowTagTransformer">
       <field column="id"               xpath="/posts/row/@Id"/>
       <field column="title"            xpath="/posts/row/@Title"/>

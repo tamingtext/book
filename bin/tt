@@ -93,6 +93,12 @@ if [ -d $TT_HOME/lib ] ; then
   do
     CLASSPATH=${CLASSPATH}:$f;
   done
+ 
+  # add slf4j jars first 
+  for f in $TT_HOME/lib/dependency/*slf4j*.jar
+  do
+    CLASSPATH=${CLASSPATH}:$f;
+  done
   
   for f in $TT_HOME/lib/dependency/*.jar
   do
@@ -103,6 +109,12 @@ fi
 if [ -d $TT_HOME/target/classes ] ; then
   # running in development context
   CLASSPATH=${CLASSPATH}:$TT_HOME/target/classes
+
+  # add slf4j jars fierst
+  for f in $TT_HOME/target/dependency/*slf4j*.jar
+  do
+    CLASSPATH=${CLASSPATH}:$f;
+  done
 
   for f in $TT_HOME/target/dependency/*.jar
   do

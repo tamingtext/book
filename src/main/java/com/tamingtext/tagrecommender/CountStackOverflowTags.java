@@ -188,13 +188,13 @@ public class CountStackOverflowTags {
       rankedTags[--pos] = queue.pop();
     }
     
-    System.err.println("Least tag count " + rankedTags[maxTags-1].getScore());
+    System.err.println("Least tag count " + rankedTags[maxTags-1].getCount());
     System.err.println("Dumping Ranked Tags...");
     System.err.flush();
 
     int rank = 0;
     for (ScoreTag tag: rankedTags) {
-      out.println(++rank + "\t" + tag.getScore() + "\t" + tag.getTag());
+      out.println(++rank + "\t" + tag.getCount() + "\t" + tag.getTag());
     }
     
     out.close();

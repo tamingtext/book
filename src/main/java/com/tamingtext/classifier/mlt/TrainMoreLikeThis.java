@@ -271,7 +271,7 @@ public class TrainMoreLikeThis {
     /* <calloutlist>
     <callout arearefs="luc.index.dir">Create Index Directory</callout>
     <callout arearefs="luc.index.analyzer">Setup Analyzer</callout>
-    <callout arearefs="luc.index.shingle">Setup N-Gram Analyzer</callout>
+    <callout arearefs="luc.index.shingle">Setup Shingle Filter</callout>
     <callout arearefs="luc.index.create">Create <classname>IndexWriter</classname></callout>
     </calloutlist> */
     //<end id="lucene.examples.index.setup"/>

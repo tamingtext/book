@@ -31,30 +31,30 @@ import com.tamingtext.util.NameFinderFactory;
 
 public class NameFinderFeatureGenerator implements FeatureGenerator {
 
-  NameFinderFactory eng;
+  NameFinderFactory factory;
   
   public NameFinderFeatureGenerator() throws IOException {
     this(null);
   }
   
-  public NameFinderFeatureGenerator(NameFinderFactory eng) {
-    if (eng == null) {
+  public NameFinderFeatureGenerator(NameFinderFactory factory) {
+    if (factory == null) {
       try {
-        eng = new NameFinderFactory();
+        factory = new NameFinderFactory();
       }
       catch (IOException e) {
         throw (RuntimeException) new RuntimeException().initCause(e);
       }
     }
-    this.eng = eng;
+    this.factory = factory;
   }
   
   @Override
   @SuppressWarnings("all")
   //<start id="maxent.examples.features"/>
   public Collection extractFeatures(String[] text) {
-    NameFinderME[] finders = eng.getNameFinders(); //<co id="nffg.engine"/>
-    String[] modelNames    = eng.getModelNames();
+    NameFinderME[] finders = factory.getNameFinders(); //<co id="nffg.engine"/>
+    String[] modelNames    = factory.getModelNames();
     
     Collection<String> features = new ArrayList<String>();
     StringBuilder builder = new StringBuilder();

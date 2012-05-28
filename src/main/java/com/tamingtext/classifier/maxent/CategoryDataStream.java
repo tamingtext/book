@@ -139,18 +139,24 @@ public class CategoryDataStream implements ObjectStream<DocumentSample> {
   
 //<start id="maxent.examples.train.event"/>
   public DocumentSample read() {
-    if (line == null && !hasNext()) {
+    if (line == null && !hasNext()) { //<co id="mee.train.read"/>
       return null;
     }
-    int split = line.indexOf('\t');
+    int split = line.indexOf('\t'); //<co id="mee.train.cat"/>
     if (split < 0) 
       throw new RuntimeException("Invalid line in " 
           + inputFiles[inputFilesIndex]);
     String category = line.substring(0,split);
     String document = line.substring(split+1);
     line = null; // mark line as consumed
-    String[] tokens = tokenizer.tokenize(document);
-    return new DocumentSample(category, tokens);
+    String[] tokens = tokenizer.tokenize(document); //<co id="mee.train.tok"/>
+    return new DocumentSample(category, tokens); //<co id="mee.train.sample"/>
   }
+  /*<calloutlist>
+  <callout arearefs="mee.train.read">Read a line training data</callout>
+  <callout arearefs="mee.train.cat">Extract category</callout>
+  <callout arearefs="mee.train.tok">Tokenize content</callout>
+  <callout arearefs="mee.train.tok">Create sample</callout>
+  </calloutlist>*/
 //<end id="maxent.examples.train.event"/>
 }

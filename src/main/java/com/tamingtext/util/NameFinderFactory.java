@@ -32,6 +32,8 @@ import opennlp.tools.namefind.TokenNameFinderModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.tamingtext.opennlp.PooledTokenNameFinderModel;
+
 /** Encapsulates OpenNLP's NameFinder by providing a mechanism to load
  *  all of the name finder models files found in a single directory into memory
  *  and instantiating an array of NameFinderME objects.
@@ -125,9 +127,10 @@ public class NameFinderFactory {
       modelFile = models[fi];
       modelNames[fi] = modelNameFromFile(language, modelFile); //<co id="nfe.modelname"/>
       
-      log.info("Loading model {}", modelFile); //<co id="nfe.modelreader"/>
+      log.info("Loading model {}", modelFile); 
       InputStream modelStream = new FileInputStream(modelFile);
-      TokenNameFinderModel model = new TokenNameFinderModel(modelStream);
+      TokenNameFinderModel model = //<co id="nfe.modelreader"/>
+          new PooledTokenNameFinderModel(modelStream);
       finders[fi] = new NameFinderME(model);
       
     }

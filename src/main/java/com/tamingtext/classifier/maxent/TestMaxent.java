@@ -120,19 +120,21 @@ public class TestMaxent {
       = new DocumentCategorizerME(model, nffg, bowfg);
     Tokenizer tokenizer = SimpleTokenizer.INSTANCE;
    
-    int catCount = categorizer.getNumberOfCategories(); //<co id="tmx.results"/>
+    int catCount = categorizer.getNumberOfCategories();
     Collection<String> categories 
       = new ArrayList<String>(catCount);
     for (int i=0; i < catCount; i++) {
       categories.add(categorizer.getCategory(i));
     }
-    ResultAnalyzer resultAnalyzer = new ResultAnalyzer(categories, "unknown");
-    runTest(inputFiles, categorizer, tokenizer, resultAnalyzer);
+    ResultAnalyzer resultAnalyzer = //<co id="tmx.results"/>
+        new ResultAnalyzer(categories, "unknown");
+    runTest(inputFiles, categorizer, tokenizer, resultAnalyzer); //<co id="tmx.run"/>
     /*<calloutlist>
     <callout arearefs="tmx.feature">Setup Feature Generators</callout>
     <callout arearefs="tmx.modelreader">Load Model</callout>
     <callout arearefs="tmx.categorizer">Create Categorizer</callout>
     <callout arearefs="tmx.results">Prepare Result Analyzer</callout>
+    <callout arearefs="tmx.run">Execute Test</callout>
     </calloutlist>*/
     //<end id="maxent.examples.test.setup"/>
   }

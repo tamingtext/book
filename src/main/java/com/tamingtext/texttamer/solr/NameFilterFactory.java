@@ -28,13 +28,13 @@ import org.apache.solr.analysis.BaseTokenFilterFactory;
 import com.tamingtext.util.NameFinderFactory;
 
 public class NameFilterFactory extends BaseTokenFilterFactory {
-  private NameFinderFactory nameFinderEngine;
+  private NameFinderFactory factory;
 
   public void init(Map<String, String> args) {
     super.init(args);
 
     try {
-      nameFinderEngine = new NameFinderFactory(args);
+      factory = new NameFinderFactory(args);
     }
     catch (IOException e) {
       throw (RuntimeException) new RuntimeException().initCause(e);
@@ -43,6 +43,6 @@ public class NameFilterFactory extends BaseTokenFilterFactory {
 
   public NameFilter create(TokenStream ts) {
     return new NameFilter(ts,
-        nameFinderEngine.getModelNames(), nameFinderEngine.getNameFinders());
+        factory.getModelNames(), factory.getNameFinders());
   }
 }

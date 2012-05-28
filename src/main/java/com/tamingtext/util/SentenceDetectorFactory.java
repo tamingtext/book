@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 public class SentenceDetectorFactory {
 
-  private static final Logger log = LoggerFactory.getLogger(NameFinderFactory.class);
+  private static final Logger log = LoggerFactory.getLogger(SentenceDetectorFactory.class);
 
   SentenceDetector detector;
   

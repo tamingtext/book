@@ -29,10 +29,8 @@ import org.apache.mahout.math.function.ObjectIntProcedure;
 import org.apache.mahout.math.map.OpenObjectIntHashMap;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
-import org.apache.solr.client.solrj.impl.XMLResponseParser;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.params.ModifiableSolrParams;
 
@@ -46,7 +44,7 @@ public class TagRecommenderClient {
   
 //<start id="tag.rec.gettags"/>
   public TagRecommenderClient(String solrUrl) throws MalformedURLException {
-    server = new CommonsHttpSolrServer(solrUrl); //<co id="trc.server"/>
+    server = new HttpSolrServer(solrUrl); //<co id="trc.server"/>
   }
   
   public ScoreTag[] getTags(String content, int maxTags) 
@@ -62,15 +60,15 @@ public class TagRecommenderClient {
       = new MoreLikeThisRequest(query, content);
     QueryResponse response = request.process(server);
 
-    SolrDocumentList documents = response.getResults();
-    ScoreTag[] rankedTags = rankTags(documents, maxTags); //<co id="trc.score"/>
+    SolrDocumentList documents = response.getResults(); //<co id="trc.results"/>
+    ScoreTag[] rankedTags = rankTags(documents, maxTags);
     return rankedTags;
   }
   /*<calloutlist>
   <callout arearefs="trc.server">Solr client</callout>
   <callout arearefs="trc.query">Query parameters</callout>
   <callout arearefs="trc.request">Create and execute request</callout>
-  <callout arearefs="trc.score">Collect and rank tags</callout>
+  <callout arearefs="trc.results">Collect and rank tags</callout>
   </calloutlist>*/
   //<end id="tag.rec.gettags"/>
 
@@ -101,17 +99,18 @@ public class TagRecommenderClient {
     while (pq.size() > 0) {
       s = pq.pop();
       rankedTags[--index] = s;
-      m += s.score;
+      m += s.count;
     }
     for (ScoreTag t: rankedTags) { //<co id="trc.score"/>
-      t.setProb(t.getScore() / (double) m);
+      t.setScore(t.getCount() / (double) m);
     }
     return rankedTags;
   }
   /*<calloutlist>
   <callout arearefs="trc.count">Count Tags</callout>
-  <callout arearefs="trc.rank">Collect Ranked Tags</callout>
-  <callout arearefs="trc.collect">Score Tags</callout>
+  <callout arearefs="trc.rank">Rank Tags</callout>
+  <callout arearefs="trc.collect">Collect Ranked Tags</callout>
+  <callout arearefs="trc.score">Score Tags</callout>
   </calloutlist>*/
   //<end id="tag.rec.collecttags"/>
   
@@ -124,7 +123,7 @@ public class TagRecommenderClient {
     
     @Override
     protected boolean lessThan(ScoreTag a, ScoreTag b) {
-      if (a.score == b.score) {
+      if (a.count == b.count) {
         if (a.tag == null && b.tag == null) return false;
         if (a.tag == null)   return true;
         if (b.tag == null) return false;
@@ -132,7 +131,7 @@ public class TagRecommenderClient {
         return a.tag.compareTo(b.tag) > 0;
       }
       else 
-        return (a.score < b.score);
+        return (a.count < b.count);
       
     }
   }
@@ -144,12 +143,12 @@ public class TagRecommenderClient {
    */
   public static class ScoreTag {
     private String tag;
-    private int score;
-    private double prob;
+    private int count;
+    private double score;
     
     public ScoreTag(String tag, int score) {
       this.tag = tag;
-      this.score = score;
+      this.count = score;
     }
 
     public String getTag() {
@@ -160,25 +159,25 @@ public class TagRecommenderClient {
       this.tag = tag;
     }
 
-    public int getScore() {
+    public int getCount() {
+      return count;
+    }
+
+    public void setCount(int score) {
+      this.count = score;
+    }
+
+    public double getScore() {
       return score;
     }
 
-    public void setScore(int score) {
-      this.score = score;
-    }
-
-    public double getProb() {
-      return prob;
-    }
-
-    public void setProb(double prob) {
-      this.prob = prob;
+    public void setScore(double prob) {
+      this.score = prob;
     }
 
     @Override
     public String toString() {
-      return tag + " " + score + " " + prob;
+      return tag + " " + count + " " + score;
     }
     
   }

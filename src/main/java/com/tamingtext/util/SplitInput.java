@@ -17,7 +17,7 @@
  * http://www.manning.com/ingersoll
  */
 
-package com.tamingtext.classifier.bayes;
+package com.tamingtext.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -112,9 +112,9 @@ import com.google.common.base.Preconditions;
  * that the desired test set size is allocated. Split location has no effect is
  * random sampling is employed.
  */
-public class SplitBayesInput {
+public class SplitInput {
   
-  private static final Logger log = LoggerFactory.getLogger(SplitBayesInput.class);
+  private static final Logger log = LoggerFactory.getLogger(SplitInput.class);
 
   private int testSplitSize = -1;
   private int testSplitPct  = -1;
@@ -131,13 +131,13 @@ public class SplitBayesInput {
   private SplitCallback callback;
   
   public static void main(String[] args) throws Exception {
-    SplitBayesInput si = new SplitBayesInput();
+    SplitInput si = new SplitInput();
     if (si.parseArgs(args)) {
       si.splitDirectory();
     }
   }
   
-  public SplitBayesInput() throws IOException {
+  public SplitInput() throws IOException {
     Configuration conf = new Configuration();
     fs = FileSystem.get(conf);
   }

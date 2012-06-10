@@ -504,9 +504,9 @@
        <str name="clustering.engine">default</str>
        <bool name="clustering.results">true</bool>
        <!-- The title field -->
-       <str name="carrot.title">title-clustering</str>
+       <str name="carrot.title">title</str>
        <!-- The field to cluster on -->
-       <str name="carrot.snippet">desc-clustering</str>
+       <str name="carrot.snippet">desc</str>
        <str name="carrot.url">link</str>
        <!-- produce summaries -->
        <bool name="carrot.produceSummary">false</bool>

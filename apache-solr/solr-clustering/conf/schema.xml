@@ -437,9 +437,9 @@
     <field name="description" type="text" indexed="true" stored="true" termVectors="true"/>
     <field name="body" type="text" indexed="true" stored="false" termVectors="true"/>
 
-    <field name="title-clustering" type="text-clustering" indexed="true" stored="true" termVectors="true"/>
-    <field name="desc-clustering" type="text-clustering" indexed="true" stored="true" termVectors="true"/>
-    <field name="body-clustering" type="text-clustering" indexed="true" stored="true" termVectors="true"/>
+    <field name="titleclustering" type="text-clustering" indexed="true" stored="true" termVectors="true"/>
+    <field name="descclustering" type="text-clustering" indexed="true" stored="true" termVectors="true"/>
+    <field name="bodyclustering" type="text-clustering" indexed="true" stored="true" termVectors="true"/>
 
 
     <!-- Catch all field -->
@@ -489,9 +489,9 @@ unknown fields indexed and/or stored by default -->
   <copyField source="category" dest="all"/>
   <copyField source="title" dest="all"/>
   <copyField source="description" dest="all"/>
-  <copyField source="title" dest="title-clustering"/>
-  <copyField source="description" dest="desc-clustering"/>
-  <copyField source="body" dest="body-clustering"/>
+  <copyField source="title" dest="titleclustering"/>
+  <copyField source="description" dest="descclustering"/>
+  <copyField source="body" dest="bodyclustering"/>
 
 
 

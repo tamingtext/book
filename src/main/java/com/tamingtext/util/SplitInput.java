@@ -26,6 +26,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.BitSet;
+import java.util.Collections;
 
 import org.apache.commons.cli2.CommandLine;
 import org.apache.commons.cli2.Group;
@@ -384,8 +385,8 @@ public class SplitInput {
       writer.write('\n');
     }
     
-    IOUtils.quietClose(trainingWriter);
-    IOUtils.quietClose(testWriter);
+    IOUtils.close(Collections.singleton(trainingWriter));
+    IOUtils.close(Collections.singleton(testWriter));
     
     log.info("file: {}, input: {} train: {}, test: {} starting at {}",
              new Object[] {inputFile.getName(), lineCount, trainCount, testCount, testSplitStart});
@@ -579,7 +580,7 @@ public class SplitInput {
         lineCount++;
       }
     } finally {
-      IOUtils.quietClose(countReader);
+      IOUtils.close(Collections.singleton(countReader));
     }
     
     return lineCount;

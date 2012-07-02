@@ -24,6 +24,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.Collections;
 
 import org.apache.commons.cli2.CommandLine;
 import org.apache.commons.cli2.Group;
@@ -146,7 +147,7 @@ public class LuceneTagExtractor {
       
       emitTextForTags(file, output);
 
-      IOUtils.quietClose(out);
+      IOUtils.close(Collections.singleton(out));
     } catch (OptionException e) {
       log.error("Exception", e);
       CommandLineUtil.printHelp(group);

@@ -21,12 +21,13 @@ package com.tamingtext.classifier.bayes;
 
 import java.io.File;
 
-import org.apache.mahout.classifier.bayes.algorithm.BayesAlgorithm;
-import org.apache.mahout.classifier.bayes.common.BayesParameters;
-import org.apache.mahout.classifier.bayes.datastore.InMemoryBayesDatastore;
-import org.apache.mahout.classifier.bayes.interfaces.Algorithm;
-import org.apache.mahout.classifier.bayes.interfaces.Datastore;
-import org.apache.mahout.classifier.bayes.model.ClassifierContext;
+
+import org.apache.mahout.classifier.bayes.Algorithm;
+import org.apache.mahout.classifier.bayes.BayesAlgorithm;
+import org.apache.mahout.classifier.bayes.BayesParameters;
+import org.apache.mahout.classifier.bayes.ClassifierContext;
+import org.apache.mahout.classifier.bayes.Datastore;
+import org.apache.mahout.classifier.bayes.InMemoryBayesDatastore;
 import org.apache.solr.common.SolrException;
 import org.apache.solr.common.util.NamedList;
 import org.apache.solr.core.SolrCore;

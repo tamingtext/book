@@ -76,7 +76,7 @@ public class SolrJTest extends BaseDistributedSearchTestCase {
   public void setUp() throws Exception {
     super.setUp();
     File home = new File(getSolrHome());
-    runner = createJetty(home, "solrjtest-data");
+    runner = createJetty(home, "target/solrjtest-data");
     port = runner.getLocalPort();
     
     solr = new CommonsHttpSolrServer(new URL("http://localhost:" + port + "/solr"));

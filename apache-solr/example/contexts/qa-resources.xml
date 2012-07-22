@@ -1,0 +1,9 @@
+<Configure class="org.mortbay.jetty.handler.ContextHandler">
+   <Set name="contextPath">/static</Set>
+   <Set name="resourceBase"><SystemProperty name="jetty.home" default="."/>/static</Set>
+   <Call name="addHandler">
+       <Arg>
+           <New class="org.mortbay.jetty.handler.ResourceHandler"/>
+       </Arg>
+   </Call>
+</Configure>

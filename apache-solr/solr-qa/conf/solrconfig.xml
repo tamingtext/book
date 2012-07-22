@@ -38,7 +38,7 @@
     that you fully re-index after changing this setting as it can affect both how text is indexed
     and queried.
   -->
-  <luceneMatchVersion>LUCENE_31</luceneMatchVersion>
+  <luceneMatchVersion>LUCENE_36</luceneMatchVersion>
 
   <!-- lib directives can be used to instruct Solr to load an Jars identified
        and use them to resolve any "plugins" specified in your solrconfig.xml or
@@ -58,6 +58,7 @@
   <lib dir="../lib/dependency" />
   <lib dir="../../target" regex="taming-text-.*\.jar" />
   <lib dir="../../target/dependency" />
+  <lib dir="../contrib/velocity/lib" regex=".*\.jar"  />
 
   <!-- an exact path can be used to specify a specific file.  This will cause
        a serious error to be logged if it can't be loaded.
@@ -915,7 +916,7 @@
     
     <queryResponseWriter name="custom" class="com.example.MyResponseWriter"/>
   -->
-
+  <queryResponseWriter name="velocity" class="solr.VelocityResponseWriter" startup="lazy"/>
   <!-- XSLT response writer transforms the XML output by any xslt file found
        in Solr's conf/xslt directory.  Changes to xslt files are checked for
        every xsltCacheLifetimeSeconds.  

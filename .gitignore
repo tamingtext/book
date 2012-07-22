@@ -1,6 +1,5 @@
 .DS_store
 output.log
-solr
 target
 *.iml
 .classpath

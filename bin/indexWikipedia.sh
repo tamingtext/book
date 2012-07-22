@@ -7,7 +7,11 @@ for jar in ../target/*.jar;do
  export CLASSPATH=$CLASSPATH:$jar
 done
 for jar in ../target/dependency/*.jar;do
- export CLASSPATH=$CLASSPATH:$jar
+ if [ $jar = "../target/dependency/jcl-over-slf4j-1.6.1.jar" ]; then
+     echo "Skipping $jar"
+ else
+     export CLASSPATH=$CLASSPATH:$jar
+ fi
 done
 
 export MEM_ARGS="-Xms512m -Xmx512m"

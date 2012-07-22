@@ -34,8 +34,6 @@ import org.apache.commons.cli2.builder.ArgumentBuilder;
 import org.apache.commons.cli2.builder.DefaultOptionBuilder;
 import org.apache.commons.cli2.builder.GroupBuilder;
 import org.apache.commons.cli2.commandline.Parser;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.benchmark.byTask.feeds.DocData;
 import org.apache.lucene.benchmark.byTask.feeds.NoMoreDataException;
 import org.apache.lucene.benchmark.byTask.utils.Config;
@@ -43,10 +41,11 @@ import org.apache.mahout.common.CommandLineUtil;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
 import org.apache.solr.common.SolrInputDocument;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class WikipediaWexIndexer {
-  private transient static Log log = LogFactory
-      .getLog(WikipediaWexIndexer.class);
+  private transient static Logger log = LoggerFactory.getLogger(WikipediaWexIndexer.class);
   
   private SolrServer server;
   public static final String DEFAULT_SOLR_URL = "http://localhost:8983/solr";

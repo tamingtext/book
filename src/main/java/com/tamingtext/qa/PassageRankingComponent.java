@@ -337,7 +337,7 @@ public class PassageRankingComponent extends SearchComponent implements PluginIn
   protected float calculateWeight(Term term, IndexReader reader) throws IOException {
     //if a term is not in the index, then it's weight is 0
     TermEnum termEnum = reader.terms(term);
-    if (termEnum.term().equals(term)) {
+    if (termEnum != null && termEnum.term() != null && termEnum.term().equals(term)) {
       return 1.0f / termEnum.docFreq();
     } else {
       log.warn("Couldn't find doc freq for term {}", term);

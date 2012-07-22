@@ -74,28 +74,28 @@ public class AnswerTypeTest extends TamingTextTestJ4 {
   @Test
   public void demonstrateATCG() throws Exception {
     File modelDir = getModelDir();
-
-    AnswerTypeContextGenerator atcg = new AnswerTypeContextGenerator(new File(getWordNetDictionary().getAbsolutePath()));
-    //<start id="answerType"/>
     InputStream chunkerStream = new FileInputStream(
-        new File(modelDir,"en-chunker.bin"));
+            new File(modelDir,"en-chunker.bin"));
     ChunkerModel chunkerModel = new ChunkerModel(chunkerStream);
     ChunkerME chunker = new ChunkerME(chunkerModel);
     InputStream posStream = new FileInputStream(
-        new File(modelDir,"en-pos-maxent.bin"));
+            new File(modelDir,"en-pos-maxent.bin"));
     POSModel posModel = new POSModel(posStream);
     POSTaggerME tagger =  new POSTaggerME(posModel);
     Parser parser = new ChunkParser(chunker, tagger);
+    //<start id="att.answerTypeDemo"/>
+    AnswerTypeContextGenerator atcg = new AnswerTypeContextGenerator(new File(getWordNetDictionary().getAbsolutePath()));
     InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("atcg-questions.txt");
     assertNotNull("input stream", is);
     BufferedReader reader = new BufferedReader(new InputStreamReader(is));
     String line = null;
     while ((line = reader.readLine()) != null){
+      System.out.println("Question: " + line);
       Parse[] results = ParserTool.parseLine(line, parser, 1);
       String[] context = atcg.getContext(results[0]);
       List<String> features = Arrays.asList(context);
       System.out.println("Features: " + features);
     }
-
+    //<end id="att.answerTypeDemo"/>
   }
 }

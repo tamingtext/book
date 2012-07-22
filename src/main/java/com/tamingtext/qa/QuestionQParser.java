@@ -86,7 +86,7 @@ public class QuestionQParser extends QParser implements QAParams  {
     }
     //<start id="qqp.query"/>
     List<SpanQuery> sql = new ArrayList<SpanQuery>();
-    if (mt != null) {
+    if (mt != null) {//<co id="qqp.handleAT"/>
       String[] parts = mt.split("\\|");
       if (parts.length == 1) {
         sql.add(new SpanTermQuery(new Term(field, mt.toLowerCase())));
@@ -99,14 +99,21 @@ public class QuestionQParser extends QParser implements QAParams  {
     try {
       Analyzer analyzer = sp.getType().getQueryAnalyzer();
       TokenStream ts = analyzer.tokenStream(field, new StringReader(qstr));
-      while (ts.incrementToken()) {
+      while (ts.incrementToken()) {//<co id="qqp.addTerms"/>
         String term = ((CharTermAttribute) ts.getAttribute(CharTermAttribute.class)).toString();
         sql.add(new SpanTermQuery(new Term(field, term)));
       }
     } catch (IOException e) {
       throw new ParseException(e.getLocalizedMessage());
     }
-    return new SpanNearQuery(sql.toArray(new SpanQuery[sql.size()]), params.getInt(QAParams.SLOP, 10), true);
+    return new SpanNearQuery(sql.toArray(new SpanQuery[sql.size()]), params.getInt(QAParams.SLOP, 10), true);//<co id="qqp.spanNear"/>
+    /*
+    <calloutlist>
+        <callout arearefs="qqp.handleAT"><para>Add the AnswerType to the query</para></callout>
+        <callout arearefs="qqp.addTerms"><para>Add the original query terms to the query</para></callout>
+        <callout arearefs="qqp.spanNear"><para>Query the index looking for all of the parts near each other</para></callout>
+    </calloutlist>
+    */
     //<end id="qqp.query"/>
   }
 

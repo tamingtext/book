@@ -431,7 +431,7 @@
     <dependency>
       <groupId>org.carrot2</groupId>
       <artifactId>carrot2-core</artifactId>
-      <version>3.6.0-SNAPSHOT</version>
+      <version>3.6.0</version>
       <exclusions>
         <exclusion>
           <groupId>org.apache.lucene</groupId>
@@ -552,7 +552,7 @@
     <repository>
       <id>tamingtext.maven2.repository</id>
       <name>TamingText Maven 2 repository</name>
-      <url>http://tamingtext.com/maven2</url>
+      <url>http://maven.tamingtext.com</url>
       <releases>
         <updatePolicy>always</updatePolicy>
         <enabled>true</enabled>

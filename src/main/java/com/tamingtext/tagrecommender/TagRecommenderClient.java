@@ -43,7 +43,8 @@ public class TagRecommenderClient {
   SolrServer server;
   
 //<start id="tag.rec.gettags"/>
-  public TagRecommenderClient(String solrUrl) throws MalformedURLException {
+  public TagRecommenderClient(String solrUrl)
+          throws MalformedURLException {
     server = new HttpSolrServer(solrUrl); //<co id="trc.server"/>
   }
   
@@ -73,8 +74,10 @@ public class TagRecommenderClient {
   //<end id="tag.rec.gettags"/>
 
   //<start id="tag.rec.collecttags"/>
-  protected ScoreTag[] rankTags(SolrDocumentList documents, int maxTags) {
-    OpenObjectIntHashMap<String> counts = new OpenObjectIntHashMap<String>();
+  protected ScoreTag[] rankTags(SolrDocumentList documents,
+                                int maxTags) {
+    OpenObjectIntHashMap<String> counts =
+            new OpenObjectIntHashMap<String>();
     
     int size = documents.size(); //<co id="trc.count"/>
     for (int i=0; i < size; i++) {

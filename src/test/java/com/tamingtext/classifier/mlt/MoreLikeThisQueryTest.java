@@ -71,7 +71,8 @@ public class MoreLikeThisQueryTest {
       = new EnglishAnalyzer(Version.LUCENE_36);
     
     if (nGramSize > 1) { //<co id="mlt.ngramsetup"/>
-      analyzer = new ShingleAnalyzerWrapper(analyzer, nGramSize, nGramSize);
+      analyzer = new ShingleAnalyzerWrapper(analyzer, nGramSize,
+              nGramSize);
     }
     
     MoreLikeThis moreLikeThis  = new MoreLikeThis(indexReader); //<co id="mlt.configure"/>

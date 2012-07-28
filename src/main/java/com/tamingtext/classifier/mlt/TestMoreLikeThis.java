@@ -157,7 +157,8 @@ public class TestMoreLikeThis {
       
       String line = null;
       //<start id="lucene.examples.mlt.test"/>
-      final ClassifierResult UNKNOWN = new ClassifierResult("unknown", 1.0);
+      final ClassifierResult UNKNOWN = new ClassifierResult("unknown",
+              1.0);
       
       ResultAnalyzer resultAnalyzer = //<co id="co.mlt.ra"/>
         new ResultAnalyzer(categorizer.getCategories(), 

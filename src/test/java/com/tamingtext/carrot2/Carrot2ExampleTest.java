@@ -66,10 +66,12 @@ public class Carrot2ExampleTest extends TamingTextTestJ4 {
             ControllerFactory.createSimple();//<co id="crt2.controller.creation"/>
     documents = new ArrayList<Document>();
     for (int i = 0; i < titles.length; i++) {
-      Document doc = new Document(titles[i], snippets[i], "file://foo_" + i + ".txt");
+      Document doc = new Document(titles[i], snippets[i],
+              "file://foo_" + i + ".txt");
       documents.add(doc);
     }
-    final ProcessingResult result = controller.process(documents, "red fox",
+    final ProcessingResult result = controller.process(documents,
+            "red fox",
             LingoClusteringAlgorithm.class);//<co id="crt2.process"/>
     displayResults(result);//<co id="crt2.print"/>
 

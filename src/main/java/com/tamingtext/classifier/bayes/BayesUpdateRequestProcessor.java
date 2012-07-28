@@ -76,7 +76,8 @@ public class BayesUpdateRequestProcessor extends UpdateRequestProcessor {
       //<start id="mahout.bayes.classify"/>
       SolrInputField field = doc.getField(inputField);
       String[] tokens = tokenizeField(inputField, field);
-      ClassifierResult result = ctx.classifyDocument(tokens, defaultCategory);
+      ClassifierResult result = ctx.classifyDocument(tokens,
+              defaultCategory);
       if (result != null && result.getLabel() != NO_LABEL) {
         doc.addField(outputField, result.getLabel());
       }
@@ -94,7 +95,8 @@ public class BayesUpdateRequestProcessor extends UpdateRequestProcessor {
     String input = (String) field.getValue();
     
     ArrayList<String> tokenList = new ArrayList<String>();
-    TokenStream ts = analyzer.tokenStream(inputField, new StringReader(input));
+    TokenStream ts = analyzer.tokenStream(inputField,
+            new StringReader(input));
     while (ts.incrementToken()) {
       tokenList.add(ts.getAttribute(CharTermAttribute.class).toString());
     }

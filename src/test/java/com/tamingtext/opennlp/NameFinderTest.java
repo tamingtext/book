@@ -158,12 +158,14 @@ public class NameFinderTest extends TamingTextTestJ4 {
     File modelDir = getModelDir();
     //<start id="ne-multi"/>    
     String[] sentences = {
-      "Former first lady Nancy Reagan was taken to a suburban Los Angeles " +
-      "hospital \"as a precaution\" Sunday after a fall at her home, an " +
+      "Former first lady Nancy Reagan was taken to a " +
+              "suburban Los Angeles " +
+      "hospital \"as a precaution\" Sunday after a fall at " +
+              "her home, an " +
       "aide said. ",
-        
       "The 86-year-old Reagan will remain overnight for " +
-      "observation at a hospital in Santa Monica, California, said Joanne " +
+      "observation at a hospital in Santa Monica, California, " +
+              "said Joanne " +
       "Drake, chief of staff for the Reagan Foundation."};
     NameFinderME[] finders = new NameFinderME[3];
     String[] names = {"person", "location", "date"};
@@ -312,7 +314,8 @@ public class NameFinderTest extends TamingTextTestJ4 {
       finders[mi] = new NameFinderME(
         new PooledTokenNameFinderModel( //<co id="co.opennlp.name.pool"/>
           new FileInputStream(
-              new File(modelDir, "en-ner-" + names[mi] + ".bin"))));
+              new File(modelDir, "en-ner-"
+                      + names[mi] + ".bin"))));
     }
     /*<calloutlist>
     <callout arearefs="co.opennlp.name.init4"><para>Initialize name finders for identifying people, locations, and dates</para></callout>
@@ -437,12 +440,15 @@ public class NameFinderTest extends TamingTextTestJ4 {
     
     //<start id="ne-setup"/>
     String[] sentences = {
-      "Former first lady Nancy Reagan was taken to a suburban Los Angeles " +
-      "hospital \"as a precaution\" Sunday after a fall at her home, an " +
+      "Former first lady Nancy Reagan was taken to a " +
+              "suburban Los Angeles " +
+      "hospital \"as a precaution\" Sunday after a " +
+              "fall at her home, an " +
       "aide said. ",
       
       "The 86-year-old Reagan will remain overnight for " +
-      "observation at a hospital in Santa Monica, California, said Joanne " +
+      "observation at a hospital in Santa Monica, California, " +
+              "said Joanne " +
       "Drake, chief of staff for the Reagan Foundation."};
     
     NameFinderME finder = new NameFinderME(  //<co id="co.opennlp.name.initmodel"/>

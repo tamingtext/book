@@ -42,7 +42,8 @@ public class SpellCorrector {
   
   public SpellCorrector(StringDistance sd, float threshold) 
     throws MalformedURLException { 
-    solr = new CommonsHttpSolrServer(new URL("http://localhost:8983/solr"));
+    solr = new CommonsHttpSolrServer(
+            new URL("http://localhost:8983/solr"));
     query = new SolrQuery();
     query.setFields("word");
     query.setRows(50); //<co id="co.dym.num"/>
@@ -50,7 +51,8 @@ public class SpellCorrector {
     this.threshold = threshold;
   }
   
-  public String topSuggestion(String spelling) throws SolrServerException {
+  public String topSuggestion(String spelling)
+          throws SolrServerException {
     query.setQuery("wordNGram:"+spelling); //<co id="co.dym.field"/>
     QueryResponse response = solr.query(query);
     SolrDocumentList dl = response.getResults();

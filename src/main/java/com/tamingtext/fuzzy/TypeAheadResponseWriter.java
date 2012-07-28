@@ -39,7 +39,8 @@ public class TypeAheadResponseWriter implements QueryResponseWriter {
   private Set<String> fields;
 
   @Override
-  public String getContentType(SolrQueryRequest req, SolrQueryResponse solrQueryResponse) {
+  public String getContentType(SolrQueryRequest req,
+                               SolrQueryResponse solrQueryResponse) {
     return "text/html;charset=UTF-8";
   }
 
@@ -50,7 +51,8 @@ public class TypeAheadResponseWriter implements QueryResponseWriter {
   }
 
   @Override
-  public void write(Writer w, SolrQueryRequest req, SolrQueryResponse rsp) throws IOException {
+  public void write(Writer w, SolrQueryRequest req,
+                    SolrQueryResponse rsp) throws IOException {
     SolrIndexSearcher searcher = req.getSearcher();
     NamedList nl = rsp.getValues();
     int sz = nl.size();

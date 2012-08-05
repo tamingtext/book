@@ -84,8 +84,11 @@ public class AnswerTypeTest extends TamingTextTestJ4 {
     POSTaggerME tagger =  new POSTaggerME(posModel);
     Parser parser = new ChunkParser(chunker, tagger);
     //<start id="att.answerTypeDemo"/>
-    AnswerTypeContextGenerator atcg = new AnswerTypeContextGenerator(new File(getWordNetDictionary().getAbsolutePath()));
-    InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("atcg-questions.txt");
+    AnswerTypeContextGenerator atcg =
+            new AnswerTypeContextGenerator(
+                    new File(getWordNetDictionary().getAbsolutePath()));
+    InputStream is = Thread.currentThread().getContextClassLoader()
+            .getResourceAsStream("atcg-questions.txt");
     assertNotNull("input stream", is);
     BufferedReader reader = new BufferedReader(new InputStreamReader(is));
     String line = null;

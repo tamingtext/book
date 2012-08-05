@@ -248,7 +248,8 @@ public class PassageRankingComponent extends SearchComponent implements PluginIn
   //<start id="qa.scorePassage"/>
   protected float scorePassage(Passage p, Map<String, Float> termWeights,
                                Map<String, Float> bigramWeights,
-                               float adjWeight, float secondAdjWeight, float biWeight) {
+                               float adjWeight, float secondAdjWeight,
+                               float biWeight) {
     Set<String> covered = new HashSet<String>();
     float termScore = scoreTerms(p.terms, termWeights, covered);//<co id="prc.main"/>
     float adjScore = scoreTerms(p.prevTerms, termWeights, covered) +
@@ -257,7 +258,8 @@ public class PassageRankingComponent extends SearchComponent implements PluginIn
             + scoreTerms(p.secFollowTerms, termWeights, covered);//<co id="prc.sec"/>
     //Give a bonus for bigram matches in the main window, could also
     float bigramScore = scoreBigrams(p.bigrams, bigramWeights, covered);//<co id="prc.bigrams"/>
-    float score = termScore + (adjWeight * adjScore) + (secondAdjWeight * secondScore) 
+    float score = termScore + (adjWeight * adjScore) +
+            (secondAdjWeight * secondScore)
             + (biWeight * bigramScore);//<co id="prc.score"/>
     return (score);
   }

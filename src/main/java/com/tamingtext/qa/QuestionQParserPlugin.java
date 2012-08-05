@@ -67,7 +67,8 @@ public class QuestionQParserPlugin extends QParserPlugin {
     QParser qParser;
     if (params.getBool(QAParams.COMPONENT_NAME, false) == true //<co id="qqpp.explainif"/>
             && qStr.equals("*:*") == false) {
-      AnswerTypeClassifier atc = new AnswerTypeClassifier(model, probs, atcg);//<co id="qqpp.atc"/>
+      AnswerTypeClassifier atc =
+              new AnswerTypeClassifier(model, probs, atcg);//<co id="qqpp.atc"/>
       Parser parser = new ChunkParser(chunker, tagger);//<co id="qqpp.parser"/>
       qParser = new QuestionQParser(qStr, localParams, //<co id="qqpp.construct"/>
               params, req, parser, atc, answerTypeMap);
@@ -92,8 +93,10 @@ public class QuestionQParserPlugin extends QParserPlugin {
   //<start id="qqpp.init"/>
   public void init(NamedList initArgs) {
     SolrParams params = SolrParams.toSolrParams(initArgs);
-    String modelDirectory = params.get("modelDirectory", System.getProperty("model.dir"));//<co id="qqpp.model"/>
-    String wordnetDirectory = params.get("wordnetDirectory", System.getProperty("wordnet.dir"));//<co id="qqpp.wordnet"/>
+    String modelDirectory = params.get("modelDirectory",
+            System.getProperty("model.dir"));//<co id="qqpp.model"/>
+    String wordnetDirectory = params.get("wordnetDirectory",
+            System.getProperty("wordnet.dir"));//<co id="qqpp.wordnet"/>
     if (modelDirectory != null) {
       File modelsDir = new File(modelDirectory);
       try {
@@ -109,7 +112,8 @@ public class QuestionQParserPlugin extends QParserPlugin {
             new File(modelDirectory,"en-answer.bin")))
             .getChunkerModel();
         probs = new double[model.getNumOutcomes()];
-        atcg = new AnswerTypeContextGenerator(new File(wordnetDirectory, "dict"));//<co id="qqpp.context"/>
+        atcg = new AnswerTypeContextGenerator(
+                new File(wordnetDirectory, "dict"));//<co id="qqpp.context"/>
       } catch (IOException e) {
         throw new RuntimeException(e);
       }

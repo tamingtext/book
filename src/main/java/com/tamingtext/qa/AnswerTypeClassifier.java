@@ -105,7 +105,8 @@ public class AnswerTypeClassifier {
     Parser parser = new ChunkParser(chunker, tagger);
     AnswerTypeContextGenerator actg = new AnswerTypeContextGenerator(new File(wordnetDir));
     //<start id="atc.train"/>
-    AnswerTypeEventStream es = new AnswerTypeEventStream(trainFile, actg, parser);
+    AnswerTypeEventStream es = new AnswerTypeEventStream(trainFile,
+            actg, parser);
     GISModel model = GIS.trainModel(100, new TwoPassDataIndexer(es, 3));//<co id="atc.train.do"/>
     new DoccatModel("en", model).serialize(new FileOutputStream(outFile));
     /*

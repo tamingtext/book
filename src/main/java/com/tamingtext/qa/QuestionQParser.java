@@ -98,9 +98,11 @@ public class QuestionQParser extends QParser implements QAParams  {
     }
     try {
       Analyzer analyzer = sp.getType().getQueryAnalyzer();
-      TokenStream ts = analyzer.tokenStream(field, new StringReader(qstr));
+      TokenStream ts = analyzer.tokenStream(field,
+              new StringReader(qstr));
       while (ts.incrementToken()) {//<co id="qqp.addTerms"/>
-        String term = ((CharTermAttribute) ts.getAttribute(CharTermAttribute.class)).toString();
+        String term = ((CharTermAttribute)
+                ts.getAttribute(CharTermAttribute.class)).toString();
         sql.add(new SpanTermQuery(new Term(field, term)));
       }
     } catch (IOException e) {

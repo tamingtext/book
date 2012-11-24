@@ -147,6 +147,22 @@
   </profiles>
   
   <dependencies>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.6.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.6.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.17</version>
+    </dependency>
 
     <dependency>
       <groupId>commons-lang</groupId>
@@ -178,6 +194,10 @@
           <groupId>org.apache.solr</groupId>
           <artifactId>solr-carrot2-core</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jcl-over-slf4j</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
 
@@ -193,6 +213,10 @@
         <exclusion>
           <groupId>org.slf4j</groupId>
           <artifactId>slf4j-jdk14</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jcl-over-slf4j</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -210,6 +234,10 @@
           <groupId>org.slf4j</groupId>
           <artifactId>slf4j-jdk14</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jcl-over-slf4j</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
 
@@ -226,6 +254,10 @@
           <groupId>org.slf4j</groupId>
           <artifactId>slf4j-jdk14</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jcl-over-slf4j</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
 
@@ -241,6 +273,10 @@
         <exclusion>
           <groupId>org.slf4j</groupId>
           <artifactId>slf4j-jdk14</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jcl-over-slf4j</artifactId>
         </exclusion>
       </exclusions>
       <scope>test</scope>
@@ -411,8 +447,16 @@
           <artifactId>slf4j-jcl</artifactId>
         </exclusion>
         <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jul-to-slf4j</artifactId>
+        </exclusion>
+        <exclusion>
           <groupId>log4j</groupId>
           <artifactId>log4j</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-log4j12</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -440,6 +484,14 @@
         <exclusion>
           <groupId>org.apache.lucene</groupId>
           <artifactId>lucene-snowball</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-jcl</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -475,19 +527,6 @@
       <artifactId>commons-logging</artifactId>
       <version>1.0.4</version>
     </dependency>
-
-    <!--<dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-      <version>1.6.1</version>
-    </dependency>-->
-
-    <!--<dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.17</version>
-    </dependency>-->
-
     <dependency>
       <groupId>stax</groupId>
       <artifactId>stax-api</artifactId>

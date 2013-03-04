@@ -220,13 +220,13 @@ public class Frankenstein {
    */
   private void init() throws IOException {
     System.out.println("Initializing Frankenstein");
-    File models = new File("../../opennlp-models");
-    File wordnet = new File("../../WordNet-3.0");
+    File models = new File("./opennlp-models");
+    File wordnet = new File("./WordNet-3.0");
     if (models.exists() == false) {
-      throw new FileNotFoundException("../../opennlp-models");
+      throw new FileNotFoundException("./opennlp-models");
     }
-    System.setProperty("model.dir", "../../opennlp-models");
-    System.setProperty("wordnet.dir", "../../WordNet-3.0");
+    System.setProperty("model.dir", "./opennlp-models");
+    System.setProperty("wordnet.dir", "./WordNet-3.0");
 
     File modelFile = new File(models, "en-sent.bin");
     InputStream modelStream = new FileInputStream(modelFile);

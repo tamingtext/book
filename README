@@ -37,7 +37,7 @@ started, you will need:
 
    wget -nd -np -m http://maven.tamingtext.com/wordnet/
    rm index.html*
-   tar -xf Wordnet-3.0.tar.gz
+   tar -xf WordNet-3.0.tar.gz
 
 Building the Source
 -------------------

@@ -26,7 +26,8 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.BitSet;
-import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.commons.cli2.CommandLine;
 import org.apache.commons.cli2.Group;
@@ -353,16 +354,19 @@ public class SplitInput {
     BufferedReader reader = new BufferedReader(new InputStreamReader(fs.open(inputFile), charset));
     Writer trainingWriter = new OutputStreamWriter(fs.create(trainingOutputFile), charset);
     Writer testWriter     = new OutputStreamWriter(fs.create(testOutputFile), charset);
+    Set<Writer> writers = new HashSet<Writer>();
+    writers.add(trainingWriter);
+    writers.add(testWriter);
 
     int pos = 0;
     int trainCount = 0;
     int testCount = 0;
 
     String line;
+    Writer writer;
     while ((line = reader.readLine()) != null) {
       pos++;
 
-      Writer writer;
       if (testRandomSelectionPct > 0) { // Randomly choose
         writer =  randomSel.get(pos) ? testWriter : trainingWriter;
       } else { // Choose based on location
@@ -384,9 +388,8 @@ public class SplitInput {
       writer.write(line);
       writer.write('\n');
     }
-    
-    IOUtils.close(Collections.singleton(trainingWriter));
-    IOUtils.close(Collections.singleton(testWriter));
+
+    IOUtils.close(writers);
     
     log.info("file: {}, input: {} train: {}, test: {} starting at {}",
              new Object[] {inputFile.getName(), lineCount, trainCount, testCount, testSplitStart});
@@ -580,7 +583,12 @@ public class SplitInput {
         lineCount++;
       }
     } finally {
-      IOUtils.close(Collections.singleton(countReader));
+        try {
+            countReader.close();
+        }
+        catch (IOException ex) {
+            log.warn("Could not close line count reader", ex);
+        }
     }
     
     return lineCount;

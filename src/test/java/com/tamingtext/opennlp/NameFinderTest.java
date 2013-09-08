@@ -77,6 +77,7 @@ public class NameFinderTest extends TamingTextTestJ4 {
 
   //<start id="ne-remove-conflicts"/>
   private void removeConflicts(List<Annotation> allAnnotations) {
+    if (allAnnotations.size() < 2) return; //<co id="co.opennlp.name.earlyreturn"/>
     java.util.Collections.sort(allAnnotations); //<co id="co.opennlp.name.sort"/>
     List<Annotation> stack = new ArrayList<Annotation>(); //<co id="co.opennlp.name.stack"/>
     stack.add(allAnnotations.get(0));
@@ -119,6 +120,7 @@ public class NameFinderTest extends TamingTextTestJ4 {
 
   /*
   <calloutlist>
+  <callout arearefs="co.opennlp.name.earlyreturn"><para>Exit early if there will be no conflicts.</para></callout>
   <callout arearefs="co.opennlp.name.sort"><para>Sort the names based on their span's start index ascending then end index decending.</para></callout>
   <callout arearefs="co.opennlp.name.stack"><para>Initialize a stack to keep track of previous names.</para></callout>
   <callout arearefs="co.opennlp.name.eachname2"><para>Iterate over each name.</para></callout>

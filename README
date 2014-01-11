@@ -42,6 +42,10 @@ started, you will need:
 Building the Source
 -------------------
 
+Prior to building the source, for those previously unfamiliar with Maven,
+it may be wise to read this to avoid future hassles:
+http://maven.apache.org/guides/getting-started/maven-in-five-minutes.html
+
 To build the source, in TT_HOME:
 
    mvn clean package 

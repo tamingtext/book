@@ -44,14 +44,20 @@ import org.apache.commons.cli2.commandline.Parser;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.shingle.ShingleAnalyzerWrapper;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Fieldable;
+import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexableField;
+import org.apache.lucene.index.MultiFields;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.index.TermEnum;
+import org.apache.lucene.index.Terms;
+import org.apache.lucene.index.TermsEnum;
+import org.apache.lucene.queries.mlt.MoreLikeThis;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.similar.MoreLikeThis;
+
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.mahout.common.CommandLineUtil;
@@ -66,7 +72,7 @@ public class MoreLikeThisCategorizer {
   private static final Logger log = LoggerFactory.getLogger(MoreLikeThisCategorizer.class);
 
   MatchMode matchMode = MatchMode.TFIDF;
-  IndexReader indexReader;
+  DirectoryReader indexReader;
   IndexSearcher indexSearcher;
   MoreLikeThis moreLikeThis;
   String categoryFieldName;
@@ -74,8 +80,8 @@ public class MoreLikeThisCategorizer {
   boolean captureCategories = false;
   int maxResults = 10;
   
-  public MoreLikeThisCategorizer(IndexReader indexReader, String categoryFieldName) throws IOException {
-    this.indexReader   = indexReader;
+  public MoreLikeThisCategorizer(DirectoryReader indexReader, String categoryFieldName) throws IOException {
+    this.indexReader   = indexReader;  //TODO: Drew, I had to change this to DirectoryReader, but wonder if there is a better way.
     this.indexSearcher = new IndexSearcher(indexReader);
     this.moreLikeThis  = new MoreLikeThis(indexReader);
     this.categoryFieldName = categoryFieldName;
@@ -87,7 +93,7 @@ public class MoreLikeThisCategorizer {
    * @throws IOException
    */
   protected void loadCategoriesFromIndex() throws IOException {
-    Map<String, String> userData = indexReader.getCommitUserData();
+    Map<String, String> userData = indexReader.getIndexCommit().getUserData();
     String categoryString = userData.get(TrainMoreLikeThis.CATEGORY_KEY);
     if (categoryString == null) {
       scanCategories();
@@ -108,13 +114,13 @@ public class MoreLikeThisCategorizer {
   
   /** populate the list of categories by reading the values from the categoryField in the index */
   protected void scanCategories() throws IOException {
-    TermEnum te = indexReader.terms(new Term(categoryFieldName));
+
+    Terms terms = MultiFields.getTerms(indexReader, categoryFieldName);
     final Set<String> c = categories;
-    
+    TermsEnum te = terms.iterator(null);
     do {
-      if (!te.term().field().equals(categoryFieldName)) break;
-      c.add(te.term().text());
-    } while (te.next());
+      c.add(te.term().utf8ToString());//TODO: check this
+    } while (te.next() != null);
     
     log.info("Scanned " + c.size() + " categories from index");
   }
@@ -150,22 +156,27 @@ public class MoreLikeThisCategorizer {
     ShingleAnalyzerWrapper sw;
     if (a instanceof ShingleAnalyzerWrapper) {
       sw = (ShingleAnalyzerWrapper) a;
+      if (sw.getMaxShingleSize() != size || sw.getMinShingleSize() != size){
+        moreLikeThis.setAnalyzer(sw.getWrappedAnalyzer(""));//there is only one delegate for the SAW, so no problem passing anything
+      }
     }
     else {
-      sw = new ShingleAnalyzerWrapper(a);
+      sw = new ShingleAnalyzerWrapper(a, size, size);
       moreLikeThis.setAnalyzer(sw);
     }
-    
-    sw.setMaxShingleSize(size);
-    sw.setMinShingleSize(size);
+    //TODO: Drew, not sure how this used to work, as we never did anything with the newly created Analyzer
   }
   
   public CategoryHits[] categorize(Reader reader) throws IOException {
-    Query query = moreLikeThis.like(reader);
+    BooleanQuery bq = new BooleanQuery();
+    for (String fieldName : moreLikeThis.getFieldNames()) {
+      Query query = moreLikeThis.like(reader, fieldName);
+      bq.add(new BooleanClause(query, BooleanClause.Occur.SHOULD));//TODO: Drew, does this need to be a must?
+    }
 
     HashMap<String, CategoryHits> categoryHash = new HashMap<String, CategoryHits>(25);
     
-    for (ScoreDoc sd: indexSearcher.search(query, maxResults).scoreDocs) {
+    for (ScoreDoc sd: indexSearcher.search(bq, maxResults).scoreDocs) {
       String cat = getDocClass(sd.doc);
       if (cat == null) continue;
       CategoryHits ch = categoryHash.get(cat);
@@ -185,9 +196,9 @@ public class MoreLikeThisCategorizer {
  
   protected String getDocClass(int doc) throws IOException {
     Document d = indexReader.document(doc);
-    Fieldable f = d.getFieldable(categoryFieldName);
+    IndexableField f = d.getField(categoryFieldName);
     if (f == null) return null;
-    if (!f.isStored()) throw new IllegalArgumentException("Field " + f.name() + " is not stored.");
+    if (f.stringValue() == null) throw new IllegalArgumentException("Field " + f.name() + " is not stored.");
     return f.stringValue();
   }
   
@@ -278,7 +289,7 @@ public class MoreLikeThisCategorizer {
 
       Reader reader = new FileReader(inputPath);
       Directory directory = FSDirectory.open(new File(modelPath));
-      IndexReader indexReader = IndexReader.open(directory);
+      DirectoryReader indexReader = DirectoryReader.open(directory);
       MoreLikeThisCategorizer categorizer = new MoreLikeThisCategorizer(indexReader, categoryField);
       categorizer.setMatchMode(mode);
       categorizer.setFieldNames(new String[]{ contentField });

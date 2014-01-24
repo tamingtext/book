@@ -27,8 +27,7 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.mahout.classifier.ClassifierResult;
-import org.apache.mahout.classifier.bayes.ClassifierContext;
-import org.apache.mahout.classifier.bayes.InvalidDatastoreException;
+
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.solr.common.SolrInputField;
 import org.apache.solr.update.AddUpdateCommand;

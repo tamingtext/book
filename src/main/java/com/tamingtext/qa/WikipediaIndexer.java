@@ -34,7 +34,8 @@ import org.apache.lucene.benchmark.byTask.feeds.EnwikiContentSource;
 import org.apache.lucene.benchmark.byTask.feeds.NoMoreDataException;
 import org.apache.lucene.benchmark.byTask.utils.Config;
 import org.apache.solr.client.solrj.SolrServer;
-import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
+
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.common.SolrInputDocument;
 
 import java.io.File;
@@ -59,7 +60,7 @@ public class WikipediaIndexer {
   public static final String DEFAULT_SOLR_URL = "http://localhost:8983/solr";
 
   public WikipediaIndexer() throws MalformedURLException {
-    server = new CommonsHttpSolrServer(DEFAULT_SOLR_URL);
+    server = new HttpSolrServer(DEFAULT_SOLR_URL);
   }
 
   public WikipediaIndexer(SolrServer server) throws MalformedURLException {
@@ -187,7 +188,7 @@ public class WikipediaIndexer {
     if (cmdLine.hasOption(solrBatchOpt)) {
       batch = Integer.parseInt(cmdLine.getValue(solrBatchOpt).toString());
     }
-    WikipediaIndexer indexer = new WikipediaIndexer(new CommonsHttpSolrServer(url));
+    WikipediaIndexer indexer = new WikipediaIndexer(new HttpSolrServer(url));
     int total = 0;
     for (int i = 0; i < dumpFiles.length && total < numDocs; i++) {
       File dumpFile = dumpFiles[i];

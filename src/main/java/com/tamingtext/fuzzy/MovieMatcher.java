@@ -35,7 +35,7 @@ import org.apache.lucene.search.spell.StringDistance;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
@@ -45,7 +45,7 @@ public class MovieMatcher {
   
   
   public MovieMatcher() throws MalformedURLException {
-    solr = new CommonsHttpSolrServer(new URL("http://localhost:8983/solr"));
+    solr = new HttpSolrServer("http://localhost:8983/solr");
     query = new SolrQuery();
     query.setRows(10);
   }

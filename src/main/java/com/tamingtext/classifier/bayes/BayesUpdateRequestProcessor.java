@@ -26,9 +26,6 @@ import java.util.ArrayList;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
-import org.apache.mahout.classifier.ClassifierResult;
-import org.apache.mahout.classifier.bayes.ClassifierContext;
-import org.apache.mahout.classifier.bayes.InvalidDatastoreException;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.solr.common.SolrInputField;
 import org.apache.solr.update.AddUpdateCommand;
@@ -44,16 +41,16 @@ public class BayesUpdateRequestProcessor extends UpdateRequestProcessor {
 
   public static final String NO_LABEL = "nullDefault";
   
-  ClassifierContext ctx;
+  //ClassifierContext ctx;
   String inputField;
   String outputField;
   String defaultCategory;
   Analyzer analyzer;
   
-  public BayesUpdateRequestProcessor(ClassifierContext ctx, Analyzer analyzer, 
+  public BayesUpdateRequestProcessor(/*ClassifierContext ctx,*/ Analyzer analyzer, 
       String inputField, String outputField, String defaultCategory, UpdateRequestProcessor next) {
     super(next);
-    this.ctx = ctx;
+    //this.ctx = ctx;
     this.analyzer = analyzer;
     this.inputField = inputField;
     this.outputField = outputField;
@@ -72,6 +69,7 @@ public class BayesUpdateRequestProcessor extends UpdateRequestProcessor {
   }
 
   public void classifyDocument(SolrInputDocument doc) throws IOException {
+    /*
     try {
       //<start id="mahout.bayes.classify"/>
       SolrInputField field = doc.getField(inputField);
@@ -86,6 +84,7 @@ public class BayesUpdateRequestProcessor extends UpdateRequestProcessor {
     catch (InvalidDatastoreException e) {
       throw new IOException("Invalid Classifier Datastore", e);
     }
+    */
   }
   
   public String[] tokenizeField(String fieldName, SolrInputField field) throws IOException {

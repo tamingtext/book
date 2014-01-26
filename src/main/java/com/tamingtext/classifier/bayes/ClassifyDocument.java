@@ -20,10 +20,7 @@
 package com.tamingtext.classifier.bayes;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.apache.commons.cli2.CommandLine;
@@ -34,19 +31,6 @@ import org.apache.commons.cli2.builder.ArgumentBuilder;
 import org.apache.commons.cli2.builder.DefaultOptionBuilder;
 import org.apache.commons.cli2.builder.GroupBuilder;
 import org.apache.commons.cli2.commandline.Parser;
-import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
-import org.apache.lucene.util.Version;
-import org.apache.mahout.classifier.ClassifierResult;
-
-import org.apache.mahout.classifier.bayes.Algorithm;
-import org.apache.mahout.classifier.bayes.BayesAlgorithm;
-import org.apache.mahout.classifier.bayes.BayesParameters;
-import org.apache.mahout.classifier.bayes.ClassifierContext;
-import org.apache.mahout.classifier.bayes.Datastore;
-import org.apache.mahout.classifier.bayes.InMemoryBayesDatastore;
-import org.apache.mahout.classifier.bayes.InvalidDatastoreException;
 import org.apache.mahout.common.CommandLineUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +41,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ClassifyDocument {
   
-  private static final Logger log = LoggerFactory.getLogger(ExtractTrainingData.class);
+  private static final Logger log = LoggerFactory.getLogger(ExtractTrainingDataToFiles.class);
   
   public static void main(String[] args) {
     log.info("Command-line arguments: " + Arrays.toString(args));
@@ -116,6 +100,7 @@ public class ClassifyDocument {
         throw new IllegalArgumentException(modelDir + " does not exist or is not a directory");
       }
       
+      /*
       BayesParameters p = new BayesParameters();
       p.set("basePath", modelDir.getCanonicalPath());
       Datastore ds = new InMemoryBayesDatastore(p);
@@ -138,13 +123,14 @@ public class ClassifyDocument {
       for (ClassifierResult r: cr) {
         System.err.println(r.getLabel() + "\t" + r.getScore());
       }
+      */
     } catch (OptionException e) {
       log.error("Exception", e);
       CommandLineUtil.printHelp(group);
-    } catch (IOException e) {
+    /* } catch (IOException e) {
       log.error("IOException", e);
     } catch (InvalidDatastoreException e) {
-      log.error("InvalidDataStoreException", e);
+      log.error("InvalidDataStoreException", e); */
     } finally {
 
     }

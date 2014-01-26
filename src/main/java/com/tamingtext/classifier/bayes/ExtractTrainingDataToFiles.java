@@ -21,8 +21,12 @@ package com.tamingtext.classifier.bayes;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -39,16 +43,8 @@ import org.apache.commons.cli2.builder.ArgumentBuilder;
 import org.apache.commons.cli2.builder.DefaultOptionBuilder;
 import org.apache.commons.cli2.builder.GroupBuilder;
 import org.apache.commons.cli2.commandline.Parser;
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.conf.Configured;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.SequenceFile;
-import org.apache.hadoop.io.Text;
-import org.apache.hadoop.util.Tool;
-import org.apache.hadoop.util.ToolRunner;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Fieldable;
+import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.TermFreqVector;
 import org.apache.lucene.store.Directory;
@@ -58,153 +54,143 @@ import org.apache.mahout.math.map.OpenObjectIntHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.io.Closeables;
-
 /** A utility to extract training data from a Lucene index using document term vectors to recreate the list of terms
- *  found in each document. Writes output in Mahout Document Sequence File Format with the category and id as the key and the text as the value */
-public class ExtractTrainingData extends Configured implements Tool {
-
-  private static final Logger log = LoggerFactory.getLogger(ExtractTrainingData.class);
-  private final Map<String, SequenceFile.Writer> writers = new HashMap<String, SequenceFile.Writer>();
+ *  found in each document. Writes output in Mahout Bayes classifier input format */
+public class ExtractTrainingDataToFiles {
   
-  public static void main(String[] args) throws Exception {
-      ToolRunner.run(new ExtractTrainingData(), args);
-      //System.exit(ret);
-  }
-
-  public int run(String[] args) throws IOException {
-
-    Configuration conf = getConf();
-    FileSystem fs = FileSystem.getLocal(conf);
+  private static final Logger log = LoggerFactory.getLogger(ExtractTrainingDataToFiles.class);
+  
+  static final Map<String, PrintWriter> trainingWriters = new HashMap<String, PrintWriter>();
+  
+  public static void main(String[] args) {
     
     log.info("Command-line arguments: " + Arrays.toString(args));
-
+    
     DefaultOptionBuilder obuilder = new DefaultOptionBuilder();
     ArgumentBuilder abuilder = new ArgumentBuilder();
     GroupBuilder gbuilder = new GroupBuilder();
-
+    
     Option inputOpt = obuilder.withLongName("dir")
-        .withRequired(true)
-        .withArgument(
-            abuilder.withName("dir")
-            .withMinimum(1)
-            .withMaximum(1).create())
-            .withDescription("Lucene index directory containing input data")
-            .withShortName("d").create();
+      .withRequired(true)
+      .withArgument(
+        abuilder.withName("dir")
+          .withMinimum(1)
+          .withMaximum(1).create())
+      .withDescription("Lucene index directory containing input data")
+      .withShortName("d").create();
 
     Option categoryOpt = obuilder.withLongName("categories")
-        .withRequired(true)
-        .withArgument(
-            abuilder.withName("file")
-            .withMinimum(1)
-            .withMaximum(1).create())
-            .withDescription("File containing a list of categories")
-            .withShortName("c").create();
-
+    .withRequired(true)
+    .withArgument(
+      abuilder.withName("file")
+        .withMinimum(1)
+        .withMaximum(1).create())
+    .withDescription("File containing a list of categories")
+    .withShortName("c").create();
+    
     Option outputOpt = obuilder.withLongName("output")
-        .withRequired(false)
-        .withArgument(
-            abuilder.withName("output")
-            .withMinimum(1)
-            .withMaximum(1).create())
-            .withDescription("Output directory")
-            .withShortName("o").create();
+      .withRequired(false)
+      .withArgument(
+        abuilder.withName("output")
+          .withMinimum(1)
+          .withMaximum(1).create())
+      .withDescription("Output directory")
+      .withShortName("o").create();
 
     Option categoryFieldsOpt = 
-        obuilder.withLongName("category-fields")
-        .withRequired(true)
-        .withArgument(
-            abuilder.withName("fields")
-            .withMinimum(1)
-            .withMaximum(1)
-            .create())
-            .withDescription("Fields to match categories against (comma-delimited)")
-            .withShortName("cf").create();
-
+      obuilder.withLongName("category-fields")
+      .withRequired(true)
+      .withArgument(
+        abuilder.withName("fields")
+          .withMinimum(1)
+          .withMaximum(1)
+          .create())
+      .withDescription("Fields to match categories against (comma-delimited)")
+      .withShortName("cf").create();
+    
     Option textFieldsOpt = 
-        obuilder.withLongName("text-fields")
-        .withRequired(true)
-        .withArgument(
-            abuilder.withName("fields")
-            .withMinimum(1)
-            .withMaximum(1)
-            .create())
-            .withDescription("Fields from which to extract training text (comma-delimited)")
-            .withShortName("tf").create();
-
+      obuilder.withLongName("text-fields")
+      .withRequired(true)
+      .withArgument(
+        abuilder.withName("fields")
+          .withMinimum(1)
+          .withMaximum(1)
+          .create())
+      .withDescription("Fields from which to extract training text (comma-delimited)")
+      .withShortName("tf").create();
+    
     Option useTermVectorsOpt = obuilder.withLongName("use-term-vectors")
-        .withDescription("Extract term vectors containing preprocessed data " +
-            "instead of unprocessed, stored text values")
-            .withShortName("tv").create();
-
+      .withDescription("Extract term vectors containing preprocessed data " +
+          "instead of unprocessed, stored text values")
+      .withShortName("tv").create();
+    
     Option helpOpt = obuilder.withLongName("help")
-        .withDescription("Print out help")
-        .withShortName("h").create();
-
+      .withDescription("Print out help")
+      .withShortName("h").create();
+    
     Group group = gbuilder.withName("Options")
-        .withOption(inputOpt)
-        .withOption(categoryOpt)
-        .withOption(outputOpt)
-        .withOption(categoryFieldsOpt)
-        .withOption(textFieldsOpt)
-        .withOption(useTermVectorsOpt)
-        .create();
-
+      .withOption(inputOpt)
+      .withOption(categoryOpt)
+      .withOption(outputOpt)
+      .withOption(categoryFieldsOpt)
+      .withOption(textFieldsOpt)
+      .withOption(useTermVectorsOpt)
+      .create();
+    
     try {
       Parser parser = new Parser();
       parser.setGroup(group);
       CommandLine cmdLine = parser.parse(args);
-
+      
       if (cmdLine.hasOption(helpOpt)) {
         CommandLineUtil.printHelp(group);
-        return 1;
+        return;
       }
 
-      Path inputDir = new Path(cmdLine.getValue(inputOpt).toString());
+      File inputDir = new File(cmdLine.getValue(inputOpt).toString());
       
-      if (!fs.getFileStatus(inputDir).isDir()) {
+      if (!inputDir.isDirectory()) {
         throw new IllegalArgumentException(inputDir + " does not exist or is not a directory");
       }
-
-      Path categoryFile = new Path(cmdLine.getValue(categoryOpt).toString());
-
-      if (!fs.isFile(categoryFile)) {
+      
+      File categoryFile = new File(cmdLine.getValue(categoryOpt).toString());
+      
+      if (!categoryFile.isFile()) {
         throw new IllegalArgumentException(categoryFile + " does not exist or is not a directory");
       }
-
-      Path outputDir = new Path(cmdLine.getValue(outputOpt).toString());
-      fs.mkdirs(outputDir);
-     
-      if (!fs.getFileStatus(outputDir).isDir()) {
-        throw new IllegalArgumentException("the output directory for " + outputDir + " is not a directory or could not be created");
+      
+      File outputDir = new File(cmdLine.getValue(outputOpt).toString());
+      
+      outputDir.mkdirs();
+      
+      if (!outputDir.isDirectory()) {
+        throw new IllegalArgumentException(outputDir + " is not a directory or could not be created");
       }
 
       Collection<String> categoryFields = stringToList(cmdLine.getValue(categoryFieldsOpt).toString());
-
+      
       if (categoryFields.size() < 1) {
         throw new IllegalArgumentException("At least one category field must be spcified.");
       }
-
+      
       Collection<String> textFields = stringToList(cmdLine.getValue(textFieldsOpt).toString());
 
       if (categoryFields.size() < 1) {
         throw new IllegalArgumentException("At least one text field must be spcified.");
       }
-
+      
       boolean useTermVectors = cmdLine.hasOption(useTermVectorsOpt);
-
-      extractTraininingData(fs, conf, inputDir, categoryFile, categoryFields, textFields, outputDir, useTermVectors);
-
+      
+      extractTraininingData(inputDir, categoryFile, categoryFields, textFields, outputDir, useTermVectors);
+      
     } catch (OptionException e) {
       log.error("Exception", e);
       CommandLineUtil.printHelp(group);
-      return 1;
     } catch (IOException e) {
       log.error("IOException", e);
-      return 1;
+    } finally {
+      closeWriters();
     }
-    
-    return 0;
   }
 
   /**
@@ -243,36 +229,33 @@ public class ExtractTrainingData extends Configured implements Tool {
    *   
    * @throws IOException
    */
-  public void extractTraininingData(FileSystem fs, Configuration conf, Path indexDir, Path categoryFile, 
-      Collection<String> categoryFields, Collection<String> textFields, Path outputDir, boolean useTermVectors) throws IOException {
-
+  public static void extractTraininingData(File indexDir, File categoryFile, 
+      Collection<String> categoryFields, Collection<String> textFields, File outputDir, boolean useTermVectors) throws IOException {
+    
     log.info("Index dir: " + indexDir);
     log.info("Category file: " + categoryFile);
-    log.info("Output directory: " + outputDir);
+    log.info("Output dir: " + outputDir);
     log.info("Category fields: " + categoryFields.toString());
     log.info("Text fields: " + textFields.toString());
     log.info("Use Term Vectors?: " + useTermVectors);
     OpenObjectIntHashMap<String> categoryCounts = new OpenObjectIntHashMap<String>();
-    Map<String, List<String>> categories = readCategoryFile(fs, categoryFile);
-
-    Directory dir = FSDirectory.open(new File(indexDir.toUri().getPath()));
-    IndexReader reader = IndexReader.open(dir);
+    Map<String, List<String>> categories = readCategoryFile(categoryFile);
+    
+    Directory dir = FSDirectory.open(indexDir);
+    IndexReader reader = IndexReader.open(dir, true);
     int max = reader.maxDoc();
-
+    
     StringBuilder buf = new StringBuilder();
-    Text key   = new Text();
-    Text value = new Text();
-    fs.delete(outputDir, true);
-
+    
     for (int i=0; i < max; i++) {
       if (!reader.isDeleted(i)) {
         Document d = reader.document(i);
         String category = null;
-
+        
         // determine whether any of the fields in this document contain a 
         // category in the category list
         fields: for (String field: categoryFields) {
-          for (Fieldable f: d.getFieldables(field)) {
+          for (Field f: d.getFields(field)) {
             if (f.isStored() && !f.isBinary()) {
               String fieldValue = f.stringValue().toLowerCase();
               for (String cat: categories.keySet()) {
@@ -287,9 +270,9 @@ public class ExtractTrainingData extends Configured implements Tool {
             }
           }
         }
-
+        
         if (category == null) continue;
-
+        
         // append the terms from each of the textFields to the training data for this document.
         buf.setLength(0);
         for (String field: textFields) {
@@ -297,31 +280,26 @@ public class ExtractTrainingData extends Configured implements Tool {
             appendVectorTerms(buf, reader.getTermFreqVector(i, field));
           }
           else {
-            appendFieldText(buf, d.getFieldable(field));
+            appendFieldText(buf, d.getField(field));
           }
         }
-        key.set(i + "/" + category);
-        value.set(buf.toString());
-        getWriterForCategory(fs, conf, outputDir, category).append(key, value);
+        getWriterForCategory(outputDir, category).printf("%s\t%s\n", category, buf.toString());
         categoryCounts.adjustOrPutValue(category, 1, 1);
       }
     }
-
-    closeWriters();
     
     if (log.isInfoEnabled()) {
       StringBuilder b = new StringBuilder();
       b.append("\nCatagory document counts:\n");
       LinkedList<String> keyList = new LinkedList<String>();
       categoryCounts.keysSortedByValue(keyList);
-      String k;
+      String key;
       while (!keyList.isEmpty()) {
-        k = keyList.removeLast();
-        b.append(categoryCounts.get(k)).append('\t').append(k).append('\n');
+        key = keyList.removeLast();
+        b.append(categoryCounts.get(key)).append('\t').append(key).append('\n');
       }
       log.info(b.toString());
     }
-    
   }
 
   /** Read the category file from disk, see {@link #extractTraininingData(File, File, Collection, Collection, File)}
@@ -331,9 +309,9 @@ public class ExtractTrainingData extends Configured implements Tool {
    * @return
    * @throws IOException
    */
-  public static Map<String,List<String>> readCategoryFile(FileSystem fs, Path categoryFile) throws IOException {
+  public static Map<String,List<String>> readCategoryFile(File categoryFile) throws IOException {
     Map<String,List<String>> categoryMap = new HashMap<String, List<String>>();
-    BufferedReader rin = new BufferedReader(new InputStreamReader(fs.open(categoryFile), "UTF-8"));
+    BufferedReader rin = new BufferedReader(new InputStreamReader(new FileInputStream(categoryFile), "UTF-8"));
     String line;
     while ((line = rin.readLine()) != null) {
       String[] parts = line.trim().toLowerCase().split("\\s+");
@@ -362,25 +340,22 @@ public class ExtractTrainingData extends Configured implements Tool {
    * @return
    * @throws IOException
    */
-  protected SequenceFile.Writer getWriterForCategory(FileSystem fs, Configuration conf, Path outputDir, String category) throws IOException {
-    SequenceFile.Writer out = writers.get(category);
+  protected static PrintWriter getWriterForCategory(File outputDir, String category) throws IOException {
+    PrintWriter out = trainingWriters.get(category);
     if (out == null) {
-      Path outputFile = new Path(outputDir, category);
-      log.info("Creating output file: " + outputFile);
-      out = new SequenceFile.Writer(fs, conf, outputFile, Text.class, Text.class);
-
-      writers.put(category, out);
+      out = new PrintWriter(new OutputStreamWriter(new FileOutputStream(new File(outputDir, category))));
+      trainingWriters.put(category, out);
     }
     return out;
   }
   
   /** Close writers opened by {@link #getWriterForCategory(File, String)} */
-  protected void closeWriters() {
-    for (SequenceFile.Writer w: writers.values()) {
-        Closeables.closeQuietly(w);
+  protected static void closeWriters() {
+    for (PrintWriter p: trainingWriters.values()) {
+        p.close();
     }
   }
-
+  
   /** Append the contents of the specified termVector to a buffer containing a list of terms
    * 
    * @param buf
@@ -388,10 +363,10 @@ public class ExtractTrainingData extends Configured implements Tool {
    */
   protected static void appendVectorTerms(StringBuilder buf, TermFreqVector tv) {
     if (tv == null) return;
-
+    
     String[] terms = tv.getTerms();
     int[] frequencies = tv.getTermFrequencies();
-
+    
     for (int j=0; j < terms.length; j++) {
       int freq = frequencies[j];
       String term = terms[j];
@@ -407,17 +382,17 @@ public class ExtractTrainingData extends Configured implements Tool {
    * @param buf
    * @param f
    */
-  protected static void appendFieldText(StringBuilder buf, Fieldable f) {
+  protected static void appendFieldText(StringBuilder buf, Field f) {
     if (f == null) return;
     if (f.isBinary()) return;
     if (!f.isStored()) return;
     if (buf.length() > 0) buf.append(' ');
-
+    
     String s = f.stringValue();
     s = s.replaceAll("\\s+", " "); // normalize whitespace.
     buf.append(s);
   }
-
+  
   /** Split a comma-delimited set of strings into a list
    * 
    * @param input
@@ -428,5 +403,5 @@ public class ExtractTrainingData extends Configured implements Tool {
     String[] parts = input.split("\\s*,\\s*");
     return Arrays.asList(parts);
   }
-
+  
 }

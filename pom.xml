@@ -11,7 +11,7 @@
   <properties>
      <lucene.version>3.6.0</lucene.version>
      <tika.version>0.10</tika.version>
-     <mahout.version>0.6</mahout.version>
+     <mahout.version>0.8</mahout.version>
      <release.update.interval>daily</release.update.interval>
      <snapshot.update.interval>interval:60</snapshot.update.interval>
      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

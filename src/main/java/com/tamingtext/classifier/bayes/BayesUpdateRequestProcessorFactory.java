@@ -21,13 +21,6 @@ package com.tamingtext.classifier.bayes;
 
 import java.io.File;
 
-
-import org.apache.mahout.classifier.bayes.Algorithm;
-import org.apache.mahout.classifier.bayes.BayesAlgorithm;
-import org.apache.mahout.classifier.bayes.BayesParameters;
-import org.apache.mahout.classifier.bayes.ClassifierContext;
-import org.apache.mahout.classifier.bayes.Datastore;
-import org.apache.mahout.classifier.bayes.InMemoryBayesDatastore;
 import org.apache.solr.common.SolrException;
 import org.apache.solr.common.util.NamedList;
 import org.apache.solr.core.SolrCore;
@@ -79,7 +72,7 @@ public class BayesUpdateRequestProcessorFactory extends UpdateRequestProcessorFa
   private String outputFieldName;
   private String defaultCategory;
   private File modelDir;
-  private ClassifierContext ctx;
+  //private ClassifierContext ctx;
   private boolean enabled;
   
   // used for locking during context swap.
@@ -132,6 +125,7 @@ public class BayesUpdateRequestProcessorFactory extends UpdateRequestProcessorFa
 
   public void initClassifierContext() {
     try {
+      /*
       //<start id="mahout.bayes.setup"/>
       BayesParameters p = new BayesParameters();
       p.set("basePath", modelDir.getCanonicalPath());
@@ -143,6 +137,7 @@ public class BayesUpdateRequestProcessorFactory extends UpdateRequestProcessorFa
       synchronized (swapContext) {
           this.ctx = ctx; // swap upon successful load.
       }
+      */
       enabled = true;
     }
     catch (Exception e) {
@@ -153,6 +148,8 @@ public class BayesUpdateRequestProcessorFactory extends UpdateRequestProcessorFa
   @Override
   public UpdateRequestProcessor getInstance(SolrQueryRequest req,
       SolrQueryResponse rsp, UpdateRequestProcessor next) {
+    return null;
+      /*
     if (enabled) {
       synchronized (swapContext) {
         return new BayesUpdateRequestProcessor(ctx, core.getSchema().getAnalyzer(), inputFieldName, outputFieldName, 
@@ -162,6 +159,6 @@ public class BayesUpdateRequestProcessorFactory extends UpdateRequestProcessorFa
     else {
       return next;
     }
+    */
   }
-
 }

@@ -97,10 +97,8 @@ public class OverlapMeasures {
     final Pattern pattern = Pattern.compile(".");
     Analyzer analyzer = new Analyzer() {
       @Override
-      public TokenStream tokenStream(String fieldName, Reader reader) {
-        TokenStream result = null;
-        result = new PatternTokenizer(reader, pattern, 0);
-        return result;
+      protected TokenStreamComponents createComponents(String fieldName, Reader reader) {
+        return new TokenStreamComponents(new PatternTokenizer(reader, pattern, 0));
       }
     };
     IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_47, analyzer);

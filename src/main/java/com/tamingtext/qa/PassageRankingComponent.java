@@ -407,12 +407,16 @@ public class PassageRankingComponent extends SearchComponent implements PluginIn
 
   class PassagePriorityQueue extends PriorityQueue<Passage> {
 
+    public PassagePriorityQueue(int maxSize, boolean prepopulate) {
+      super(maxSize, prepopulate);
+    }
+
     PassagePriorityQueue() {
-      initialize(10);
+     super(10);
     }
 
     PassagePriorityQueue(int maxSize) {
-      initialize(maxSize);
+      super(maxSize);
     }
 
     public int capacity() {

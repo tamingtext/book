@@ -109,7 +109,6 @@ public class TrainMoreLikeThis {
    *  separate documents in the index, and the category that has the haghest count in the tip N hits is 
    *  is the category that is assigned.
    * @param inputFiles
-   * @param writer
    * @throws Exception
    */
   protected void buildKnnIndex(File[] inputFiles) throws Exception {
@@ -146,9 +145,9 @@ public class TrainMoreLikeThis {
         categories.add(category);
 
         Document d = new Document(); //<co id="luc.knn.document"/>
-        id.setValue(category + "-" + lineCount++);
-        categoryField.setValue(category);
-        contentField.setValue(parts[1]);
+        id.setStringValue(category + "-" + lineCount++);
+        categoryField.setStringValue(category);
+        contentField.setStringValue(parts[1]);
         d.add(id);
         d.add(categoryField);
         d.add(contentField);
@@ -166,8 +165,8 @@ public class TrainMoreLikeThis {
       
       log.info("Knn: Added document for category " + category + " with " + lineCount + " lines");
     }
-    
-    writer.commit(generateUserData(categories));
+    writer.setCommitData(generateUserData(categories));
+    writer.commit();
     
     log.info("Knn: Added " + fileCount + " categories in " + (System.currentTimeMillis() - start) + " msec.");
   }
@@ -176,7 +175,6 @@ public class TrainMoreLikeThis {
    *  a single document in the index, and the best match for a MoreLikeThis query is the category that
    *  is assigned.
    * @param inputFiles
-   * @param writer
    * @throws Exception
    */
   protected void buildTfidfIndex(File[] inputFiles) throws Exception {
@@ -226,8 +224,8 @@ public class TrainMoreLikeThis {
 
       Document d = new Document(); //<co id="luc.tf.document"/>
       id.setStringValue(category + "-" + lineCount);
-      categoryField.setValue(category);
-      contentField.setValue(content.toString());
+      categoryField.setStringValue(category);
+      contentField.setStringValue(content.toString());
       d.add(id);
       d.add(categoryField);
       d.add(contentField);
@@ -242,8 +240,8 @@ public class TrainMoreLikeThis {
       
       log.info("TfIdf: Added document for category " + category + " with " + lineCount + " lines");
     }
-    
-    writer.commit(generateUserData(categories));
+    writer.setCommitData(generateUserData(categories));
+    writer.commit();
     
     log.info("TfIdf: Added " + fileCount + " categories in " + (System.currentTimeMillis() - start) + " msec.");
   }
@@ -283,14 +281,8 @@ public class TrainMoreLikeThis {
   }
 
   protected void closeIndexWriter() throws IOException {
-    log.info("Starting optimize");
-
-    // optimize and close the index.
-    writer.optimize();
     writer.close();
     writer = null;
-    
-    log.info("Optimize complete, index closed");
   }
   
   protected static Map<String, String> generateUserData(Collection<String> categories) {

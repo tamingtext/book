@@ -48,8 +48,8 @@ public final class SentenceTokenizer extends Tokenizer {
     this.detector = detector;
   }
   
-  public void reset(Reader in) throws IOException {
-    super.reset(in);
+  public void reset() throws IOException {
+    super.reset();
     sentences = null;
   }
   

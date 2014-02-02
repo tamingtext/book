@@ -44,9 +44,12 @@ import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.analysis.shingle.ShingleAnalyzerWrapper;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.document.FieldType;
+import org.apache.lucene.document.StringField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
+import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
@@ -185,12 +188,13 @@ public class TrainMoreLikeThis {
     long start = System.currentTimeMillis();
     
     // reuse these fields
-    Field id = new Field("id", "", Field.Store.YES, 
-        Field.Index.NOT_ANALYZED, Field.TermVector.NO);
-    Field categoryField = new Field("category", "", Field.Store.YES, 
-        Field.Index.NOT_ANALYZED, Field.TermVector.NO);
-    Field contentField = new Field("content", "", Field.Store.NO, 
-        Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+    Field id = new StringField("id", "", Field.Store.YES);
+    Field categoryField = new StringField("category", "", Field.Store.YES);
+    FieldType fieldType = new FieldType();
+    fieldType.setIndexed(true);
+    fieldType.setStoreTermVectorOffsets(true);
+    fieldType.setStoreTermVectorPositions(true);
+    Field contentField = new Field("content", "", fieldType);
     
     // read data from input files.
     
@@ -221,7 +225,7 @@ public class TrainMoreLikeThis {
       in.close();
 
       Document d = new Document(); //<co id="luc.tf.document"/>
-      id.setValue(category + "-" + lineCount);
+      id.setStringValue(category + "-" + lineCount);
       categoryField.setValue(category);
       contentField.setValue(content.toString());
       d.add(id);
@@ -251,7 +255,7 @@ public class TrainMoreLikeThis {
     Directory directory //<co id="luc.index.dir"/>
       = FSDirectory.open(new File(pathname));
     Analyzer analyzer   //<co id="luc.index.analyzer"/>
-      = new EnglishAnalyzer(Version.LUCENE_36);
+      = new EnglishAnalyzer(Version.LUCENE_47);
     
     if (nGramSize > 1) { //<co id="luc.index.shingle"/>
       ShingleAnalyzerWrapper sw 
@@ -265,7 +269,7 @@ public class TrainMoreLikeThis {
     }
     
     IndexWriterConfig config //<co id="luc.index.create"/>
-      = new IndexWriterConfig(Version.LUCENE_36, analyzer);
+      = new IndexWriterConfig(Version.LUCENE_47, analyzer);
     config.setOpenMode(OpenMode.CREATE);
     IndexWriter writer =  new IndexWriter(directory, config);
     /* <calloutlist>
@@ -280,13 +284,13 @@ public class TrainMoreLikeThis {
 
   protected void closeIndexWriter() throws IOException {
     log.info("Starting optimize");
-    
+
     // optimize and close the index.
     writer.optimize();
     writer.close();
     writer = null;
     
-    log.info("Optimize complete, index closed"); 
+    log.info("Optimize complete, index closed");
   }
   
   protected static Map<String, String> generateUserData(Collection<String> categories) {

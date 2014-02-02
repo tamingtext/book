@@ -138,7 +138,7 @@ public class TestMoreLikeThis {
       Directory directory = FSDirectory.open(new File(modelPath));
       IndexReader indexReader = IndexReader.open(directory);
       Analyzer analyzer   //<co id="mlt.analyzersetup"/>
-        = new EnglishAnalyzer(Version.LUCENE_36);
+        = new EnglishAnalyzer(Version.LUCENE_47);
       
       MoreLikeThisCategorizer categorizer 
         = new MoreLikeThisCategorizer(indexReader, categoryField);

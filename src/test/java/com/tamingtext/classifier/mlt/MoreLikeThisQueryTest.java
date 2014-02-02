@@ -68,7 +68,7 @@ public class MoreLikeThisQueryTest {
     IndexSearcher indexSearcher = new IndexSearcher(indexReader);
 
     Analyzer analyzer //<co id="mlt.analyzersetup"/>
-      = new EnglishAnalyzer(Version.LUCENE_36);
+      = new EnglishAnalyzer(Version.LUCENE_47);
     
     if (nGramSize > 1) { //<co id="mlt.ngramsetup"/>
       analyzer = new ShingleAnalyzerWrapper(analyzer, nGramSize,

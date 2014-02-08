@@ -87,7 +87,7 @@ public class MoreLikeThisCategorizer {
    * @throws IOException
    */
   protected void loadCategoriesFromIndex() throws IOException {
-    Map<String, String> userData = indexReader.getCommitUserData();
+    Map<String, String> userData = indexReader.getIndexCommit().getUserData();
     String categoryString = userData.get(TrainMoreLikeThis.CATEGORY_KEY);
     if (categoryString == null) {
       scanCategories();

@@ -19,10 +19,8 @@
 
 package com.tamingtext.classifier.mlt;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
+import java.io.IOException;
 import java.io.StringReader;
 
 import org.apache.commons.cli2.CommandLine;
@@ -47,7 +45,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.tamingtext.classifier.mlt.TrainMoreLikeThis.MatchMode;
-import com.tamingtext.util.FileUtil;
 
 
 public class TestMoreLikeThis {
@@ -67,19 +64,19 @@ public class TestMoreLikeThis {
         .withShortName("i").create();
     
     Option modelOpt = obuilder.withLongName("model").withRequired(true).withArgument(
-      abuilder.withName("index").withMinimum(1).withMaximum(1).create()).withDescription(
+      abuilder.withName("model").withMinimum(1).withMaximum(1).create()).withDescription(
       "The directory containing the index model").withShortName("m").create();
     
-    Option categoryFieldOpt = obuilder.withLongName("categoryField").withRequired(true).withArgument(
-        abuilder.withName("index").withMinimum(1).withMaximum(1).create()).withDescription(
+    Option categoryFieldOpt = obuilder.withLongName("categoryField").withRequired(false).withArgument(
+        abuilder.withName("categoryField").withMinimum(1).withMaximum(1).create()).withDescription(
         "Name of the field containing category information").withShortName("catf").create();
 
-    Option contentFieldOpt = obuilder.withLongName("contentField").withRequired(true).withArgument(
-        abuilder.withName("index").withMinimum(1).withMaximum(1).create()).withDescription(
+    Option contentFieldOpt = obuilder.withLongName("contentField").withRequired(false).withArgument(
+        abuilder.withName("contentField").withMinimum(1).withMaximum(1).create()).withDescription(
         "Name of the field containing content information").withShortName("contf").create();
     
     Option maxResultsOpt = obuilder.withLongName("maxResults").withRequired(false).withArgument(
-        abuilder.withName("gramSize").withMinimum(1).withMaximum(1).create()).withDescription(
+        abuilder.withName("maxResults").withMinimum(1).withMaximum(1).create()).withDescription(
         "Number of results to retrive, default: 10 ").withShortName("r").create();
     
     Option gramSizeOpt = obuilder.withLongName("gramSize").withRequired(false).withArgument(
@@ -120,8 +117,15 @@ public class TestMoreLikeThis {
       
       String inputPath  = (String) cmdLine.getValue(inputDirOpt);
       String modelPath = (String) cmdLine.getValue(modelOpt);
-      String categoryField = (String) cmdLine.getValue(categoryFieldOpt);
-      String contentField = (String) cmdLine.getValue(contentFieldOpt);
+      String categoryField = "category";
+      if (cmdLine.hasOption(categoryFieldOpt)) {
+        categoryField = (String) cmdLine.getValue(categoryFieldOpt);
+      }
+      
+      String contentField = "content";
+      if (cmdLine.hasOption(contentFieldOpt)) {
+        contentField = (String) cmdLine.getValue(contentFieldOpt);
+      }
       
       MatchMode mode;
       
@@ -148,56 +152,57 @@ public class TestMoreLikeThis {
       categorizer.setMaxResults(maxResults);
       categorizer.setNgramSize(gramSize);
 
-      File f = new File(inputPath);
-      if (!f.isDirectory()) {
-        throw new IllegalArgumentException(f + " is not a directory or does not exit");
-      }
+      TwentyNewsgroupsCorpus c = new TwentyNewsgroupsCorpus(new File(inputPath));
+      CategorizerCallback cb = new CategorizerCallback(categorizer);
+      c.process(cb);
+      cb.printResults();
       
-      File[] inputFiles = FileUtil.buildFileList(f);
-      
-      String line = null;
-      //<start id="lucene.examples.mlt.test"/>
-      final ClassifierResult UNKNOWN = new ClassifierResult("unknown",
-              1.0);
-      
-      ResultAnalyzer resultAnalyzer = //<co id="co.mlt.ra"/>
-        new ResultAnalyzer(categorizer.getCategories(), 
-            UNKNOWN.getLabel());
-
-      for (File ff: inputFiles) { //<co id="co.mlt.read"/>
-        BufferedReader in = 
-            new BufferedReader(
-                new InputStreamReader(
-                    new FileInputStream(ff), 
-                    "UTF-8"));
-        while ((line = in.readLine()) != null) {
-          String[] parts = line.split("\t");
-          if (parts.length != 2) {
-            continue;
-          }
-          
-          CategoryHits[] hits //<co id="co.mlt.cat"/>
-            = categorizer.categorize(new StringReader(parts[1]));
-          ClassifierResult result = hits.length > 0 ? hits[0] : UNKNOWN;
-          resultAnalyzer.addInstance(parts[0], result); //<co id="co.mlt.an"/>
-        }
-        
-        in.close();
-      }
-
-      System.out.println(resultAnalyzer.toString());//<co id="co.mlt.print"/>
-      /*
-      <calloutlist>
-        <callout arearefs="co.mlt.ra">Create <classname>ResultAnalyzer</classname></callout>
-        <callout arearefs="co.mlt.read">Read Test data</callout>
-        <callout arearefs="co.mlt.cat">Categorize</callout>
-        <callout arearefs="co.mlt.an">Collect Results</callout>
-        <callout arearefs="co.mlt.print">Display Results</callout>
-      </calloutlist>
-      */
-      //<end id="lucene.examples.mlt.test"/>
     } catch (OptionException e) {
       log.error("Error while parsing options", e);
     }
   }
+  
+  public static class CategorizerCallback implements TwentyNewsgroupsCorpus.Callback {
+    //<begin id="lucene.examples.mlt.test"/>
+
+    public static final ClassifierResult UNKNOWN 
+    = new ClassifierResult("unknown", 1.0);
+
+    ResultAnalyzer resultAnalyzer; 
+    MoreLikeThisCategorizer categorizer;
+
+    public CategorizerCallback(MoreLikeThisCategorizer categorizer) {
+      ResultAnalyzer resultAnalyzer = //<co id="co.mlt.ra"/>
+          new ResultAnalyzer(categorizer.getCategories(), 
+              UNKNOWN.getLabel());
+
+      this.categorizer = categorizer;
+      this.resultAnalyzer = resultAnalyzer;
+    }
+
+    @Override
+    public void process(String expectedLabel, File inputFile) throws IOException {
+      //<start id="lucene.examples.mlt.test"/>  
+      String content = TwentyNewsgroupsCorpus.readFile(inputFile, true);
+      CategoryHits[] hits //<co id="co.mlt.cat"/>
+        = categorizer.categorize(new StringReader(content));
+      ClassifierResult result = hits.length > 0 ? hits[0] : UNKNOWN;
+      resultAnalyzer.addInstance(expectedLabel, result); //<co id="co.mlt.an"/>
+    }
+
+    public void printResults() {  
+      System.out.println(resultAnalyzer.toString());//<co id="co.mlt.print"/>
+    }
+  }
+
+  /*
+  <calloutlist>
+    <callout arearefs="co.mlt.ra">Create <classname>ResultAnalyzer</classname></callout>
+    <callout arearefs="co.mlt.read">Read Test data</callout>
+    <callout arearefs="co.mlt.cat">Categorize</callout>
+    <callout arearefs="co.mlt.an">Collect Results</callout>
+    <callout arearefs="co.mlt.print">Display Results</callout>
+  </calloutlist>
+   */
+  //<end id="lucene.examples.mlt.test"/>
 }

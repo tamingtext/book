@@ -19,12 +19,8 @@
 
 package com.tamingtext.classifier.mlt;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -55,8 +51,6 @@ import org.apache.mahout.common.commandline.DefaultOptionCreator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.tamingtext.util.FileUtil;
-
 public class TrainMoreLikeThis {
   
   private static final Logger log = LoggerFactory.getLogger(TrainMoreLikeThis.class);
@@ -67,8 +61,6 @@ public class TrainMoreLikeThis {
     KNN,
     TFIDF
   }
-
-  private IndexWriter writer;
   
   private int nGramSize = 1;
   
@@ -79,43 +71,34 @@ public class TrainMoreLikeThis {
   }
   
   public void train(String source, String destination,  MatchMode mode) throws Exception {
-    
-    File[] inputFiles = FileUtil.buildFileList(new File(source));
-    
-    if (inputFiles.length < 2) {
-      throw new IllegalStateException("There must be more than one training file in " + source);
-    }
-    
-    openIndexWriter(destination);
+
+    TwentyNewsgroupsCorpus c = new TwentyNewsgroupsCorpus(new File(source));
+    IndexingCallback cb;
     
     switch (mode) {
       case TFIDF:
-        this.buildTfidfIndex(inputFiles);
+        cb = new TfidfIndexer(destination, nGramSize);
         break;
       case KNN:
-        this.buildKnnIndex(inputFiles);
+        cb = new KnnIndexer(destination, nGramSize);
         break;
       default:
         throw new IllegalStateException("Unknown match mode: " + mode.toString());
     }
     
-    closeIndexWriter();
+    long start = System.currentTimeMillis();
+    c.process(cb);
+    log.info(mode + ": Added " + c.getCategoryCount() + " categories in " + (System.currentTimeMillis() - start) + " msec.");
+    cb.close();
+    
   }
   
-  /** builda a lucene index suidable for knn based classification. Each category's content is indexed into
-   *  separate documents in the index, and the category that has the haghest count in the tip N hits is 
-   *  is the category that is assigned.
-   * @param inputFiles
-   * @param writer
-   * @throws Exception
+  /** 
+   * Defines index management mechanisms for Lucene based classifier model.
    */
-  protected void buildKnnIndex(File[] inputFiles) throws Exception {
-    int lineCount = 0;
-    int fileCount = 0;
-    String line = null;
-    String category = null;
-    Set<String> categories = new HashSet<String>();
-    long start = System.currentTimeMillis();
+  public static abstract class IndexingCallback implements TwentyNewsgroupsCorpus.Callback {
+    protected IndexWriter writer;
+    protected final Set<String> categories = new HashSet<String>();
     
     // reuse these fields
     //<start id="lucene.examples.fields"/>
@@ -127,48 +110,94 @@ public class TrainMoreLikeThis {
         Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
     //<end id="lucene.examples.fields"/>
     
-    
-    for (File ff: inputFiles) {
-      fileCount++;
-      lineCount = 0;
-      category = null;
+    Analyzer analyzer;
 
-      BufferedReader in = new BufferedReader(new FileReader(ff));
+    public IndexingCallback(String pathname, int nGramSize) throws IOException {
+    //<start id="lucene.examples.index.setup"/>
+      Directory directory //<co id="luc.index.dir"/>
+        = FSDirectory.open(new File(pathname));
+      Analyzer analyzer   //<co id="luc.index.analyzer"/>
+        = new EnglishAnalyzer(Version.LUCENE_36);
       
-      //<start id="lucene.examples.knn.train"/>
-      while ((line = in.readLine()) != null) {
-        String[] parts = line.split("\t"); //<co id="luc.knn.content"/>
-        if (parts.length != 2) continue;
-        category = parts[0];
-        categories.add(category);
-
-        Document d = new Document(); //<co id="luc.knn.document"/>
-        id.setValue(category + "-" + lineCount++);
-        categoryField.setValue(category);
-        contentField.setValue(parts[1]);
-        d.add(id);
-        d.add(categoryField);
-        d.add(contentField);
-        
-        writer.addDocument(d); //<co id="luc.knn.index"/>
+      if (nGramSize > 1) { //<co id="luc.index.shingle"/>
+        ShingleAnalyzerWrapper sw = new ShingleAnalyzerWrapper(analyzer,
+              nGramSize, // min shingle size
+              nGramSize, // max shingle size
+              "-",       // token separator
+              true,      // output unigrams
+              true);     // output unigrams if no shingles
+        analyzer = sw;
       }
+      
+      IndexWriterConfig config //<co id="luc.index.create"/>
+        = new IndexWriterConfig(Version.LUCENE_36, analyzer);
+      config.setOpenMode(OpenMode.CREATE);
+      IndexWriter writer =  new IndexWriter(directory, config);
+      /* <calloutlist>
+      <callout arearefs="luc.index.dir">Create Index Directory</callout>
+      <callout arearefs="luc.index.analyzer">Setup Analyzer</callout>
+      <callout arearefs="luc.index.shingle">Setup Shingle Filter</callout>
+      <callout arearefs="luc.index.create">Create <classname>IndexWriter</classname></callout>
+      </calloutlist> */
+      //<end id="lucene.examples.index.setup"/>
+      this.writer = writer;
+      this.analyzer = analyzer;
+    }
+    
+    public void close() throws IOException {
+      log.info("Starting optimize");
+      
+      writer.commit(generateUserData(categories));
+      
+      // optimize and close the index.
+      writer.close();
+      writer = null;
+      
+      analyzer.close();
+      
+      log.info("Optimize complete, index closed"); 
+    }
+  }
+  
+  /** builds a lucene index suitable for knn based classification. Each category's content is indexed into
+   *  separate documents in the index, and the category that has the haghest count in the tip N hits is 
+   *  is the category that is assigned.
+   * @param inputFiles
+   * @param writer
+   * @throws Exception
+   */
+  public static class KnnIndexer extends IndexingCallback {
+    public KnnIndexer(String dest, int ngramSize) throws IOException {
+      super(dest, ngramSize);
+    }
+
+    @Override
+    public void process(String category, File inputFile) throws IOException {
+      //<start id="lucene.examples.knn.train"/>
+      String content = TwentyNewsgroupsCorpus.readFile(inputFile, true);
+      categories.add(category);
+
+      Document d = new Document(); //<co id="luc.knn.document"/>
+      id.setValue(category + "-" + inputFile.getName());
+      categoryField.setValue(category);
+      contentField.setValue(content);
+      d.add(id);
+      d.add(categoryField);
+      d.add(contentField);
+      
+      writer.addDocument(d); //<co id="luc.knn.index"/>
+
       /*<calloutlist>
       <callout arearefs="luc.knn.content">Collect Content</callout>
       <callout arearefs="luc.knn.document">Build Document</callout>
       <callout arearefs="luc.knn.index">Index Document</callout>
       </calloutlist>*/
       //<end id="lucene.examples.knn.train"/>
-      
-      in.close();
-      
-      log.info("Knn: Added document for category " + category + " with " + lineCount + " lines");
+
+      log.info("KNN: Added document for category " + category + " named " + inputFile.getName());
     }
-    
-    writer.commit(generateUserData(categories));
-    
-    log.info("Knn: Added " + fileCount + " categories in " + (System.currentTimeMillis() - start) + " msec.");
   }
-  
+
   /** builds a lucene index suitable for tfidf based classification. Each categories content is indexed into
    *  a single document in the index, and the best match for a MoreLikeThis query is the category that
    *  is assigned.
@@ -176,119 +205,57 @@ public class TrainMoreLikeThis {
    * @param writer
    * @throws Exception
    */
-  protected void buildTfidfIndex(File[] inputFiles) throws Exception {
+  public static class TfidfIndexer extends IndexingCallback {
+    
+    // holds the collected content for each category
+    final Map<String, StringBuilder> content = new HashMap<String, StringBuilder>();
 
-    int lineCount = 0;
-    int fileCount = 0;
-    String line = null;
-    Set<String> categories = new HashSet<String>();
-    long start = System.currentTimeMillis();
-    
-    // reuse these fields
-    Field id = new Field("id", "", Field.Store.YES, 
-        Field.Index.NOT_ANALYZED, Field.TermVector.NO);
-    Field categoryField = new Field("category", "", Field.Store.YES, 
-        Field.Index.NOT_ANALYZED, Field.TermVector.NO);
-    Field contentField = new Field("content", "", Field.Store.NO, 
-        Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-    
-    // read data from input files.
-    
-    
-    for (File ff: inputFiles) {
-      fileCount++;
-      lineCount = 0;
+    public TfidfIndexer(String dest, int ngramSize) throws IOException {
+      super(dest, ngramSize);
+    }
 
-      // read all training documents into a string
-      BufferedReader in = 
-          new BufferedReader(
-              new InputStreamReader(
-                  new FileInputStream(ff), 
-                  "UTF-8"));
-
-      //<start id="lucene.examples.tfidf.train"/>
-      StringBuilder content = new StringBuilder();
-      String category = null;
-      while ((line = in.readLine()) != null) {
-        String[] parts = line.split("\t"); //<co id="luc.tf.content"/>
-        if (parts.length != 2) continue;
-        category = parts[0];
-        categories.add(category);
-        content.append(parts[1]).append(" ");
-        lineCount++;
+    @Override
+    public void process(String label, File inputFile) {
+      StringBuilder b = content.get(label);
+      if (b == null) {
+        b = new StringBuilder();
+        content.put(label, b);
       }
-      
-      in.close();
-
-      Document d = new Document(); //<co id="luc.tf.document"/>
-      id.setValue(category + "-" + lineCount);
-      categoryField.setValue(category);
-      contentField.setValue(content.toString());
-      d.add(id);
-      d.add(categoryField);
-      d.add(contentField);
-      
-      writer.addDocument(d); //<co id="luc.tf.index"/>
-      /*<calloutlist>
-        <callout arearefs="luc.tf.content">Collect Content</callout>
-        <callout arearefs="luc.tf.document">Build Document</callout>
-        <callout arearefs="luc.tf.index">Index Document</callout>
-       </calloutlist>*/
-      //<end id="lucene.examples.tfidf.train"/>
-      
-      log.info("TfIdf: Added document for category " + category + " with " + lineCount + " lines");
+      if (b.length() > 0) {
+        b.append("\n");
+      }
+      b.append(inputFile);
     }
-    
-    writer.commit(generateUserData(categories));
-    
-    log.info("TfIdf: Added " + fileCount + " categories in " + (System.currentTimeMillis() - start) + " msec.");
-  }
 
-  
-  
-  protected void openIndexWriter(String pathname) throws IOException {
-    //<start id="lucene.examples.index.setup"/>
-    Directory directory //<co id="luc.index.dir"/>
-      = FSDirectory.open(new File(pathname));
-    Analyzer analyzer   //<co id="luc.index.analyzer"/>
-      = new EnglishAnalyzer(Version.LUCENE_36);
-    
-    if (nGramSize > 1) { //<co id="luc.index.shingle"/>
-      ShingleAnalyzerWrapper sw 
-        = new ShingleAnalyzerWrapper(analyzer,
-            nGramSize, // min shingle size
-            nGramSize, // max shingle size
-            "-",       // token separator
-            true,      // output unigrams
-            true);     // output unigrams if no shingles
-      analyzer = sw;
+    public void close() throws IOException {
+      //<start id="lucene.examples.tfidf.train"/>
+      for (Map.Entry<String, StringBuilder> e: content.entrySet()) { //<co id="luc.tf.content"/>
+        String category = e.getKey();
+        categories.add(category);
+        Document d = new Document(); //<co id="luc.tf.document"/>
+        id.setValue(category);
+        categoryField.setValue(e.getKey());
+        contentField.setValue(e.getValue().toString());
+        d.add(id);
+        d.add(categoryField);
+        d.add(contentField);
+
+        writer.addDocument(d); //<co id="luc.tf.index"/>
+        
+        /*<calloutlist>
+          <callout arearefs="luc.tf.content">Collect Content</callout>
+          <callout arearefs="luc.tf.document">Build Document</callout>
+          <callout arearefs="luc.tf.index">Index Document</callout>
+         </calloutlist>*/
+        //<end id="lucene.examples.tfidf.train"/>
+
+        log.info("TfIdf: Added document for category " + category);
+      }
+
+      super.close();
     }
-    
-    IndexWriterConfig config //<co id="luc.index.create"/>
-      = new IndexWriterConfig(Version.LUCENE_36, analyzer);
-    config.setOpenMode(OpenMode.CREATE);
-    IndexWriter writer =  new IndexWriter(directory, config);
-    /* <calloutlist>
-    <callout arearefs="luc.index.dir">Create Index Directory</callout>
-    <callout arearefs="luc.index.analyzer">Setup Analyzer</callout>
-    <callout arearefs="luc.index.shingle">Setup Shingle Filter</callout>
-    <callout arearefs="luc.index.create">Create <classname>IndexWriter</classname></callout>
-    </calloutlist> */
-    //<end id="lucene.examples.index.setup"/>
-    this.writer = writer;
   }
 
-  protected void closeIndexWriter() throws IOException {
-    log.info("Starting optimize");
-    
-    // optimize and close the index.
-    writer.optimize();
-    writer.close();
-    writer = null;
-    
-    log.info("Optimize complete, index closed"); 
-  }
-  
   protected static Map<String, String> generateUserData(Collection<String> categories) {
     StringBuilder b = new StringBuilder();
     for (String cat: categories) {

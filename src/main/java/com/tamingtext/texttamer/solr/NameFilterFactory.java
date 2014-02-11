@@ -19,30 +19,27 @@
 
 package com.tamingtext.texttamer.solr;
 
+import com.tamingtext.util.NameFinderFactory;
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.util.TokenFilterFactory;
+
 import java.io.IOException;
 import java.util.Map;
 
-import org.apache.lucene.analysis.TokenStream;
-import org.apache.solr.analysis.BaseTokenFilterFactory;
-
-import com.tamingtext.util.NameFinderFactory;
-
-public class NameFilterFactory extends BaseTokenFilterFactory {
+public class NameFilterFactory extends TokenFilterFactory {
   private NameFinderFactory factory;
 
-  public void init(Map<String, String> args) {
-    super.init(args);
-
+  public NameFilterFactory(Map<String, String> args) {
+    super(args);
     try {
       factory = new NameFinderFactory(args);
-    }
-    catch (IOException e) {
+    } catch (IOException e) {
       throw (RuntimeException) new RuntimeException().initCause(e);
     }
   }
 
   public NameFilter create(TokenStream ts) {
     return new NameFilter(ts,
-        factory.getModelNames(), factory.getNameFinders());
+            factory.getModelNames(), factory.getNameFinders());
   }
 }

@@ -21,16 +21,18 @@ package com.tamingtext.qa;
 
 
 import com.tamingtext.texttamer.solr.NameFilter;
+import org.apache.lucene.index.AtomicReaderContext;
+import org.apache.lucene.index.DocsAndPositionsEnum;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.index.TermEnum;
-import org.apache.lucene.index.TermVectorMapper;
-import org.apache.lucene.index.TermVectorOffsetInfo;
+import org.apache.lucene.index.Terms;
+import org.apache.lucene.index.TermsEnum;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.spans.SpanNearQuery;
 import org.apache.lucene.search.spans.SpanQuery;
 import org.apache.lucene.search.spans.SpanTermQuery;
 import org.apache.lucene.search.spans.Spans;
+import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.PriorityQueue;
 import org.apache.solr.common.SolrException;
 import org.apache.solr.common.params.CommonParams;
@@ -51,6 +53,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -108,93 +111,96 @@ public class PassageRankingComponent extends SearchComponent implements PluginIn
       SpanNearQuery sQuery = (SpanNearQuery) origQuery;
       SolrIndexSearcher searcher = rb.req.getSearcher();
       IndexReader reader = searcher.getIndexReader();
-      Spans spans = sQuery.getSpans(reader);
-      //Assumes the query is a SpanQuery
-      //Build up the query term weight map and the bi-gram
-      Map<String, Float> termWeights = new HashMap<String, Float>();
-      Map<String, Float> bigramWeights = new HashMap<String, Float>();
-      createWeights(params.get(CommonParams.Q), sQuery, termWeights, bigramWeights, reader);
-      float adjWeight = params.getFloat(ADJACENT_WEIGHT, DEFAULT_ADJACENT_WEIGHT);
-      float secondAdjWeight = params.getFloat(SECOND_ADJ_WEIGHT, DEFAULT_SECOND_ADJACENT_WEIGHT);
-      float bigramWeight = params.getFloat(BIGRAM_WEIGHT, DEFAULT_BIGRAM_WEIGHT);
-      //get the passages
-      int primaryWindowSize = params.getInt(QAParams.PRIMARY_WINDOW_SIZE, DEFAULT_PRIMARY_WINDOW_SIZE);
-      int adjacentWindowSize = params.getInt(QAParams.ADJACENT_WINDOW_SIZE, DEFAULT_ADJACENT_WINDOW_SIZE);
-      int secondaryWindowSize = params.getInt(QAParams.SECONDARY_WINDOW_SIZE, DEFAULT_SECONDARY_WINDOW_SIZE);
-      WindowBuildingTVM tvm = new WindowBuildingTVM(primaryWindowSize, adjacentWindowSize, secondaryWindowSize);
-      PassagePriorityQueue rankedPassages = new PassagePriorityQueue();
-      //intersect w/ doclist
-      DocList docList = rb.getResults().docList;
-      while (spans.next() == true) {
-        //build up the window
-        if (docList.exists(spans.doc())) {
-          tvm.spanStart = spans.start();
-          tvm.spanEnd = spans.end();
-          reader.getTermFreqVector(spans.doc(), sQuery.getField(), tvm);
-          //The entries map contains the window, do some ranking of it
-          if (tvm.passage.terms.isEmpty() == false) {
-            log.debug("Candidate: Doc: {} Start: {} End: {} ",
-                    new Object[]{spans.doc(), spans.start(), spans.end()});
+      List<AtomicReaderContext> leaves = reader.getContext().leaves();
+      for (AtomicReaderContext leaf : leaves) {
+        Spans spans = sQuery.getSpans(leaf, null, null);
+        //Assumes the query is a SpanQuery
+        //Build up the query term weight map and the bi-gram
+        Map<String, Float> termWeights = new HashMap<String, Float>();
+        Map<String, Float> bigramWeights = new HashMap<String, Float>();
+        createWeights(params.get(CommonParams.Q), sQuery, termWeights, bigramWeights, reader);
+        float adjWeight = params.getFloat(ADJACENT_WEIGHT, DEFAULT_ADJACENT_WEIGHT);
+        float secondAdjWeight = params.getFloat(SECOND_ADJ_WEIGHT, DEFAULT_SECOND_ADJACENT_WEIGHT);
+        float bigramWeight = params.getFloat(BIGRAM_WEIGHT, DEFAULT_BIGRAM_WEIGHT);
+        //get the passages
+        int primaryWindowSize = params.getInt(QAParams.PRIMARY_WINDOW_SIZE, DEFAULT_PRIMARY_WINDOW_SIZE);
+        int adjacentWindowSize = params.getInt(QAParams.ADJACENT_WINDOW_SIZE, DEFAULT_ADJACENT_WINDOW_SIZE);
+        int secondaryWindowSize = params.getInt(QAParams.SECONDARY_WINDOW_SIZE, DEFAULT_SECONDARY_WINDOW_SIZE);
+        WindowBuildingTVM tvm = new WindowBuildingTVM(primaryWindowSize, adjacentWindowSize, secondaryWindowSize);
+        PassagePriorityQueue rankedPassages = new PassagePriorityQueue();
+        //intersect w/ doclist
+        DocList docList = rb.getResults().docList;
+        while (spans.next() == true) {
+          //build up the window
+          if (docList.exists(spans.doc())) {
+            tvm.spanStart = spans.start();
+            tvm.spanEnd = spans.end();
+            Terms termVector = reader.getTermVector(spans.doc(), sQuery.getField());
+            tvm.createWindow(termVector);
+            //The entries map contains the window, do some ranking of it
+            if (tvm.passage.terms.isEmpty() == false) {
+              log.debug("Candidate: Doc: {} Start: {} End: {} ",
+                      new Object[]{spans.doc(), spans.start(), spans.end()});
+            }
+            tvm.passage.lDocId = spans.doc();
+            tvm.passage.field = sQuery.getField();
+            //score this window
+            try {
+              addPassage(tvm.passage, rankedPassages, termWeights, bigramWeights, adjWeight, secondAdjWeight, bigramWeight);
+            } catch (CloneNotSupportedException e) {
+              throw new SolrException(SolrException.ErrorCode.SERVER_ERROR, "Internal error cloning Passage", e);
+            }
+            //clear out the entries for the next round
+            tvm.passage.clear();
           }
-          tvm.passage.lDocId = spans.doc();
-          tvm.passage.field = sQuery.getField();
-          //score this window
-          try {
-            addPassage(tvm.passage, rankedPassages, termWeights, bigramWeights, adjWeight, secondAdjWeight, bigramWeight);
-          } catch (CloneNotSupportedException e) {
-            throw new SolrException(SolrException.ErrorCode.SERVER_ERROR, "Internal error cloning Passage", e);
-          }
-          //clear out the entries for the next round
-          tvm.passage.clear();
         }
-      }
-      NamedList qaResp = new NamedList();
-      rb.rsp.add("qaResponse", qaResp);
-      int rows = params.getInt(QA_ROWS, 5);
+        NamedList qaResp = new NamedList();
+        rb.rsp.add("qaResponse", qaResp);
+        int rows = params.getInt(QA_ROWS, 5);
 
-      SchemaField uniqField = rb.req.getSchema().getUniqueKeyField();
-      if (rankedPassages.size() > 0) {
-        int size = Math.min(rows, rankedPassages.size());
-        Set<String> fields = new HashSet<String>();
-        for (int i = size - 1; i >= 0; i--) {
-          Passage passage = rankedPassages.pop();
-          if (passage != null) {
-            NamedList passNL = new NamedList();
-            qaResp.add(("answer"), passNL);
-            String idName;
-            String idValue;
-            if (uniqField != null) {
-              idName = uniqField.getName();
-              fields.add(idName);
-              fields.add(passage.field);//prefetch this now, so that it is cached
-              idValue = searcher.doc(passage.lDocId, fields).get(idName);
-            } else {
-              idName = "luceneDocId";
-              idValue = String.valueOf(passage.lDocId);
-            }
-            passNL.add(idName, idValue);
-            passNL.add("field", passage.field);
-            //get the window
-            String fldValue = searcher.doc(passage.lDocId, fields).get(passage.field);
-            if (fldValue != null) {
-              //get the window of words to display, we don't use the passage window, as that is based on the term vector
-              int start = passage.terms.first().start;//use the offsets
-              int end = passage.terms.last().end;
-              if (start >= 0 && start < fldValue.length() &&
-                      end >= 0 && end < fldValue.length()) {
-                passNL.add("window", fldValue.substring(start, end + passage.terms.last().term.length()));
+        SchemaField uniqField = rb.req.getSchema().getUniqueKeyField();
+        if (rankedPassages.size() > 0) {
+          int size = Math.min(rows, rankedPassages.size());
+          Set<String> fields = new HashSet<String>();
+          for (int i = size - 1; i >= 0; i--) {
+            Passage passage = rankedPassages.pop();
+            if (passage != null) {
+              NamedList passNL = new NamedList();
+              qaResp.add(("answer"), passNL);
+              String idName;
+              String idValue;
+              if (uniqField != null) {
+                idName = uniqField.getName();
+                fields.add(idName);
+                fields.add(passage.field);//prefetch this now, so that it is cached
+                idValue = searcher.doc(passage.lDocId, fields).get(idName);
               } else {
-                log.debug("Passage does not have correct offset information");
-                passNL.add("window", fldValue);//we don't have offsets, or they are incorrect, return the whole field value
+                idName = "luceneDocId";
+                idValue = String.valueOf(passage.lDocId);
               }
+              passNL.add(idName, idValue);
+              passNL.add("field", passage.field);
+              //get the window
+              String fldValue = searcher.doc(passage.lDocId, fields).get(passage.field);
+              if (fldValue != null) {
+                //get the window of words to display, we don't use the passage window, as that is based on the term vector
+                int start = passage.terms.first().start;//use the offsets
+                int end = passage.terms.last().end;
+                if (start >= 0 && start < fldValue.length() &&
+                        end >= 0 && end < fldValue.length()) {
+                  passNL.add("window", fldValue.substring(start, end + passage.terms.last().term.length()));
+                } else {
+                  log.debug("Passage does not have correct offset information");
+                  passNL.add("window", fldValue);//we don't have offsets, or they are incorrect, return the whole field value
+                }
+              }
+            } else {
+              break;
             }
-          } else {
-            break;
           }
         }
       }
     }
-
 
   }
 
@@ -338,14 +344,16 @@ public class PassageRankingComponent extends SearchComponent implements PluginIn
 
   protected float calculateWeight(Term term, IndexReader reader) throws IOException {
     //if a term is not in the index, then it's weight is 0
-    TermEnum termEnum = reader.terms(term);
-    if (termEnum != null && termEnum.term() != null && termEnum.term().equals(term)) {
-      return 1.0f / termEnum.docFreq();
+    if (term != null) {
+      int docFreq = reader.docFreq(term);
+      if (docFreq > 0) {
+        return 1.0f / docFreq;
+      } else {
+        return 0;
+      }
     } else {
-      log.warn("Couldn't find doc freq for term {}", term);
       return 0;
     }
-
   }
 
   class Passage implements Cloneable {
@@ -409,12 +417,16 @@ public class PassageRankingComponent extends SearchComponent implements PluginIn
 
   class PassagePriorityQueue extends PriorityQueue<Passage> {
 
+    public PassagePriorityQueue(int maxSize, boolean prepopulate) {
+      super(maxSize, prepopulate);
+    }
+
     PassagePriorityQueue() {
-      initialize(10);
+      super(10);
     }
 
     PassagePriorityQueue(int maxSize) {
-      initialize(maxSize);
+      super(maxSize);
     }
 
     public int capacity() {
@@ -437,7 +449,7 @@ public class PassageRankingComponent extends SearchComponent implements PluginIn
    * The PassageRankingTVM is a Lucene TermVectorMapper that builds a five different windows around a matching term.
    * This Window can then be used to rank the passages
    */
-  class WindowBuildingTVM extends TermVectorMapper {
+  class WindowBuildingTVM {
     //spanStart and spanEnd are the start and positions of where the match occurred in the document
     //from these values, we can calculate the windows
     int spanStart, spanEnd;
@@ -452,64 +464,67 @@ public class PassageRankingComponent extends SearchComponent implements PluginIn
       passage = new Passage();//reuse the passage, since it will be cloned if it makes it onto the priority queue
     }
 
-    public void map(String term, int frequency, TermVectorOffsetInfo[] offsets, int[] positions) {
-      if (positions.length > 0 && term.startsWith(NameFilter.NE_PREFIX) == false && term.startsWith(NE_PREFIX_LOWER) == false) {//filter out the types, as we don't need them here
-        //construct the windows, which means we need a bunch of bracketing variables to know what window we are in
-
-        //start and end of the primary window
-        int primStart = spanStart - primaryWS;
-        int primEnd = spanEnd + primaryWS;
-        // stores the start and end of the adjacent previous and following
-        int adjLBStart = primStart - adjWS;
-        int adjLBEnd = primStart - 1;//don't overlap
-        int adjUBStart = primEnd + 1;//don't o
-        int adjUBEnd = primEnd + adjWS;
-        //stores the start and end of the secondary previous and the secondary following
-        int secLBStart = adjLBStart - secWS;
-        int secLBEnd = adjLBStart - 1; //don't overlap the adjacent window
-        int secUBStart = adjUBEnd + 1;
-        int secUBEnd = adjUBEnd + secWS;
-        WindowTerm lastWT = null;
-        for (int i = 0; i < positions.length; i++) {//unfortunately, we still have to loop over the positions
-          //we'll make this inclusive of the boundaries, do an upfront check here so we can skip over anything that is outside of all windows
-          if (positions[i] >= secLBStart && positions[i] <= secUBEnd) {
-            //fill in the windows
-            WindowTerm wt;
-            //offsets aren't required, but they are nice to have
-            if (offsets != null){
-              wt = new WindowTerm(term, positions[i], offsets[i].getStartOffset(), offsets[i].getEndOffset());
-            } else {
-              wt = new WindowTerm(term, positions[i]);
-            }
-            if (positions[i] >= primStart && positions[i] <= primEnd) {//are we in the primary window
-              passage.terms.add(wt);
-              //we are only going to keep bigrams for the primary window.  You could do it for the other windows, too
-              if (lastWT != null) {
-                WindowTerm bigramWT = new WindowTerm(lastWT.term + "," + term, lastWT.position);//we don't care about offsets for bigrams
-                passage.bigrams.add(bigramWT);
+    public void createWindow(Terms termVector) throws IOException {
+      if (termVector.hasFreqs() && termVector.hasPositions()) {
+        TermsEnum iterator = termVector.iterator(null);
+        BytesRef next = null;
+        while ((next = iterator.next()) != null) {
+          String term = next.utf8ToString();
+          if (term.startsWith(NameFilter.NE_PREFIX) == false && term.startsWith(NE_PREFIX_LOWER) == false) {//filter out the types, as we don't need them here
+            DocsAndPositionsEnum docsEnum = iterator.docsAndPositions(null, null);
+            if (docsEnum != null) {
+              docsEnum.nextDoc();//position this.  TODO: is this right?  kind of confusing that we got a Terms for the specific doc and then we have to position it?
+              //construct the windows, which means we need a bunch of bracketing variables to know what window we are in
+              //start and end of the primary window
+              int primStart = spanStart - primaryWS;
+              int primEnd = spanEnd + primaryWS;
+              // stores the start and end of the adjacent previous and following
+              int adjLBStart = primStart - adjWS;
+              int adjLBEnd = primStart - 1;//don't overlap
+              int adjUBStart = primEnd + 1;//don't o
+              int adjUBEnd = primEnd + adjWS;
+              //stores the start and end of the secondary previous and the secondary following
+              int secLBStart = adjLBStart - secWS;
+              int secLBEnd = adjLBStart - 1; //don't overlap the adjacent window
+              int secUBStart = adjUBEnd + 1;
+              int secUBEnd = adjUBEnd + secWS;
+              for (int i = 0; i < docsEnum.freq(); i++) {
+                int position = docsEnum.nextPosition();//TODO: check for -1?
+                WindowTerm lastWT = null;
+                //we'll make this inclusive of the boundaries, do an upfront check here so we can skip over anything that is outside of all windows
+                if (position >= secLBStart && position <= secUBEnd) {
+                  //fill in the windows
+                  WindowTerm wt;
+                  //offsets aren't required, but they are nice to have
+                  if (docsEnum.startOffset() != -1) {
+                    wt = new WindowTerm(term, position, docsEnum.startOffset(), docsEnum.endOffset());
+                  } else {
+                    wt = new WindowTerm(term, position);
+                  }
+                  if (position >= primStart && position <= primEnd) {//are we in the primary window
+                    passage.terms.add(wt);
+                    //we are only going to keep bigrams for the primary window.  You could do it for the other windows, too
+                    if (lastWT != null) {
+                      WindowTerm bigramWT = new WindowTerm(lastWT.term + "," + term, lastWT.position);//we don't care about offsets for bigrams
+                      passage.bigrams.add(bigramWT);
+                    }
+                    lastWT = wt;
+                  } else if (position >= secLBStart && position <= secLBEnd) {//are we in the secondary previous window?
+                    passage.secPrevTerms.add(wt);
+                  } else if (position >= secUBStart && position <= secUBEnd) {//are we in the secondary following window?
+                    passage.secFollowTerms.add(wt);
+                  } else if (position >= adjLBStart && position <= adjLBEnd) {//are we in the adjacent previous window?
+                    passage.prevTerms.add(wt);
+                  } else if (position >= adjUBStart && position <= adjUBEnd) {//are we in the adjacent following window?
+                    passage.followTerms.add(wt);
+                  }
+                }
               }
-              lastWT = wt;
-            } else if (positions[i] >= secLBStart && positions[i] <= secLBEnd) {//are we in the secondary previous window?
-              passage.secPrevTerms.add(wt);
-            } else if (positions[i] >= secUBStart && positions[i] <= secUBEnd) {//are we in the secondary following window?
-              passage.secFollowTerms.add(wt);
-            } else if (positions[i] >= adjLBStart && positions[i] <= adjLBEnd) {//are we in the adjacent previous window?
-              passage.prevTerms.add(wt);
-            } else if (positions[i] >= adjUBStart && positions[i] <= adjUBEnd) {//are we in the adjacent following window?
-              passage.followTerms.add(wt);
             }
           }
         }
       }
     }
-
-
-
-    public void setExpectations(String field, int numTerms, boolean storeOffsets, boolean storePositions) {
-      // do nothing for this example
-      //See also the PositionBasedTermVectorMapper.
-    }
-
   }
 
   class WindowTerm implements Cloneable, Comparable<WindowTerm> {
@@ -562,10 +577,6 @@ public class PassageRankingComponent extends SearchComponent implements PluginIn
     return "$Revision:$";
   }
 
-  @Override
-  public String getSourceId() {
-    return "$Id:$";
-  }
 
   @Override
   public String getSource() {

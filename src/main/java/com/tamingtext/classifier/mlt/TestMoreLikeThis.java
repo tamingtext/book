@@ -33,6 +33,7 @@ import org.apache.commons.cli2.builder.GroupBuilder;
 import org.apache.commons.cli2.commandline.Parser;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
+import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
@@ -140,9 +141,9 @@ public class TestMoreLikeThis {
       }
 
       Directory directory = FSDirectory.open(new File(modelPath));
-      IndexReader indexReader = IndexReader.open(directory);
+      DirectoryReader indexReader = DirectoryReader.open(directory);
       Analyzer analyzer   //<co id="mlt.analyzersetup"/>
-        = new EnglishAnalyzer(Version.LUCENE_36);
+        = new EnglishAnalyzer(Version.LUCENE_47);
       
       MoreLikeThisCategorizer categorizer 
         = new MoreLikeThisCategorizer(indexReader, categoryField);

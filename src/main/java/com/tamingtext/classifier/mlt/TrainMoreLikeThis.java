@@ -173,6 +173,8 @@ public class TrainMoreLikeThis {
 
     @Override
     public void process(String category, File inputFile) throws IOException {
+      final Set<String> categories = new HashSet<String>();
+      
       //<start id="lucene.examples.knn.train"/>
       String content = TwentyNewsgroupsCorpus.readFile(inputFile, true);
       categories.add(category);

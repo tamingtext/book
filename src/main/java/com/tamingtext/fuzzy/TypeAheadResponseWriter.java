@@ -21,7 +21,7 @@ package com.tamingtext.fuzzy;
 
 import org.apache.lucene.document.Document;
 import org.apache.solr.common.util.NamedList;
-import org.apache.solr.request.QueryResponseWriter;
+import org.apache.solr.response.QueryResponseWriter;
 import org.apache.solr.request.SolrQueryRequest;
 import org.apache.solr.search.DocIterator;
 import org.apache.solr.search.DocList;

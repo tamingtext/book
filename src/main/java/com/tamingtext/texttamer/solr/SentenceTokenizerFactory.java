@@ -19,31 +19,30 @@
 
 package com.tamingtext.texttamer.solr;
 
+import com.tamingtext.util.SentenceDetectorFactory;
+import org.apache.lucene.analysis.Tokenizer;
+import org.apache.lucene.analysis.util.TokenizerFactory;
+import org.apache.lucene.util.AttributeSource;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Map;
 
-import org.apache.solr.analysis.BaseTokenizerFactory;
-
-import com.tamingtext.util.SentenceDetectorFactory;
-
-public class SentenceTokenizerFactory extends BaseTokenizerFactory {
+public class SentenceTokenizerFactory extends TokenizerFactory {
 
   SentenceDetectorFactory sentenceDetectorFactory;
-  
-  @Override
-  public void init(Map<String,String> args) {
-    super.init(args);
-    
+
+  public SentenceTokenizerFactory(Map<String, String> args) {
+    super(args);
     try {
       sentenceDetectorFactory = new SentenceDetectorFactory(args);
-    }
-    catch (IOException e) {
+    } catch (IOException e) {
       throw (RuntimeException) new RuntimeException().initCause(e);
     }
   }
 
-  public SentenceTokenizer create(Reader input) {
-    return new SentenceTokenizer(input, sentenceDetectorFactory.getSentenceDetector());
+  @Override
+  public Tokenizer create(AttributeSource.AttributeFactory attributeFactory, Reader reader) {
+    return new SentenceTokenizer(reader, sentenceDetectorFactory.getSentenceDetector());
   }
 }

@@ -33,7 +33,7 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.queryParser.ParseException;
+
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.spans.SpanNearQuery;
 import org.apache.lucene.search.spans.SpanQuery;
@@ -44,6 +44,7 @@ import org.apache.solr.common.params.SolrParams;
 import org.apache.solr.request.SolrQueryRequest;
 import org.apache.solr.schema.SchemaField;
 import org.apache.solr.search.QParser;
+import org.apache.solr.search.SyntaxError;
 
 /**
  * The QuestionQParser takes in a natural language question and produces a Lucene {@link org.apache.lucene.search.spans.SpanNearQuery}
@@ -65,7 +66,7 @@ public class QuestionQParser extends QParser implements QAParams  {
   }
 
   @Override
-  public Query parse() throws ParseException {
+  public Query parse() throws SyntaxError {
 
     //<start id="qqp.parse"/>
     Parse parse = ParserTool.parseLine(qstr, parser, 1)[0];//<co id="qqp.parseLine"/>
@@ -106,7 +107,7 @@ public class QuestionQParser extends QParser implements QAParams  {
         sql.add(new SpanTermQuery(new Term(field, term)));
       }
     } catch (IOException e) {
-      throw new ParseException(e.getLocalizedMessage());
+      throw new SyntaxError(e.getLocalizedMessage());
     }
     return new SpanNearQuery(sql.toArray(new SpanQuery[sql.size()]), params.getInt(QAParams.SLOP, 10), true);//<co id="qqp.spanNear"/>
     /*

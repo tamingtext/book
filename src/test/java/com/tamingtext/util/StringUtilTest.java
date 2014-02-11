@@ -50,7 +50,7 @@ public class StringUtilTest extends TamingTextTestJ4 {
   @Test
   public void testLuceneStandardTokenizer() throws Exception {
     String[] gold = {"I", "can't", "beleive", "that", "the", "Carolina", "Hurricanes", "won", "the", "2005", "2006", "Stanley", "Cup",};
-    StandardTokenizer tokenizer = new StandardTokenizer(Version.LUCENE_36, new StringReader("I can't beleive that the Carolina Hurricanes won the 2005-2006 Stanley Cup."));
+    StandardTokenizer tokenizer = new StandardTokenizer(Version.LUCENE_47, new StringReader("I can't beleive that the Carolina Hurricanes won the 2005-2006 Stanley Cup."));
     List<String> result = new ArrayList<String>();
     while (tokenizer.incrementToken()) {
       result.add(((CharTermAttribute) tokenizer.getAttribute(CharTermAttribute.class)).toString());
@@ -67,7 +67,7 @@ public class StringUtilTest extends TamingTextTestJ4 {
     String[] gold = {"Last", "week", "the", "National", "Football", "League", "crowned", "a", "new", "Super", "Bowl", "Champion",
             "Minnesota", "Vikings", "fans", "will", "take", "little", "solace", "in", "the", "fact", "that", "they",
             "lost", "to", "the", "eventual", "champion", "in", "the", "playoffs"};
-    StandardTokenizer tokenizer = new StandardTokenizer(Version.LUCENE_36, new StringReader("Last week the National Football League crowned a new Super Bowl Champion." +
+    StandardTokenizer tokenizer = new StandardTokenizer(Version.LUCENE_47, new StringReader("Last week the National Football League crowned a new Super Bowl Champion." +
             "  Minnesota Vikings fans will take little solace in the fact that they" +
             " lost to the eventual champion in the playoffs."));
     List<String> result = new ArrayList<String>();

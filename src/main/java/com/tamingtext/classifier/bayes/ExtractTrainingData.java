@@ -60,6 +60,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.io.Closeables;
 
+
 /** A utility to extract training data from a Lucene index using document term vectors to recreate the list of terms
  *  found in each document. Writes output in Mahout Document Sequence File Format with the category and id as the key and the text as the value */
 public class ExtractTrainingData extends Configured implements Tool {

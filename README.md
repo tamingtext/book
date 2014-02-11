@@ -3,10 +3,19 @@ designed to teach software engineers the basic concepts of working
 with text to solve search and Natural Language Processing problems.
 The book focuses on teaching using existing open source libraries like
 Apache Solr, Apache Mahout and Apache OpenNLP to manipulate text.  To
-learn more, visit http://www.manning.com/ingersoll.
+learn more or to purchase, visit http://www.manning.com/ingersoll.
+
+First Edition
+=============
+
+Please note, if you wish to use the code that goes with the First Edition
+of Taming Text, please refer to the https://github.com/tamingtext/book/tree/taming-text-1_0 tag.
+
+The Master branch has diverged from the first edition code.
+
 
 Getting Started
----------------
+=============
 
 Throughout this document, TT_HOME is the directory containing the
 checkout of the Taming Text code base.
@@ -40,7 +49,7 @@ started, you will need:
    tar -xf WordNet-3.0.tar.gz
 
 Building the Source
--------------------
+===================
 
 Prior to building the source, for those previously unfamiliar with Maven,
 it may be wise to read this to avoid future hassles:
@@ -51,7 +60,7 @@ To build the source, in TT_HOME:
    mvn clean package 
 
 Running the Examples
---------------------
+===================
 
 Many of the examples can be run via the 'tt' script in the TT_HOME/bin
 directory. Running this script without arguments will display a list

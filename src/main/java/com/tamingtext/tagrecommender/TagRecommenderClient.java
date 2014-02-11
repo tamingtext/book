@@ -120,10 +120,10 @@ public class TagRecommenderClient {
 
   /** A priority queue for holding only the highest ranked ScoreTags */
   public static class ScoreTagQueue extends PriorityQueue<ScoreTag> {
-    public ScoreTagQueue(int size) {
-      this.initialize(size);
+    public ScoreTagQueue(int maxSize) {
+      super(maxSize);
     }
-    
+
     @Override
     protected boolean lessThan(ScoreTag a, ScoreTag b) {
       if (a.count == b.count) {

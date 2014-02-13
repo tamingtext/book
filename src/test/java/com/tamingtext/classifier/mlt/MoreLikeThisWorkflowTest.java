@@ -55,7 +55,7 @@ public class MoreLikeThisWorkflowTest {
         "--input", "src/test/resources/classifier/mlt/sample-data",
         "--output", "target/mlt-workflow/tfidf-model",
         "--gramSize", "2",
-        "--classifierType", "knn"
+        "--classifierType", "tfidf"
     };
     TrainMoreLikeThis.main(trainArgs);
     
@@ -63,7 +63,7 @@ public class MoreLikeThisWorkflowTest {
         "--input", "src/test/resources/classifier/mlt/sample-data",
         "--model", "target/mlt-workflow/tfidf-model",
         "--gramSize", "2",
-        "--classifierType", "knn",
+        "--classifierType", "tfidf",
         "--contentField", "content",
         "--categoryField", "category"
     };

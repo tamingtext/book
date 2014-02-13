@@ -43,6 +43,7 @@ public class CategoryHits extends ClassifierResult {
   
   public void incrementScore(double score) {
     this.setScore(this.getScore() + score);
+    this.hits++;
   }
   
   public static Comparator<CategoryHits> comparatorForMode(MatchMode mode) {

@@ -45,19 +45,14 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.shingle.ShingleAnalyzerWrapper;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
-import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.index.MultiFields;
-import org.apache.lucene.index.Term;
 import org.apache.lucene.index.Terms;
 import org.apache.lucene.index.TermsEnum;
 import org.apache.lucene.queries.mlt.MoreLikeThis;
-import org.apache.lucene.search.BooleanClause;
-import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
-
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.mahout.common.CommandLineUtil;
@@ -81,7 +76,7 @@ public class MoreLikeThisCategorizer {
   int maxResults = 10;
   
   public MoreLikeThisCategorizer(DirectoryReader indexReader, String categoryFieldName) throws IOException {
-    this.indexReader   = indexReader;  //TODO: Drew, I had to change this to DirectoryReader, but wonder if there is a better way.
+    this.indexReader   = indexReader;
     this.indexSearcher = new IndexSearcher(indexReader);
     this.moreLikeThis  = new MoreLikeThis(indexReader);
     this.categoryFieldName = categoryFieldName;
@@ -98,11 +93,12 @@ public class MoreLikeThisCategorizer {
     if (categoryString == null) {
       scanCategories();
       return;
-      
+    }
+    else {
+      log.info("Categories extracted from commit data: " + categoryString);
     }
     
     String[] parts = categoryString.split("\\|");
-    
     if (parts.length < 1) {
       scanCategories();
       return;
@@ -114,7 +110,8 @@ public class MoreLikeThisCategorizer {
   
   /** populate the list of categories by reading the values from the categoryField in the index */
   protected void scanCategories() throws IOException {
-
+    log.info("Scanning index for category data.");
+    
     Terms terms = MultiFields.getTerms(indexReader, categoryFieldName);
     final Set<String> c = categories;
     TermsEnum te = terms.iterator(null);
@@ -164,19 +161,20 @@ public class MoreLikeThisCategorizer {
       sw = new ShingleAnalyzerWrapper(a, size, size);
       moreLikeThis.setAnalyzer(sw);
     }
-    //TODO: Drew, not sure how this used to work, as we never did anything with the newly created Analyzer
   }
   
   public CategoryHits[] categorize(Reader reader) throws IOException {
-    BooleanQuery bq = new BooleanQuery();
-    for (String fieldName : moreLikeThis.getFieldNames()) {
-      Query query = moreLikeThis.like(reader, fieldName);
-      bq.add(new BooleanClause(query, BooleanClause.Occur.SHOULD));//TODO: Drew, does this need to be a must?
+    if (matchMode == MatchMode.TFIDF) {
+      moreLikeThis.setMinTermFreq(1);
+      moreLikeThis.setMinDocFreq(1);
     }
 
-    HashMap<String, CategoryHits> categoryHash = new HashMap<String, CategoryHits>(25);
+    Query query = moreLikeThis.like(reader, null);
+    log.info("Categorization query is: " + query);
+
+    HashMap<String, CategoryHits> categoryHash = new HashMap<String, CategoryHits>(categories.size());
     
-    for (ScoreDoc sd: indexSearcher.search(bq, maxResults).scoreDocs) {
+    for (ScoreDoc sd: indexSearcher.search(query, maxResults).scoreDocs) {
       String cat = getDocClass(sd.doc);
       if (cat == null) continue;
       CategoryHits ch = categoryHash.get(cat);

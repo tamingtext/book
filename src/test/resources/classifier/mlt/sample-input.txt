@@ -1,2 +1,53 @@
- From: schaerer@isi.ethz.ch (Thomas Schaerer) Subject: Re: Voltage regulation and current limiting Organization: Swiss Federal Institute of Technology (ETH), Zurich, CH X-Newsreader: TIN [version 1.1 PL9] Lines: 21 Andy Collins (acollins@uclink.berkeley.edu) wrote: : One not-so-quick question to throw out there for you guys... : For our class project, we need to design and build a power supply : to the following specs: : Voltatge: adjustable from 1-12V : Current: *limited* at 1A : Voltage must stay within 2% of designated value for I from 0-1A : AC ripple less than 5 mV (rms) To decide which kind of circuit you must know the initialprecission of the limiter-current and the allowed temp-drift. In the first case, you can use a Ube of a transistor as a voltage-reference of about 0.7 VDC with a temp-drift of 2mV/K. In the second case its better you use a bandgap-ref and a opamp-circuit to detect the maximum-current. The output of this opamp controlls the outputstage to limit the current. Bye Thomas`
+From: pgf@srl03.cacs.usl.edu (Phil G. Fraering)
+Subject: Re: Space Marketing would be wonderfull.
+Organization: Univ. of Southwestern Louisiana
+Lines: 50
 
+stange@meena.cc.uregina.ca writes:
+
+>Phil, your point is well taken.  It is still a sad idea.
+
+I'm worried by the concern about it though, for a number of reasons
+that have nothing to do with Space Advertising (which for a number of
+reasons is probably doomed to fail on financial grounds).
+
+(And I've been reading and (and writing) this thread since way
+back when it was only on sci.space).
+
+For starters, I don't think the piece of light-pollution apparatus
+would be as bright as the full moon. _That_ seems to me to be a bit
+of propaganda on the part of opponents, or wishful thinking on the
+part of proponents.
+
+Second, this charge of ruining the night sky permanently has been
+levelled against other projects, that either 1) don't increace light
+pollution significantly, or 2) increace light pollution only over the
+target area.
+
+You may or may not recognize #1 as being Solar Power Sattelites.
+I think it was Josh Hopkins who actually did the math, showing that
+SPS's weren't that bright after all, ending some two months of frenzied
+opposition on the part of dark-sky activists and various other types.
+
+#2 is mainly projects like the orbiting mirror the CIS tested
+recently.  While slightly more worrisome, I'd like to point out that
+any significant scattering of light outside the target area for one of
+these mirrors would be wasted as far as the project would be
+concerned, and something any project like that would work against
+anyway. And given some of the likely targets, I don't think there's
+going to be much of an outcry from the inhabitants. There is too much
+dark sky in the northern CIS during the winter, and I doubt you'll find
+many activists in Murmansk demanding the "natural" sky back. If anything,
+he'll probably be inside, stripped buck naked in front of the UV lamp,
+making sure he'll get enough vitamin D for the "day."
+
+The mirror experiments aren't something they're doing for crass
+advertising. They think that if they can build one, it'll be one of
+those things people in the affected areas will think they couldn't
+have lived without before. And I doubt anyone's going to really be
+able to convince them to stop.
+
+
+--
+Phil Fraering         |"Number one good faith! You convert,
+pgf@srl02.cacs.usl.edu|you not tortured by demons!" - anon. Mahen missionary

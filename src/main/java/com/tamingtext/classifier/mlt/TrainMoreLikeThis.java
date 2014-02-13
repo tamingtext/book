@@ -40,6 +40,9 @@ import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.analysis.shingle.ShingleAnalyzerWrapper;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.document.Field.Store;
+import org.apache.lucene.document.FieldType;
+import org.apache.lucene.document.StringField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
@@ -100,24 +103,40 @@ public class TrainMoreLikeThis {
     protected IndexWriter writer;
     protected final Set<String> categories = new HashSet<String>();
     
-    // reuse these fields
-    //<start id="lucene.examples.fields"/>
-    Field id = new Field("id", "", Field.Store.YES, 
-        Field.Index.NOT_ANALYZED, Field.TermVector.NO);
-    Field categoryField = new Field("category", "", Field.Store.YES, 
-        Field.Index.NOT_ANALYZED, Field.TermVector.NO);
-    Field contentField = new Field("content", "", Field.Store.NO, 
-        Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-    //<end id="lucene.examples.fields"/>
+    protected Field idField;
+    protected Field categoryField;
+    protected Field contentField;
+    {
+      //<start id="lucene.examples.fields"/>
+      FieldType contentFieldType = new FieldType();
+      contentFieldType.setStored(true);
+      contentFieldType.setIndexed(true);
+      contentFieldType.setTokenized(true);
+      contentFieldType.setStoreTermVectors(true);
+      contentFieldType.setStoreTermVectorPositions(true);
+      contentFieldType.setStoreTermVectorOffsets(true);
+      contentFieldType.freeze();
+      
+      Field idField = new StringField("id", "", Store.YES);
+      Field categoryField = new StringField("category", "", Store.YES);
+      Field contentField  = new Field("content", "", contentFieldType);
+      //<end id="lucene.examples.fields"/>
+      
+      // for the sake of example clarity.
+      this.idField = idField;
+      this.categoryField = categoryField;
+      this.contentField = contentField;
+    }
     
     Analyzer analyzer;
 
+    @SuppressWarnings("resource")
     public IndexingCallback(String pathname, int nGramSize) throws IOException {
     //<start id="lucene.examples.index.setup"/>
       Directory directory //<co id="luc.index.dir"/>
         = FSDirectory.open(new File(pathname));
       Analyzer analyzer   //<co id="luc.index.analyzer"/>
-        = new EnglishAnalyzer(Version.LUCENE_36);
+        = new EnglishAnalyzer(Version.LUCENE_47);
       
       if (nGramSize > 1) { //<co id="luc.index.shingle"/>
         ShingleAnalyzerWrapper sw = new ShingleAnalyzerWrapper(analyzer,
@@ -130,7 +149,7 @@ public class TrainMoreLikeThis {
       }
       
       IndexWriterConfig config //<co id="luc.index.create"/>
-        = new IndexWriterConfig(Version.LUCENE_36, analyzer);
+        = new IndexWriterConfig(Version.LUCENE_47, analyzer);
       config.setOpenMode(OpenMode.CREATE);
       IndexWriter writer =  new IndexWriter(directory, config);
       /* <calloutlist>
@@ -147,7 +166,8 @@ public class TrainMoreLikeThis {
     public void close() throws IOException {
       log.info("Starting optimize");
       
-      writer.commit(generateUserData(categories));
+      writer.setCommitData(generateUserData(categories));
+      writer.commit();
       
       // optimize and close the index.
       writer.close();
@@ -173,17 +193,15 @@ public class TrainMoreLikeThis {
 
     @Override
     public void process(String category, File inputFile) throws IOException {
-      final Set<String> categories = new HashSet<String>();
-      
       //<start id="lucene.examples.knn.train"/>
       String content = TwentyNewsgroupsCorpus.readFile(inputFile, true);
       categories.add(category);
 
       Document d = new Document(); //<co id="luc.knn.document"/>
-      id.setValue(category + "-" + inputFile.getName());
-      categoryField.setValue(category);
-      contentField.setValue(content);
-      d.add(id);
+      idField.setStringValue(category + "-" + inputFile.getName());
+      categoryField.setStringValue(category);
+      contentField.setStringValue(content);
+      d.add(idField);
       d.add(categoryField);
       d.add(contentField);
       
@@ -217,7 +235,7 @@ public class TrainMoreLikeThis {
     }
 
     @Override
-    public void process(String label, File inputFile) {
+    public void process(String label, File inputFile) throws IOException {
       StringBuilder b = content.get(label);
       if (b == null) {
         b = new StringBuilder();
@@ -226,19 +244,20 @@ public class TrainMoreLikeThis {
       if (b.length() > 0) {
         b.append("\n");
       }
-      b.append(inputFile);
+      b.append(TwentyNewsgroupsCorpus.readFile(inputFile, false));
     }
 
     public void close() throws IOException {
       //<start id="lucene.examples.tfidf.train"/>
       for (Map.Entry<String, StringBuilder> e: content.entrySet()) { //<co id="luc.tf.content"/>
         String category = e.getKey();
+        String content  = e.getValue().toString();
         categories.add(category);
         Document d = new Document(); //<co id="luc.tf.document"/>
-        id.setValue(category);
-        categoryField.setValue(e.getKey());
-        contentField.setValue(e.getValue().toString());
-        d.add(id);
+        idField.setStringValue(category);
+        categoryField.setStringValue(category);
+        contentField.setStringValue(content);
+        d.add(idField);
         d.add(categoryField);
         d.add(contentField);
 
@@ -251,7 +270,7 @@ public class TrainMoreLikeThis {
          </calloutlist>*/
         //<end id="lucene.examples.tfidf.train"/>
 
-        log.info("TfIdf: Added document for category " + category);
+        log.info("TFIDF: Added document for category " + category);
       }
 
       super.close();
@@ -266,6 +285,7 @@ public class TrainMoreLikeThis {
     b.setLength(b.length()-1);
     Map<String, String> userData = new HashMap<String, String>();
     userData.put(CATEGORY_KEY, b.toString());
+    log.info("Categories are: " + userData.get(CATEGORY_KEY));
     return userData;
   }
 

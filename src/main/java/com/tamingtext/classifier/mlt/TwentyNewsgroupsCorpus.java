@@ -9,7 +9,7 @@ import java.io.Reader;
 import org.apache.log4j.Logger;
 
 import com.google.common.io.CharStreams;
-import com.google.common.io.Closeables;
+import com.google.common.io.Closer;
 
 /** Encapsulates knowledge of the structure of to 20 newsgroups
  *  corpus.
@@ -79,9 +79,11 @@ public class TwentyNewsgroupsCorpus {
    */
   public static String readFile(File dataFile, boolean includeHeader) throws IOException {
     StringBuilder b = new StringBuilder();
-    Reader r = new FileReader(dataFile);
-    
+
+    Closer closer = Closer.create();
     try {
+      Reader r = new FileReader(dataFile);
+      closer.register(r);
       CharStreams.copy(r, b);
       int pos = 0;
       
@@ -98,7 +100,7 @@ public class TwentyNewsgroupsCorpus {
       }
     }
     finally {
-      Closeables.closeQuietly(r);
+      closer.close();
     }
   }
 }

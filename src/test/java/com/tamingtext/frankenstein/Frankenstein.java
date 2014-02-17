@@ -20,29 +20,6 @@
 package com.tamingtext.frankenstein;
 
 
-import opennlp.tools.namefind.NameFinderME;
-import opennlp.tools.namefind.TokenNameFinderModel;
-import opennlp.tools.sentdetect.SentenceDetector;
-import opennlp.tools.sentdetect.SentenceDetectorME;
-import opennlp.tools.sentdetect.SentenceModel;
-import opennlp.tools.tokenize.SimpleTokenizer;
-import opennlp.tools.tokenize.Tokenizer;
-import opennlp.tools.util.Span;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.NumericField;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.queryParser.QueryParser;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TopDocs;
-import org.apache.lucene.store.RAMDirectory;
-import org.apache.lucene.util.Version;
-import org.apache.poi.hwpf.usermodel.Paragraph;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -54,6 +31,33 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import opennlp.tools.namefind.NameFinderME;
+import opennlp.tools.namefind.TokenNameFinderModel;
+import opennlp.tools.sentdetect.SentenceDetector;
+import opennlp.tools.sentdetect.SentenceDetectorME;
+import opennlp.tools.sentdetect.SentenceModel;
+import opennlp.tools.tokenize.SimpleTokenizer;
+import opennlp.tools.tokenize.Tokenizer;
+import opennlp.tools.util.Span;
+
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.IntField;
+import org.apache.lucene.document.StringField;
+import org.apache.lucene.document.TextField;
+import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.store.RAMDirectory;
+import org.apache.lucene.util.Version;
 
 /**
  * Parse Frankenstein book (located in the test resources folder), identifies sentences and then
@@ -137,7 +141,8 @@ public class Frankenstein {
   private Results search(String queryStr) throws IOException, ParseException {
     System.out.println("Searching for: " + queryStr);
     if (searcher == null) {
-      searcher = new IndexSearcher(directory, true);
+      IndexReader reader = DirectoryReader.open(directory);
+      searcher = new IndexSearcher(reader);
     }
     Results result = new Results();
     QueryParser qp = new QueryParser(Version.LUCENE_47, "paragraph", new StandardAnalyzer(Version.LUCENE_47));
@@ -184,7 +189,7 @@ public class Frankenstein {
         theString.trim();
         if (theString.length() > 0 && theString.matches("^\\s*$") == false) {
           addMetadata(doc, lines, paragraphs, paragraphLines);
-          doc.add(new Field("paragraph", theString, Field.Store.YES, Field.Index.ANALYZED));//add the main content
+          doc.add(new TextField("paragraph", theString, Field.Store.YES));//add the main content
           iw.addDocument(doc);//Index the document
           paragraphs++;
         }
@@ -202,16 +207,10 @@ public class Frankenstein {
   }
 
   private void addMetadata(Document doc, int lines, int paragraphs, int paragraphLines) {
-    doc.add(new Field("id", "frank_" + paragraphs, Field.Store.YES, Field.Index.NOT_ANALYZED));
-    NumericField startLine = new NumericField("startLine", Field.Store.YES, true);
-    startLine.setIntValue(lines - paragraphLines);
-    doc.add(startLine);
-    NumericField finishLine = new NumericField("finishLine", Field.Store.YES, true);
-    finishLine.setIntValue(lines);
-    doc.add(finishLine);
-    NumericField paragraphNumber = new NumericField("paragraphNumber", Field.Store.YES, true);
-    paragraphNumber.setIntValue(paragraphs);
-    doc.add(paragraphNumber);
+    doc.add(new StringField("id", "frank_" + paragraphs, Field.Store.YES));
+    doc.add(new IntField("startLine", (lines - paragraphLines), Field.Store.YES));
+    doc.add(new IntField("finishLine", lines, Field.Store.YES));
+    doc.add(new IntField("paragraphNumber", paragraphs, Field.Store.YES));
   }
 
   /**

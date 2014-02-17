@@ -21,7 +21,6 @@ package com.tamingtext.qa;
 
 
 import org.apache.lucene.index.Term;
-import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.spans.SpanNearQuery;
 import org.apache.lucene.search.spans.SpanQuery;
@@ -31,6 +30,7 @@ import org.apache.solr.common.util.NamedList;
 import org.apache.solr.request.SolrQueryRequest;
 import org.apache.solr.search.QParser;
 import org.apache.solr.search.QParserPlugin;
+import org.apache.solr.search.SyntaxError;
 
 /**
  *
@@ -64,7 +64,7 @@ public class MockQuestionQParserPlugin extends QParserPlugin{
     }
 
     @Override
-    public Query parse() throws ParseException {
+    public Query parse() throws SyntaxError {
       SpanQuery[] clauses = null;
       if (qstr.indexOf("hockey") != -1){
         clauses = new SpanQuery[2];

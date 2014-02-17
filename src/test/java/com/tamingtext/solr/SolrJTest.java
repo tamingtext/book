@@ -33,14 +33,13 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.embedded.JettySolrRunner;
-import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.solr.common.util.DateUtil;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
 
 public class SolrJTest extends BaseDistributedSearchTestCase {
   private transient static Log log = LogFactory.getLog(SolrJTest.class);
@@ -79,7 +78,7 @@ public class SolrJTest extends BaseDistributedSearchTestCase {
     runner = createJetty(home, "target/solrjtest-data");
     port = runner.getLocalPort();
     
-    solr = new CommonsHttpSolrServer(new URL("http://localhost:" + port + "/solr"));
+    solr = new HttpSolrServer("http://localhost:" + port + "/solr");
     //clean out all the docs
     solr.deleteByQuery("*:*");
     solr.commit();
@@ -116,7 +115,7 @@ public class SolrJTest extends BaseDistributedSearchTestCase {
             "Fans everywhere were appalled by the revelations, with " +
             "allegiances falling roughly along species lines.";
     //<start id="solrj"/>
-    SolrServer solr = new CommonsHttpSolrServer(new URL("http://localhost:" + port + "/solr"));//<co id="co.solrj.server"/>
+    SolrServer solr = new HttpSolrServer("http://localhost:" + port + "/solr");//<co id="co.solrj.server"/>
     SolrInputDocument doc = new SolrInputDocument();
     doc.addField("id", "http://tortoisehare5k.tamingtext.com");//<co id="co.solrj.unique"/>
     doc.addField("mimeType", "text/plain");

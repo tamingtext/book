@@ -145,7 +145,8 @@ public class NameFilterTest extends TamingTextTestJ4 {
       
       in.close();
       in = new StringReader(input);
-      tok.reset(in);
+      tok.setReader(in);
+      tok.reset();
       pass++;
     }
   }

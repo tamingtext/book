@@ -27,9 +27,11 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 
+import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
 import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
+import org.apache.lucene.util.AttributeSource;
 import org.junit.Test;
 
 import com.tamingtext.TamingTextTestJ4;
@@ -52,16 +54,11 @@ public class SentenceTokenizerTest extends TamingTextTestJ4 {
 
     
     File modelsDir = getModelDir();
-    
-    SentenceTokenizerFactory factory = 
-      new SentenceTokenizerFactory();
-    
     Map<String, String> args = new HashMap<String, String>();
-    
     args.put("modelDirectory", modelsDir.getAbsolutePath());
-    factory.init(args);
     
-    SentenceTokenizer tok = factory.create(new StringReader(inputString));
+    SentenceTokenizerFactory factory = new SentenceTokenizerFactory(args);
+    Tokenizer tok = factory.create(AttributeSource.AttributeFactory.DEFAULT_ATTRIBUTE_FACTORY, new StringReader(inputString));
     
     CharTermAttribute cta;
     PositionIncrementAttribute pta;
@@ -94,7 +91,8 @@ public class SentenceTokenizerTest extends TamingTextTestJ4 {
       }
       
       tok.end();
-      tok.reset(new StringReader(inputString));
+      tok.setReader(new StringReader(inputString));
+      tok.reset();
       pass++;
     }
     

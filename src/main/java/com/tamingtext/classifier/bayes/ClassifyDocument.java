@@ -20,7 +20,6 @@
 package com.tamingtext.classifier.bayes;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 
 import org.apache.commons.cli2.CommandLine;
@@ -41,7 +40,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ClassifyDocument {
   
-  private static final Logger log = LoggerFactory.getLogger(ExtractTrainingDataToFiles.class);
+  private static final Logger log = LoggerFactory.getLogger(ClassifyDocument.class);
   
   public static void main(String[] args) {
     log.info("Command-line arguments: " + Arrays.toString(args));

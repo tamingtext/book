@@ -144,7 +144,8 @@ public class TrainMoreLikeThis {
               nGramSize, // max shingle size
               "-",       // token separator
               true,      // output unigrams
-              true);     // output unigrams if no shingles
+              true,      // output unigrams if no shingles
+              "_");      // filler token
         analyzer = sw;
       }
       

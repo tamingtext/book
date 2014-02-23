@@ -31,17 +31,19 @@ import opennlp.tools.util.Span;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.document.NumericField;
+import org.apache.lucene.document.IntField;
+import org.apache.lucene.document.StringField;
+import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
-import org.apache.poi.hwpf.usermodel.Paragraph;
+
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -134,10 +136,10 @@ public class Frankenstein {
    * @throws IOException
    * @throws ParseException
    */
-  private Results search(String queryStr) throws IOException, ParseException {
+  private Results search(String queryStr) throws IOException, ParseException{
     System.out.println("Searching for: " + queryStr);
     if (searcher == null) {
-      searcher = new IndexSearcher(directory, true);
+      searcher = new IndexSearcher(DirectoryReader.open(directory));
     }
     Results result = new Results();
     QueryParser qp = new QueryParser(Version.LUCENE_47, "paragraph", new StandardAnalyzer(Version.LUCENE_47));
@@ -202,15 +204,15 @@ public class Frankenstein {
   }
 
   private void addMetadata(Document doc, int lines, int paragraphs, int paragraphLines) {
-    doc.add(new Field("id", "frank_" + paragraphs, Field.Store.YES, Field.Index.NOT_ANALYZED));
-    NumericField startLine = new NumericField("startLine", Field.Store.YES, true);
-    startLine.setIntValue(lines - paragraphLines);
+    Field idField = new StringField("id", "frank_" + paragraphs, Field.Store.YES);
+    doc.add(idField);
+    Field startLine = new IntField("startLine", lines - paragraphLines, Field.Store.YES);
+
     doc.add(startLine);
-    NumericField finishLine = new NumericField("finishLine", Field.Store.YES, true);
-    finishLine.setIntValue(lines);
+    Field finishLine = new IntField("finishLine", lines, Field.Store.YES);
+
     doc.add(finishLine);
-    NumericField paragraphNumber = new NumericField("paragraphNumber", Field.Store.YES, true);
-    paragraphNumber.setIntValue(paragraphs);
+    Field paragraphNumber = new IntField("paragraphNumber", paragraphs, Field.Store.YES);
     doc.add(paragraphNumber);
   }
 

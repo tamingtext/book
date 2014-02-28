@@ -136,7 +136,7 @@ public class TrainMoreLikeThis {
       Directory directory //<co id="luc.index.dir"/>
         = FSDirectory.open(new File(pathname));
       Analyzer analyzer   //<co id="luc.index.analyzer"/>
-        = new EnglishAnalyzer(Version.LUCENE_47);
+        = new EnglishAnalyzer(Version.LUCENE_46);
       
       if (nGramSize > 1) { //<co id="luc.index.shingle"/>
         ShingleAnalyzerWrapper sw = new ShingleAnalyzerWrapper(analyzer,
@@ -144,13 +144,12 @@ public class TrainMoreLikeThis {
               nGramSize, // max shingle size
               "-",       // token separator
               true,      // output unigrams
-              true,      // output unigrams if no shingles
-              "_");      // filler token
+              true);      // output unigrams if no shingles
         analyzer = sw;
       }
       
       IndexWriterConfig config //<co id="luc.index.create"/>
-        = new IndexWriterConfig(Version.LUCENE_47, analyzer);
+        = new IndexWriterConfig(Version.LUCENE_46, analyzer);
       config.setOpenMode(OpenMode.CREATE);
       IndexWriter writer =  new IndexWriter(directory, config);
       /* <calloutlist>

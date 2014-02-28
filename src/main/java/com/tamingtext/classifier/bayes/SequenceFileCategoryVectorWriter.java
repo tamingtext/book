@@ -37,7 +37,7 @@ public class SequenceFileCategoryVectorWriter extends SequenceFileVectorWriter {
       if (point != null) {
         if (point instanceof NamedVector) {
           NamedVector nv = (NamedVector) point;
-          writer.append(new Text(nv.getName()), nv);
+          writer.append(new Text(nv.getName()), new VectorWritable(point));
         }
         else {
           writer.append(new Text(String.valueOf(recNum++)), new VectorWritable(point));

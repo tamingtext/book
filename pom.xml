@@ -9,9 +9,9 @@
   <url>http://www.tamingtext.com</url>
 
   <properties>
-     <lucene.version>4.7-SNAPSHOT</lucene.version>
+     <lucene.version>4.6.1</lucene.version>
      <tika.version>1.4</tika.version>
-     <mahout.version>0.8</mahout.version>
+     <mahout.version>0.9</mahout.version>
      <release.update.interval>daily</release.update.interval>
      <snapshot.update.interval>interval:60</snapshot.update.interval>
      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -145,7 +145,7 @@
       </build>
     </profile>
   </profiles>
-  
+
   <dependencies>
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -176,10 +176,10 @@
       <version>1.1</version>
     </dependency>
 
-    <!-- Solr -->
+    <!-- Lucene and Solr Test Frameworks must appear first -->
     <dependency>
-      <groupId>org.apache.solr</groupId>
-      <artifactId>solr-clustering</artifactId>
+      <groupId>org.apache.lucene</groupId>
+      <artifactId>lucene-test-framework</artifactId>
       <version>${lucene.version}</version>
       <exclusions>
         <exclusion>
@@ -190,123 +190,8 @@
           <groupId>org.slf4j</groupId>
           <artifactId>slf4j-jdk14</artifactId>
         </exclusion>
-        <exclusion>
-          <groupId>org.apache.solr</groupId>
-          <artifactId>solr-carrot2-core</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>jcl-over-slf4j</artifactId>
-        </exclusion>
       </exclusions>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.solr</groupId>
-      <artifactId>solr-dataimporthandler</artifactId>
-      <version>${lucene.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-jdk14</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.solr</groupId>
-          <artifactId>solr-carrot2-core</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>jcl-over-slf4j</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.solr</groupId>
-      <artifactId>solr-dataimporthandler-extras</artifactId>
-      <version>${lucene.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-jdk14</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.solr</groupId>
-          <artifactId>solr-carrot2-core</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>jcl-over-slf4j</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.solr</groupId>
-      <artifactId>solr-cell</artifactId>
-      <version>${lucene.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-jdk14</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>jcl-over-slf4j</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.solr</groupId>
-      <artifactId>solr-solrj</artifactId>
-      <version>${lucene.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-jdk14</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>jcl-over-slf4j</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.solr</groupId>
-      <artifactId>solr-core</artifactId>
-      <version>${lucene.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-jdk14</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>jcl-over-slf4j</artifactId>
-        </exclusion>
-      </exclusions>
+      <scope>test</scope>
     </dependency>
 
     <dependency>
@@ -518,7 +403,7 @@
 
     <dependency>
       <groupId>org.apache.lucene</groupId>
-      <artifactId>lucene-test-framework</artifactId>
+      <artifactId>lucene-benchmark</artifactId>
       <version>${lucene.version}</version>
       <exclusions>
         <exclusion>
@@ -530,12 +415,12 @@
           <artifactId>slf4j-jdk14</artifactId>
         </exclusion>
       </exclusions>
-      <scope>test</scope>
     </dependency>
 
+    <!-- Solr -->
     <dependency>
-      <groupId>org.apache.lucene</groupId>
-      <artifactId>lucene-benchmark</artifactId>
+      <groupId>org.apache.solr</groupId>
+      <artifactId>solr-clustering</artifactId>
       <version>${lucene.version}</version>
       <exclusions>
         <exclusion>
@@ -545,6 +430,122 @@
         <exclusion>
           <groupId>org.slf4j</groupId>
           <artifactId>slf4j-jdk14</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.solr</groupId>
+          <artifactId>solr-carrot2-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jcl-over-slf4j</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.solr</groupId>
+      <artifactId>solr-dataimporthandler</artifactId>
+      <version>${lucene.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-jdk14</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.solr</groupId>
+          <artifactId>solr-carrot2-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jcl-over-slf4j</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.solr</groupId>
+      <artifactId>solr-dataimporthandler-extras</artifactId>
+      <version>${lucene.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-jdk14</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.solr</groupId>
+          <artifactId>solr-carrot2-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jcl-over-slf4j</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.solr</groupId>
+      <artifactId>solr-cell</artifactId>
+      <version>${lucene.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-jdk14</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jcl-over-slf4j</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.solr</groupId>
+      <artifactId>solr-solrj</artifactId>
+      <version>${lucene.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-jdk14</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jcl-over-slf4j</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.solr</groupId>
+      <artifactId>solr-core</artifactId>
+      <version>${lucene.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-jdk14</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jcl-over-slf4j</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -613,6 +614,7 @@
         </exclusion>
       </exclusions>
     </dependency>
+
     <dependency>
       <groupId>org.apache.mahout</groupId>
       <artifactId>mahout-math</artifactId>
@@ -628,11 +630,18 @@
         </exclusion>
       </exclusions>
     </dependency>
+    
+    <dependency>
+        <groupId>org.apache.avro</groupId>
+        <artifactId>avro</artifactId>
+        <version>1.7.4</version>
+    </dependency>
+    
     <!-- Carrot2 -->
     <dependency>
       <groupId>org.carrot2</groupId>
       <artifactId>carrot2-core</artifactId>
-      <version>3.6.0</version>
+      <version>3.9.0</version>
       <exclusions>
         <exclusion>
           <groupId>org.apache.lucene</groupId>

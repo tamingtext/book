@@ -101,7 +101,7 @@ public class OverlapMeasures {
         return new TokenStreamComponents(new PatternTokenizer(reader, pattern, 0));
       }
     };
-    IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_47, analyzer);
+    IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_46, analyzer);
     IndexWriter writer = new IndexWriter(directory, conf);
     for (String term : terms) {
       Document doc = new Document();
@@ -115,7 +115,7 @@ public class OverlapMeasures {
     for (int i = 0; i < topDocs.scoreDocs.length; i++) {
       System.out.println("Id: " + topDocs.scoreDocs[i].doc + " Val: " + searcher.doc(topDocs.scoreDocs[i].doc).get("chars"));
     }
-    QueryParser qp = new QueryParser(Version.LUCENE_47, "chars", analyzer);
+    QueryParser qp = new QueryParser(Version.LUCENE_46, "chars", analyzer);
     Query query = qp.parse(queryTerm);
     return searcher.search(query, n);
   }

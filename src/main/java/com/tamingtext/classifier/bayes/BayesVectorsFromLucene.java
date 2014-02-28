@@ -175,13 +175,17 @@ public final class BayesVectorsFromLucene {
 
     Option fieldOpt = obuilder.withLongName("field").withRequired(true).withArgument(
         abuilder.withName("field").withMinimum(1).withMaximum(1).create()).withDescription(
-        "The field in the index").withShortName("f").create();
+        "The field in the index containing the content to extract.").withShortName("f").create();
 
     Option idFieldOpt = obuilder.withLongName("idField").withRequired(false).withArgument(
         abuilder.withName("idField").withMinimum(1).withMaximum(1).create()).withDescription(
-        "The field in the index containing the index.  If null, then the Lucene internal doc "
+        "The field in the index containing the document identifier.  If null, then the Lucene internal doc "
             + "id is used which is prone to error if the underlying index changes").create();
 
+    Option categoryFieldOpt = obuilder.withLongName("categoryField").withRequired(true).withArgument(
+        abuilder.withName("idField").withMinimum(1).withMaximum(1).create()).withDescription(
+        "The field in the index containing the category.").create();
+    
     Option dictOutOpt = obuilder.withLongName("dictOut").withRequired(true).withArgument(
         abuilder.withName("dictOut").withMinimum(1).withMaximum(1).create()).withDescription(
         "The output of the dictionary").withShortName("t").create();
@@ -229,7 +233,7 @@ public final class BayesVectorsFromLucene {
     Group group = gbuilder.withName("Options").withOption(inputOpt).withOption(idFieldOpt).withOption(
         outputOpt).withOption(delimiterOpt).withOption(helpOpt).withOption(fieldOpt).withOption(maxOpt)
         .withOption(dictOutOpt).withOption(seqDictOutOpt).withOption(powerOpt).withOption(maxDFPercentOpt)
-        .withOption(weightOpt).withOption(minDFOpt).withOption(maxPercentErrorDocsOpt).create();
+        .withOption(weightOpt).withOption(minDFOpt).withOption(maxPercentErrorDocsOpt).withOption(categoryFieldOpt).create();
 
     try {
       Parser parser = new Parser();
@@ -275,6 +279,10 @@ public final class BayesVectorsFromLucene {
 
         if (cmdLine.hasOption(idFieldOpt)) {
           luceneDriver.setIdField(cmdLine.getValue(idFieldOpt).toString());
+        }
+
+        if (cmdLine.hasOption(categoryFieldOpt)) {
+          luceneDriver.setCategoryField(cmdLine.getValue(categoryFieldOpt).toString());
         }
 
         if (cmdLine.hasOption(maxPercentErrorDocsOpt)) {

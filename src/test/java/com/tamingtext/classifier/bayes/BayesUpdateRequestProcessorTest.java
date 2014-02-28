@@ -19,12 +19,13 @@
 
 package com.tamingtext.classifier.bayes;
 
-import org.apache.solr.SolrTestCaseJ4;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.tamingtext.TTTestCaseJ4;
 
-public class BayesUpdateRequestProcessorTest extends SolrTestCaseJ4 {
+
+public class BayesUpdateRequestProcessorTest extends TTTestCaseJ4 {
   @BeforeClass
   public static void beforeClass() throws Exception {
     initCore("bayes-update-config.xml", 

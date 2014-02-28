@@ -38,4 +38,5 @@ public class TTTestCaseJ4 extends SolrTestCaseJ4 {
     TamingTextTestJ4.setUp();
   }
 
+
 }

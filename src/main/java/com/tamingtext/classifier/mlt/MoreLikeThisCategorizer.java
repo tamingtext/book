@@ -154,7 +154,7 @@ public class MoreLikeThisCategorizer {
     if (a instanceof ShingleAnalyzerWrapper) {
       sw = (ShingleAnalyzerWrapper) a;
       if (sw.getMaxShingleSize() != size || sw.getMinShingleSize() != size){
-        moreLikeThis.setAnalyzer(sw.getWrappedAnalyzer(""));//there is only one delegate for the SAW, so no problem passing anything
+        moreLikeThis.setAnalyzer(a);
       }
     }
     else {

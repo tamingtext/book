@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.google.common.io.Closer;
 import com.tamingtext.TTTestCaseJ4;
 
 public class BayesVectorsFromLuceneTest extends TTTestCaseJ4 {
@@ -34,9 +35,16 @@ public class BayesVectorsFromLuceneTest extends TTTestCaseJ4 {
   public static String readFile(File file) throws IOException {
     StringBuilder buf = new StringBuilder();
     String line;
-    BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
-    while ((line = r.readLine()) != null) {
-      buf.append(line); 
+    Closer c = Closer.create();
+    try {
+      BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+      c.register(r);
+      while ((line = r.readLine()) != null) {
+        buf.append(line); 
+      }
+    }
+    finally {
+      c.close();
     }
     return buf.toString();
   }

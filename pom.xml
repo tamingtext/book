@@ -9,7 +9,7 @@
   <url>http://www.tamingtext.com</url>
 
   <properties>
-     <lucene.version>4.7-SNAPSHOT</lucene.version>
+     <lucene.version>4.7.0</lucene.version>
      <tika.version>1.4</tika.version>
      <mahout.version>0.8</mahout.version>
      <release.update.interval>daily</release.update.interval>

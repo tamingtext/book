@@ -10,7 +10,7 @@ INSTANCE=$1;
 
 if [ "x$INSTANCE" == "x" ]; then
   echo "Usage: start-solr.sh (instance), where instance is one of:"
-  echo "    solr-qa, solr-clustering, solr-tagging"
+  echo "    solr-qa, solr-clustering, solr-tagging, example"
   exit
 fi
 
@@ -26,10 +26,15 @@ fi
 
 DEBUG_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044"
 
-exec java \
+if [ $INSTANCE == "example" ]; then
+  exec java -Xmx1024M $DEBUG_OPTS -jar start.jar
+else
+  exec java \
   -Xmx1024M $DEBUG_OPTS \
   -Dsolr.solr.home=../${INSTANCE} \
   -Dsolr.data.dir=../${INSTANCE}/data \
   -Dmodel.dir=../../opennlp-models \
   -Dwordnet.dir=../../WordNet-3.0 \
   -jar start.jar
+
+fi

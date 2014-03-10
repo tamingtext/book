@@ -21,6 +21,8 @@
   <field name="id">F8V7067-APL-KIT</field>
   <field name="name">Belkin Mobile Power Cord for iPod w/ Dock</field>
   <field name="manu">Belkin</field>
+  <!-- Join -->
+  <field name="manu_id_s">belkin</field>
   <field name="cat">electronics</field>
   <field name="cat">connector</field>
   <field name="features">car power adapter, white</field>
@@ -29,7 +31,7 @@
   <field name="popularity">1</field>
   <field name="inStock">false</field>
   <!-- Buffalo store -->
-  <field name="store">45.17614,-93.87341</field>
+  <field name="store">45.18014,-93.87741</field>
   <field name="manufacturedate_dt">2005-08-01T16:30:25Z</field>
 </doc>
 
@@ -37,6 +39,8 @@
   <field name="id">IW-02</field>
   <field name="name">iPod &amp; iPod Mini USB 2.0 Cable</field>
   <field name="manu">Belkin</field>
+  <!-- Join -->
+  <field name="manu_id_s">belkin</field>
   <field name="cat">electronics</field>
   <field name="cat">connector</field>
   <field name="features">car power adapter for iPod, white</field>

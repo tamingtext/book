@@ -14,5 +14,5 @@ apache-solr/solr-tagging/data
 apache-solr/solr-tagging/conf/dataimport.properties
 apache-solr/solr-clustering/data
 apache-solr/solr-clustering/conf/dataimport.properties
-apache-solr/example/solr/data
+apache-solr/example/solr/collection1/data
 

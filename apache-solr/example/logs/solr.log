@@ -556,3 +556,1294 @@ INFO  - 2014-03-10 06:51:59.229; org.apache.solr.core.CachingDirectoryFactory; C
 INFO  - 2014-03-10 06:51:59.229; org.apache.solr.core.CachingDirectoryFactory; looking to close /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data [CachedDir<<refCount=0;path=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data;done=false>>]
 INFO  - 2014-03-10 06:51:59.229; org.apache.solr.core.CachingDirectoryFactory; Closing directory: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data
 INFO  - 2014-03-10 06:51:59.231; org.eclipse.jetty.server.handler.ContextHandler; stopped o.e.j.w.WebAppContext{/solr,file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr-webapp/webapp/},/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/webapps/solr.war
+INFO  - 2014-03-12 05:56:34.535; org.eclipse.jetty.server.Server; jetty-8.1.10.v20130312
+INFO  - 2014-03-12 05:56:34.570; org.eclipse.jetty.deploy.providers.ScanningAppProvider; Deployment monitor /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/contexts at interval 0
+INFO  - 2014-03-12 05:56:34.581; org.eclipse.jetty.deploy.DeploymentManager; Deployable added: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/contexts/solr-jetty-context.xml
+INFO  - 2014-03-12 05:56:35.670; org.eclipse.jetty.webapp.StandardDescriptorProcessor; NO JSP Support for /solr, did not find org.apache.jasper.servlet.JspServlet
+INFO  - 2014-03-12 05:56:35.738; org.apache.solr.servlet.SolrDispatchFilter; SolrDispatchFilter.init()
+INFO  - 2014-03-12 05:56:35.758; org.apache.solr.core.SolrResourceLoader; JNDI not configured for solr (NoInitialContextEx)
+INFO  - 2014-03-12 05:56:35.758; org.apache.solr.core.SolrResourceLoader; solr home defaulted to 'solr/' (could not find system property or JNDI)
+INFO  - 2014-03-12 05:56:35.759; org.apache.solr.core.SolrResourceLoader; new SolrResourceLoader for directory: 'solr/'
+INFO  - 2014-03-12 05:56:35.902; org.apache.solr.core.ConfigSolr; Loading container configuration from /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/solr.xml
+INFO  - 2014-03-12 05:56:36.074; org.apache.solr.core.CorePropertiesLocator; Config-defined core root directory: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr
+INFO  - 2014-03-12 05:56:36.086; org.apache.solr.core.CoreContainer; New CoreContainer 1225438970
+INFO  - 2014-03-12 05:56:36.086; org.apache.solr.core.CoreContainer; Loading cores into CoreContainer [instanceDir=solr/]
+INFO  - 2014-03-12 05:56:36.099; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting socketTimeout to: 0
+INFO  - 2014-03-12 05:56:36.099; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting urlScheme to: null
+INFO  - 2014-03-12 05:56:36.103; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting connTimeout to: 0
+INFO  - 2014-03-12 05:56:36.104; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maxConnectionsPerHost to: 20
+INFO  - 2014-03-12 05:56:36.105; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting corePoolSize to: 0
+INFO  - 2014-03-12 05:56:36.106; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maximumPoolSize to: 2147483647
+INFO  - 2014-03-12 05:56:36.106; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maxThreadIdleTime to: 5
+INFO  - 2014-03-12 05:56:36.106; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting sizeOfQueue to: -1
+INFO  - 2014-03-12 05:56:36.106; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting fairnessPolicy to: false
+INFO  - 2014-03-12 05:56:36.255; org.apache.solr.logging.LogWatcher; SLF4J impl is org.slf4j.impl.Log4jLoggerFactory
+INFO  - 2014-03-12 05:56:36.256; org.apache.solr.logging.LogWatcher; Registering Log Listener [Log4j (org.slf4j.impl.Log4jLoggerFactory)]
+INFO  - 2014-03-12 05:56:36.257; org.apache.solr.core.CoreContainer; Host Name: 
+INFO  - 2014-03-12 05:56:36.304; org.apache.solr.core.CorePropertiesLocator; Looking for core definitions underneath /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr
+INFO  - 2014-03-12 05:56:36.311; org.apache.solr.core.CorePropertiesLocator; Found core collection1 in /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/
+INFO  - 2014-03-12 05:56:36.312; org.apache.solr.core.CorePropertiesLocator; Found 1 core definitions
+INFO  - 2014-03-12 05:56:36.314; org.apache.solr.core.CoreContainer; Creating SolrCore 'collection1' using instanceDir: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1
+INFO  - 2014-03-12 05:56:36.314; org.apache.solr.core.SolrResourceLoader; new SolrResourceLoader for directory: '/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/'
+INFO  - 2014-03-12 05:56:36.394; org.apache.solr.core.SolrConfig; Adding specified lib dirs to ClassLoader
+WARN  - 2014-03-12 05:56:36.395; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../../../contrib/extraction/lib (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../../../contrib/extraction/lib).
+WARN  - 2014-03-12 05:56:36.396; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../../../dist/ (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../../../dist).
+WARN  - 2014-03-12 05:56:36.396; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../../../contrib/clustering/lib/ (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../../../contrib/clustering/lib).
+WARN  - 2014-03-12 05:56:36.396; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../../../dist/ (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../../../dist).
+WARN  - 2014-03-12 05:56:36.430; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../../../contrib/langid/lib/ (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../../../contrib/langid/lib).
+WARN  - 2014-03-12 05:56:36.430; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../../../dist/ (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../../../dist).
+INFO  - 2014-03-12 05:56:36.432; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/velocity/lib/apache-solr-velocity-3.6.0.jar' to classloader
+INFO  - 2014-03-12 05:56:36.432; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/velocity/lib/commons-beanutils-1.7.0.jar' to classloader
+INFO  - 2014-03-12 05:56:36.433; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/velocity/lib/commons-collections-3.2.1.jar' to classloader
+INFO  - 2014-03-12 05:56:36.433; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/velocity/lib/velocity-1.6.4.jar' to classloader
+INFO  - 2014-03-12 05:56:36.434; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/velocity/lib/velocity-tools-2.0.jar' to classloader
+WARN  - 2014-03-12 05:56:36.436; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../../../dist/ (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../../../dist).
+INFO  - 2014-03-12 05:56:36.545; org.apache.solr.update.SolrIndexConfig; IndexWriter infoStream solr logging is enabled
+INFO  - 2014-03-12 05:56:36.551; org.apache.solr.core.SolrConfig; Using Lucene MatchVersion: LUCENE_47
+INFO  - 2014-03-12 05:56:36.671; org.apache.solr.core.SolrConfig; Loaded SolrConfig: solrconfig.xml
+INFO  - 2014-03-12 05:56:36.678; org.apache.solr.schema.IndexSchema; Reading Solr Schema from managed-schema.xml
+INFO  - 2014-03-12 05:56:36.752; org.apache.solr.schema.IndexSchema; [collection1] Schema name=example
+INFO  - 2014-03-12 05:56:37.419; org.apache.solr.schema.IndexSchema; unique key field: id
+INFO  - 2014-03-12 05:56:37.509; org.apache.solr.schema.FileExchangeRateProvider; Reloading exchange rates from file currency.xml
+INFO  - 2014-03-12 05:56:37.520; org.apache.solr.schema.FileExchangeRateProvider; Reloading exchange rates from file currency.xml
+INFO  - 2014-03-12 05:56:37.695; org.apache.solr.core.SolrCore; solr.NRTCachingDirectoryFactory
+INFO  - 2014-03-12 05:56:37.704; org.apache.solr.core.SolrCore; [collection1] Opening new SolrCore at /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/, dataDir=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/
+INFO  - 2014-03-12 05:56:37.706; org.apache.solr.core.JmxMonitoredMap; No JMX servers found, not exposing Solr information with JMX.
+INFO  - 2014-03-12 05:56:37.710; org.apache.solr.core.SolrCore; [collection1] Added SolrEventListener for newSearcher: org.apache.solr.core.QuerySenderListener{queries=[]}
+INFO  - 2014-03-12 05:56:37.710; org.apache.solr.core.SolrCore; [collection1] Added SolrEventListener for firstSearcher: org.apache.solr.core.QuerySenderListener{queries=[{q=static firstSearcher warming in solrconfig.xml}]}
+INFO  - 2014-03-12 05:56:37.721; org.apache.solr.core.CachingDirectoryFactory; return new directory for /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data
+INFO  - 2014-03-12 05:56:37.721; org.apache.solr.core.SolrCore; New index directory detected: old=null new=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index/
+INFO  - 2014-03-12 05:56:37.721; org.apache.solr.core.CachingDirectoryFactory; return new directory for /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index
+INFO  - 2014-03-12 05:56:37.731; org.apache.solr.core.SolrCore; created json: solr.JSONResponseWriter
+INFO  - 2014-03-12 05:56:37.731; org.apache.solr.core.SolrCore; adding lazy queryResponseWriter: solr.VelocityResponseWriter
+INFO  - 2014-03-12 05:56:37.732; org.apache.solr.core.SolrCore; created velocity: solr.VelocityResponseWriter
+INFO  - 2014-03-12 05:56:37.734; org.apache.solr.core.SolrCore; created xslt: solr.XSLTResponseWriter
+INFO  - 2014-03-12 05:56:37.735; org.apache.solr.response.XSLTResponseWriter; xsltCacheLifetimeSeconds=5
+INFO  - 2014-03-12 05:56:37.831; org.apache.solr.core.SolrCore; no updateRequestProcessorChain defined as default, creating implicit default
+INFO  - 2014-03-12 05:56:37.839; org.apache.solr.core.RequestHandlers; created /select: solr.SearchHandler
+INFO  - 2014-03-12 05:56:37.840; org.apache.solr.core.RequestHandlers; created /query: solr.SearchHandler
+INFO  - 2014-03-12 05:56:37.841; org.apache.solr.core.RequestHandlers; created /get: solr.RealTimeGetHandler
+INFO  - 2014-03-12 05:56:37.841; org.apache.solr.core.RequestHandlers; created /browse: solr.SearchHandler
+INFO  - 2014-03-12 05:56:37.843; org.apache.solr.core.RequestHandlers; created /update: solr.UpdateRequestHandler
+INFO  - 2014-03-12 05:56:37.843; org.apache.solr.core.RequestHandlers; created /update/json: solr.UpdateRequestHandler
+INFO  - 2014-03-12 05:56:37.844; org.apache.solr.core.RequestHandlers; created /update/csv: solr.UpdateRequestHandler
+INFO  - 2014-03-12 05:56:37.844; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.extraction.ExtractingRequestHandler
+INFO  - 2014-03-12 05:56:37.844; org.apache.solr.core.RequestHandlers; created /update/extract: solr.extraction.ExtractingRequestHandler
+INFO  - 2014-03-12 05:56:37.844; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.FieldAnalysisRequestHandler
+INFO  - 2014-03-12 05:56:37.845; org.apache.solr.core.RequestHandlers; created /analysis/field: solr.FieldAnalysisRequestHandler
+INFO  - 2014-03-12 05:56:37.845; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.DocumentAnalysisRequestHandler
+INFO  - 2014-03-12 05:56:37.845; org.apache.solr.core.RequestHandlers; created /analysis/document: solr.DocumentAnalysisRequestHandler
+INFO  - 2014-03-12 05:56:37.846; org.apache.solr.core.RequestHandlers; created /admin/: solr.admin.AdminHandlers
+INFO  - 2014-03-12 05:56:37.848; org.apache.solr.core.RequestHandlers; created /admin/ping: solr.PingRequestHandler
+INFO  - 2014-03-12 05:56:37.849; org.apache.solr.core.RequestHandlers; created /debug/dump: solr.DumpRequestHandler
+INFO  - 2014-03-12 05:56:37.863; org.apache.solr.core.RequestHandlers; created /replication: solr.ReplicationHandler
+INFO  - 2014-03-12 05:56:37.863; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.SearchHandler
+INFO  - 2014-03-12 05:56:37.863; org.apache.solr.core.RequestHandlers; created /spell: solr.SearchHandler
+INFO  - 2014-03-12 05:56:37.863; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.SearchHandler
+INFO  - 2014-03-12 05:56:37.863; org.apache.solr.core.RequestHandlers; created /suggest: solr.SearchHandler
+INFO  - 2014-03-12 05:56:37.863; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.SearchHandler
+INFO  - 2014-03-12 05:56:37.863; org.apache.solr.core.RequestHandlers; created /tvrh: solr.SearchHandler
+INFO  - 2014-03-12 05:56:37.864; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.SearchHandler
+INFO  - 2014-03-12 05:56:37.864; org.apache.solr.core.RequestHandlers; created /terms: solr.SearchHandler
+INFO  - 2014-03-12 05:56:37.864; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.SearchHandler
+INFO  - 2014-03-12 05:56:37.864; org.apache.solr.core.RequestHandlers; created /elevate: solr.SearchHandler
+INFO  - 2014-03-12 05:56:37.880; org.apache.solr.handler.loader.XMLLoader; xsltCacheLifetimeSeconds=60
+INFO  - 2014-03-12 05:56:37.882; org.apache.solr.handler.loader.XMLLoader; xsltCacheLifetimeSeconds=60
+INFO  - 2014-03-12 05:56:37.882; org.apache.solr.handler.loader.XMLLoader; xsltCacheLifetimeSeconds=60
+INFO  - 2014-03-12 05:56:37.896; org.apache.solr.update.CommitTracker; Hard AutoCommit: if uncommited for 15000ms; 
+INFO  - 2014-03-12 05:56:37.896; org.apache.solr.update.CommitTracker; Soft AutoCommit: disabled
+INFO  - 2014-03-12 05:56:37.944; org.apache.solr.core.SolrDeletionPolicy; SolrDeletionPolicy.onInit: commits: num=1
+	commit{dir=NRTCachingDirectory(NIOFSDirectory@/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index lockFactory=NativeFSLockFactory@/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index; maxCacheMB=48.0 maxMergeSizeMB=4.0),segFN=segments_1,generation=1}
+INFO  - 2014-03-12 05:56:37.945; org.apache.solr.core.SolrDeletionPolicy; newest commit generation = 1
+INFO  - 2014-03-12 05:56:37.950; org.apache.solr.search.SolrIndexSearcher; Opening Searcher@30468792[collection1] main
+INFO  - 2014-03-12 05:56:37.954; org.apache.solr.handler.component.SpellCheckComponent; Initializing spell checkers
+INFO  - 2014-03-12 05:56:37.959; org.apache.solr.spelling.DirectSolrSpellChecker; init: {name=default,field=text,classname=solr.DirectSolrSpellChecker,distanceMeasure=internal,accuracy=0.5,maxEdits=2,minPrefix=1,maxInspections=5,minQueryLength=4,maxQueryFrequency=0.01}
+INFO  - 2014-03-12 05:56:37.964; org.apache.solr.handler.component.SpellCheckComponent; No queryConverter defined, using default converter
+INFO  - 2014-03-12 05:56:37.965; org.apache.solr.handler.component.SuggestComponent; Initializing SuggestComponent
+INFO  - 2014-03-12 05:56:37.966; org.apache.solr.spelling.suggest.SolrSuggester; init: {name=mySuggester,lookupImpl=FuzzyLookupFactory,dictionaryImpl=DocumentDictionaryFactory,field=cat,weightField=price,suggestAnalyzerFieldType=string}
+INFO  - 2014-03-12 05:56:37.984; org.apache.solr.spelling.suggest.SolrSuggester; Dictionary loaded with params: {name=mySuggester,lookupImpl=FuzzyLookupFactory,dictionaryImpl=DocumentDictionaryFactory,field=cat,weightField=price,suggestAnalyzerFieldType=string}
+INFO  - 2014-03-12 05:56:37.985; org.apache.solr.handler.component.QueryElevationComponent; Loading QueryElevation from: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/conf/elevate.xml
+INFO  - 2014-03-12 05:56:38.018; org.apache.solr.handler.ReplicationHandler; Commits will be reserved for  10000
+INFO  - 2014-03-12 05:56:38.019; org.apache.solr.core.QuerySenderListener; QuerySenderListener sending requests to Searcher@30468792[collection1] main{StandardDirectoryReader(segments_1:1:nrt)}
+INFO  - 2014-03-12 05:56:38.019; org.apache.solr.core.CoreContainer; registering core: collection1
+INFO  - 2014-03-12 05:56:38.021; org.apache.solr.servlet.SolrDispatchFilter; user.dir=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example
+INFO  - 2014-03-12 05:56:38.021; org.apache.solr.servlet.SolrDispatchFilter; SolrDispatchFilter.init() done
+INFO  - 2014-03-12 05:56:38.063; org.eclipse.jetty.server.AbstractConnector; Started SocketConnector@0.0.0.0:8983
+INFO  - 2014-03-12 05:56:38.066; org.apache.solr.core.SolrCore; [collection1] webapp=null path=null params={event=firstSearcher&q=static+firstSearcher+warming+in+solrconfig.xml&distrib=false} hits=0 status=0 QTime=47 
+INFO  - 2014-03-12 05:56:38.067; org.apache.solr.core.QuerySenderListener; QuerySenderListener done.
+INFO  - 2014-03-12 05:56:38.067; org.apache.solr.handler.component.SpellCheckComponent$SpellCheckerListener; Loading spell index for spellchecker: default
+INFO  - 2014-03-12 05:56:38.067; org.apache.solr.handler.component.SpellCheckComponent$SpellCheckerListener; Loading spell index for spellchecker: wordbreak
+INFO  - 2014-03-12 05:56:38.067; org.apache.solr.handler.component.SuggestComponent$SuggesterListener; Loading suggester index for: mySuggester
+INFO  - 2014-03-12 05:56:38.067; org.apache.solr.spelling.suggest.SolrSuggester; reload()
+INFO  - 2014-03-12 05:56:38.067; org.apache.solr.spelling.suggest.SolrSuggester; build()
+INFO  - 2014-03-12 05:56:38.075; org.apache.solr.core.SolrCore; [collection1] Registered new searcher Searcher@30468792[collection1] main{StandardDirectoryReader(segments_1:1:nrt)}
+INFO  - 2014-03-12 05:57:54.847; org.apache.solr.servlet.SolrDispatchFilter; [admin] webapp=null path=/admin/cores params={indexInfo=false&_=1394618274842&wt=json} status=0 QTime=2 
+INFO  - 2014-03-12 05:57:55.057; org.apache.solr.servlet.SolrDispatchFilter; [admin] webapp=null path=/admin/info/system params={_=1394618275026&wt=json} status=0 QTime=29 
+INFO  - 2014-03-12 05:58:04.305; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/admin/file/ params={file=admin-extra.menu-top.html&_=1394618284297&contentType=text/html;charset%3Dutf-8} status=0 QTime=3 
+INFO  - 2014-03-12 05:58:04.306; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/admin/file/ params={file=admin-extra.menu-bottom.html&_=1394618284297&contentType=text/html;charset%3Dutf-8} status=0 QTime=3 
+INFO  - 2014-03-12 05:58:04.328; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/admin/luke params={numTerms=0&_=1394618284321&show=index&wt=json} status=0 QTime=1 
+INFO  - 2014-03-12 05:58:04.365; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/admin/file/ params={file=admin-extra.html&_=1394618284328} status=0 QTime=0 
+INFO  - 2014-03-12 05:58:04.389; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/admin/system params={_=1394618284326&wt=json} status=0 QTime=24 
+INFO  - 2014-03-12 05:58:04.393; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/replication params={command=details&_=1394618284325&wt=json} status=0 QTime=29 
+INFO  - 2014-03-12 05:58:04.395; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/admin/ping params={action=status&_=1394618284329&wt=json} status=503 QTime=30 
+INFO  - 2014-03-12 05:58:12.807; org.apache.solr.servlet.SolrDispatchFilter; [admin] webapp=null path=/admin/cores params={_=1394618292804&wt=json} status=0 QTime=0 
+INFO  - 2014-03-12 05:58:12.820; org.apache.solr.servlet.SolrDispatchFilter; [admin] webapp=null path=/admin/cores params={_=1394618292817&wt=json} status=0 QTime=1 
+INFO  - 2014-03-12 05:58:17.137; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/admin/luke params={numTerms=0&_=1394618297134&show=index&wt=json} status=0 QTime=0 
+INFO  - 2014-03-12 05:58:17.138; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/replication params={command=details&_=1394618297136&wt=json} status=0 QTime=1 
+INFO  - 2014-03-12 05:58:17.151; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/admin/ping params={action=status&_=1394618297138&wt=json} status=503 QTime=6 
+INFO  - 2014-03-12 05:58:17.152; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/admin/system params={_=1394618297136&wt=json} status=0 QTime=14 
+INFO  - 2014-03-12 05:58:17.151; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/admin/file/ params={file=admin-extra.html&_=1394618297138} status=0 QTime=6 
+INFO  - 2014-03-12 05:58:25.045; org.apache.solr.update.processor.LogUpdateProcessor; [collection1] webapp=/solr path=/update params={wt=json} {add=[change.me (1462363283787874304)]} 0 51
+INFO  - 2014-03-12 05:58:26.046; org.apache.solr.update.DirectUpdateHandler2; start commit{,optimize=false,openSearcher=true,waitSearcher=true,expungeDeletes=false,softCommit=true,prepareCommit=false}
+INFO  - 2014-03-12 05:58:26.086; org.apache.solr.search.SolrIndexSearcher; Opening Searcher@66162088[collection1] main
+INFO  - 2014-03-12 05:58:26.087; org.apache.solr.update.DirectUpdateHandler2; end_commit_flush
+INFO  - 2014-03-12 05:58:26.088; org.apache.solr.core.QuerySenderListener; QuerySenderListener sending requests to Searcher@66162088[collection1] main{StandardDirectoryReader(segments_1:3:nrt _0(4.7):C1)}
+INFO  - 2014-03-12 05:58:26.088; org.apache.solr.core.QuerySenderListener; QuerySenderListener done.
+INFO  - 2014-03-12 05:58:26.088; org.apache.solr.core.SolrCore; [collection1] Registered new searcher Searcher@66162088[collection1] main{StandardDirectoryReader(segments_1:3:nrt _0(4.7):C1)}
+INFO  - 2014-03-12 05:58:39.520; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select params={indent=true&q=*:*&_=1394618319514&wt=json} hits=1 status=0 QTime=3 
+INFO  - 2014-03-12 05:58:40.052; org.apache.solr.update.DirectUpdateHandler2; start commit{,optimize=false,openSearcher=false,waitSearcher=true,expungeDeletes=false,softCommit=false,prepareCommit=false}
+INFO  - 2014-03-12 05:58:40.091; org.apache.solr.core.SolrDeletionPolicy; SolrDeletionPolicy.onCommit: commits: num=2
+	commit{dir=NRTCachingDirectory(NIOFSDirectory@/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index lockFactory=NativeFSLockFactory@/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index; maxCacheMB=48.0 maxMergeSizeMB=4.0),segFN=segments_1,generation=1}
+	commit{dir=NRTCachingDirectory(NIOFSDirectory@/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index lockFactory=NativeFSLockFactory@/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index; maxCacheMB=48.0 maxMergeSizeMB=4.0),segFN=segments_2,generation=2}
+INFO  - 2014-03-12 05:58:40.091; org.apache.solr.core.SolrDeletionPolicy; newest commit generation = 2
+INFO  - 2014-03-12 05:58:40.095; org.apache.solr.update.DirectUpdateHandler2; end_commit_flush
+INFO  - 2014-03-12 05:59:59.179; org.apache.solr.update.processor.LogUpdateProcessor; [collection1] webapp=/solr path=/update params={extra=info&literal.id=svdtut_pdf&wt=json} {} 0 1
+ERROR - 2014-03-12 05:59:59.180; org.apache.solr.common.SolrException; org.apache.solr.common.SolrException: Unsupported ContentType: application/pdf  Not in: [application/xml, text/csv, text/json, application/csv, application/javabin, text/xml, application/json]
+	at org.apache.solr.handler.UpdateRequestHandler$1.load(UpdateRequestHandler.java:86)
+	at org.apache.solr.handler.ContentStreamHandlerBase.handleRequestBody(ContentStreamHandlerBase.java:74)
+	at org.apache.solr.handler.RequestHandlerBase.handleRequest(RequestHandlerBase.java:135)
+	at org.apache.solr.core.SolrCore.execute(SolrCore.java:1916)
+	at org.apache.solr.servlet.SolrDispatchFilter.execute(SolrDispatchFilter.java:780)
+	at org.apache.solr.servlet.SolrDispatchFilter.doFilter(SolrDispatchFilter.java:427)
+	at org.apache.solr.servlet.SolrDispatchFilter.doFilter(SolrDispatchFilter.java:217)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1419)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:455)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:557)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1075)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:384)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1009)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:255)
+	at org.eclipse.jetty.server.handler.HandlerCollection.handle(HandlerCollection.java:154)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:368)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:489)
+	at org.eclipse.jetty.server.BlockingHttpConnection.handleRequest(BlockingHttpConnection.java:53)
+	at org.eclipse.jetty.server.AbstractHttpConnection.content(AbstractHttpConnection.java:953)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.content(AbstractHttpConnection.java:1014)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:861)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:240)
+	at org.eclipse.jetty.server.BlockingHttpConnection.handle(BlockingHttpConnection.java:72)
+	at org.eclipse.jetty.server.bio.SocketConnector$ConnectorEndPoint.run(SocketConnector.java:264)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:722)
+
+ERROR - 2014-03-12 06:00:07.239; org.apache.solr.common.SolrException; null:org.apache.solr.common.SolrException: lazy loading error
+	at org.apache.solr.core.RequestHandlers$LazyRequestHandlerWrapper.getWrappedHandler(RequestHandlers.java:257)
+	at org.apache.solr.core.RequestHandlers$LazyRequestHandlerWrapper.handleRequest(RequestHandlers.java:239)
+	at org.apache.solr.core.SolrCore.execute(SolrCore.java:1916)
+	at org.apache.solr.servlet.SolrDispatchFilter.execute(SolrDispatchFilter.java:780)
+	at org.apache.solr.servlet.SolrDispatchFilter.doFilter(SolrDispatchFilter.java:427)
+	at org.apache.solr.servlet.SolrDispatchFilter.doFilter(SolrDispatchFilter.java:217)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1419)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:455)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:557)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1075)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:384)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1009)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:255)
+	at org.eclipse.jetty.server.handler.HandlerCollection.handle(HandlerCollection.java:154)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:368)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:489)
+	at org.eclipse.jetty.server.BlockingHttpConnection.handleRequest(BlockingHttpConnection.java:53)
+	at org.eclipse.jetty.server.AbstractHttpConnection.content(AbstractHttpConnection.java:953)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.content(AbstractHttpConnection.java:1014)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:861)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.BlockingHttpConnection.handle(BlockingHttpConnection.java:72)
+	at org.eclipse.jetty.server.bio.SocketConnector$ConnectorEndPoint.run(SocketConnector.java:264)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.apache.solr.common.SolrException: Error loading class 'solr.extraction.ExtractingRequestHandler'
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:470)
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:401)
+	at org.apache.solr.core.SolrCore.createInstance(SolrCore.java:531)
+	at org.apache.solr.core.SolrCore.createRequestHandler(SolrCore.java:604)
+	at org.apache.solr.core.RequestHandlers$LazyRequestHandlerWrapper.getWrappedHandler(RequestHandlers.java:248)
+	... 30 more
+Caused by: java.lang.ClassNotFoundException: solr.extraction.ExtractingRequestHandler
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:423)
+	at java.net.FactoryURLClassLoader.loadClass(URLClassLoader.java:789)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:356)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:266)
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:454)
+	... 34 more
+
+INFO  - 2014-03-12 06:00:44.403; org.eclipse.jetty.server.Server; Graceful shutdown SocketConnector@0.0.0.0:8983
+INFO  - 2014-03-12 06:00:44.404; org.eclipse.jetty.server.Server; Graceful shutdown o.e.j.w.WebAppContext{/solr,file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr-webapp/webapp/},/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/webapps/solr.war
+INFO  - 2014-03-12 06:00:45.406; org.apache.solr.core.CoreContainer; Shutting down CoreContainer instance=1225438970
+INFO  - 2014-03-12 06:00:45.407; org.apache.solr.core.SolrCore; [collection1]  CLOSING SolrCore org.apache.solr.core.SolrCore@4e705502
+INFO  - 2014-03-12 06:00:45.408; org.apache.solr.update.DirectUpdateHandler2; closing DirectUpdateHandler2{commits=2,autocommit maxTime=15000ms,autocommits=1,soft autocommits=1,optimizes=0,rollbacks=0,expungeDeletes=0,docsPending=0,adds=0,deletesById=0,deletesByQuery=0,errors=0,cumulative_adds=1,cumulative_deletesById=0,cumulative_deletesByQuery=0,cumulative_errors=0,transaction_logs_total_size=121,transaction_logs_total_number=1}
+INFO  - 2014-03-12 06:00:45.408; org.apache.solr.update.SolrCoreState; Closing SolrCoreState
+INFO  - 2014-03-12 06:00:45.409; org.apache.solr.update.DefaultSolrCoreState; SolrCoreState ref count has reached 0 - closing IndexWriter
+INFO  - 2014-03-12 06:00:45.409; org.apache.solr.update.DefaultSolrCoreState; closing IndexWriter with IndexWriterCloser
+INFO  - 2014-03-12 06:00:45.413; org.apache.solr.core.SolrCore; [collection1] Closing main searcher on request.
+INFO  - 2014-03-12 06:00:45.414; org.apache.solr.core.CachingDirectoryFactory; Closing NRTCachingDirectoryFactory - 2 directories currently being tracked
+INFO  - 2014-03-12 06:00:45.415; org.apache.solr.core.CachingDirectoryFactory; looking to close /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data [CachedDir<<refCount=0;path=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data;done=false>>]
+INFO  - 2014-03-12 06:00:45.415; org.apache.solr.core.CachingDirectoryFactory; Closing directory: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data
+INFO  - 2014-03-12 06:00:45.416; org.apache.solr.core.CachingDirectoryFactory; looking to close /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index [CachedDir<<refCount=0;path=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index;done=false>>]
+INFO  - 2014-03-12 06:00:45.416; org.apache.solr.core.CachingDirectoryFactory; Closing directory: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index
+INFO  - 2014-03-12 06:00:45.418; org.eclipse.jetty.server.handler.ContextHandler; stopped o.e.j.w.WebAppContext{/solr,file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr-webapp/webapp/},/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/webapps/solr.war
+INFO  - 2014-03-12 06:00:54.396; org.eclipse.jetty.server.Server; jetty-8.1.10.v20130312
+INFO  - 2014-03-12 06:00:54.415; org.eclipse.jetty.deploy.providers.ScanningAppProvider; Deployment monitor /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/contexts at interval 0
+INFO  - 2014-03-12 06:00:54.422; org.eclipse.jetty.deploy.DeploymentManager; Deployable added: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/contexts/solr-jetty-context.xml
+INFO  - 2014-03-12 06:00:55.365; org.eclipse.jetty.webapp.StandardDescriptorProcessor; NO JSP Support for /solr, did not find org.apache.jasper.servlet.JspServlet
+INFO  - 2014-03-12 06:00:55.417; org.apache.solr.servlet.SolrDispatchFilter; SolrDispatchFilter.init()
+INFO  - 2014-03-12 06:00:55.433; org.apache.solr.core.SolrResourceLoader; JNDI not configured for solr (NoInitialContextEx)
+INFO  - 2014-03-12 06:00:55.434; org.apache.solr.core.SolrResourceLoader; solr home defaulted to 'solr/' (could not find system property or JNDI)
+INFO  - 2014-03-12 06:00:55.434; org.apache.solr.core.SolrResourceLoader; new SolrResourceLoader for directory: 'solr/'
+INFO  - 2014-03-12 06:00:55.568; org.apache.solr.core.ConfigSolr; Loading container configuration from /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/solr.xml
+INFO  - 2014-03-12 06:00:55.687; org.apache.solr.core.CorePropertiesLocator; Config-defined core root directory: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr
+INFO  - 2014-03-12 06:00:55.694; org.apache.solr.core.CoreContainer; New CoreContainer 444507014
+INFO  - 2014-03-12 06:00:55.694; org.apache.solr.core.CoreContainer; Loading cores into CoreContainer [instanceDir=solr/]
+INFO  - 2014-03-12 06:00:55.708; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting socketTimeout to: 0
+INFO  - 2014-03-12 06:00:55.708; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting urlScheme to: null
+INFO  - 2014-03-12 06:00:55.712; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting connTimeout to: 0
+INFO  - 2014-03-12 06:00:55.712; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maxConnectionsPerHost to: 20
+INFO  - 2014-03-12 06:00:55.714; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting corePoolSize to: 0
+INFO  - 2014-03-12 06:00:55.715; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maximumPoolSize to: 2147483647
+INFO  - 2014-03-12 06:00:55.715; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maxThreadIdleTime to: 5
+INFO  - 2014-03-12 06:00:55.715; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting sizeOfQueue to: -1
+INFO  - 2014-03-12 06:00:55.715; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting fairnessPolicy to: false
+INFO  - 2014-03-12 06:00:55.829; org.apache.solr.logging.LogWatcher; SLF4J impl is org.slf4j.impl.Log4jLoggerFactory
+INFO  - 2014-03-12 06:00:55.830; org.apache.solr.logging.LogWatcher; Registering Log Listener [Log4j (org.slf4j.impl.Log4jLoggerFactory)]
+INFO  - 2014-03-12 06:00:55.831; org.apache.solr.core.CoreContainer; Host Name: 
+INFO  - 2014-03-12 06:00:56.940; org.apache.solr.core.CorePropertiesLocator; Looking for core definitions underneath /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr
+INFO  - 2014-03-12 06:00:56.951; org.apache.solr.core.CorePropertiesLocator; Found core collection1 in /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/
+INFO  - 2014-03-12 06:00:56.952; org.apache.solr.core.CorePropertiesLocator; Found 1 core definitions
+INFO  - 2014-03-12 06:00:56.953; org.apache.solr.core.CoreContainer; Creating SolrCore 'collection1' using instanceDir: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1
+INFO  - 2014-03-12 06:00:56.953; org.apache.solr.core.SolrResourceLoader; new SolrResourceLoader for directory: '/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/'
+INFO  - 2014-03-12 06:00:57.025; org.apache.solr.core.SolrConfig; Adding specified lib dirs to ClassLoader
+WARN  - 2014-03-12 06:00:57.026; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../../../contrib/extraction/lib (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../../../contrib/extraction/lib).
+WARN  - 2014-03-12 06:00:57.026; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../../../dist/ (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../../../dist).
+WARN  - 2014-03-12 06:00:57.027; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../../../contrib/clustering/lib/ (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../../../contrib/clustering/lib).
+WARN  - 2014-03-12 06:00:57.027; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../../../dist/ (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../../../dist).
+WARN  - 2014-03-12 06:00:57.027; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../../../contrib/langid/lib/ (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../../../contrib/langid/lib).
+WARN  - 2014-03-12 06:00:57.027; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../../../dist/ (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../../../dist).
+INFO  - 2014-03-12 06:00:57.030; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/velocity/lib/apache-solr-velocity-3.6.0.jar' to classloader
+INFO  - 2014-03-12 06:00:57.030; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/velocity/lib/commons-beanutils-1.7.0.jar' to classloader
+INFO  - 2014-03-12 06:00:57.030; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/velocity/lib/commons-collections-3.2.1.jar' to classloader
+INFO  - 2014-03-12 06:00:57.030; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/velocity/lib/velocity-1.6.4.jar' to classloader
+INFO  - 2014-03-12 06:00:57.030; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/velocity/lib/velocity-tools-2.0.jar' to classloader
+WARN  - 2014-03-12 06:00:57.031; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../../../dist/ (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../../../dist).
+INFO  - 2014-03-12 06:00:57.165; org.apache.solr.update.SolrIndexConfig; IndexWriter infoStream solr logging is enabled
+INFO  - 2014-03-12 06:00:57.173; org.apache.solr.core.SolrConfig; Using Lucene MatchVersion: LUCENE_47
+INFO  - 2014-03-12 06:00:57.292; org.apache.solr.core.SolrConfig; Loaded SolrConfig: solrconfig.xml
+INFO  - 2014-03-12 06:00:57.302; org.apache.solr.schema.IndexSchema; Reading Solr Schema from managed-schema.xml
+INFO  - 2014-03-12 06:00:57.367; org.apache.solr.schema.IndexSchema; [collection1] Schema name=example
+INFO  - 2014-03-12 06:00:58.022; org.apache.solr.schema.IndexSchema; unique key field: id
+INFO  - 2014-03-12 06:00:58.102; org.apache.solr.schema.FileExchangeRateProvider; Reloading exchange rates from file currency.xml
+INFO  - 2014-03-12 06:00:58.109; org.apache.solr.schema.FileExchangeRateProvider; Reloading exchange rates from file currency.xml
+INFO  - 2014-03-12 06:00:58.231; org.apache.solr.core.SolrCore; solr.NRTCachingDirectoryFactory
+INFO  - 2014-03-12 06:00:58.237; org.apache.solr.core.SolrCore; [collection1] Opening new SolrCore at /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/, dataDir=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/
+INFO  - 2014-03-12 06:00:58.238; org.apache.solr.core.JmxMonitoredMap; No JMX servers found, not exposing Solr information with JMX.
+INFO  - 2014-03-12 06:00:58.241; org.apache.solr.core.SolrCore; [collection1] Added SolrEventListener for newSearcher: org.apache.solr.core.QuerySenderListener{queries=[]}
+INFO  - 2014-03-12 06:00:58.241; org.apache.solr.core.SolrCore; [collection1] Added SolrEventListener for firstSearcher: org.apache.solr.core.QuerySenderListener{queries=[{q=static firstSearcher warming in solrconfig.xml}]}
+INFO  - 2014-03-12 06:00:58.252; org.apache.solr.core.CachingDirectoryFactory; return new directory for /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data
+INFO  - 2014-03-12 06:00:58.252; org.apache.solr.core.SolrCore; New index directory detected: old=null new=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index/
+INFO  - 2014-03-12 06:00:58.253; org.apache.solr.core.CachingDirectoryFactory; return new directory for /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index
+INFO  - 2014-03-12 06:00:58.261; org.apache.solr.core.SolrCore; created json: solr.JSONResponseWriter
+INFO  - 2014-03-12 06:00:58.261; org.apache.solr.core.SolrCore; adding lazy queryResponseWriter: solr.VelocityResponseWriter
+INFO  - 2014-03-12 06:00:58.261; org.apache.solr.core.SolrCore; created velocity: solr.VelocityResponseWriter
+INFO  - 2014-03-12 06:00:58.264; org.apache.solr.core.SolrCore; created xslt: solr.XSLTResponseWriter
+INFO  - 2014-03-12 06:00:58.264; org.apache.solr.response.XSLTResponseWriter; xsltCacheLifetimeSeconds=5
+INFO  - 2014-03-12 06:00:58.360; org.apache.solr.core.SolrCore; no updateRequestProcessorChain defined as default, creating implicit default
+INFO  - 2014-03-12 06:00:58.371; org.apache.solr.core.RequestHandlers; created /select: solr.SearchHandler
+INFO  - 2014-03-12 06:00:58.372; org.apache.solr.core.RequestHandlers; created /query: solr.SearchHandler
+INFO  - 2014-03-12 06:00:58.373; org.apache.solr.core.RequestHandlers; created /get: solr.RealTimeGetHandler
+INFO  - 2014-03-12 06:00:58.373; org.apache.solr.core.RequestHandlers; created /browse: solr.SearchHandler
+INFO  - 2014-03-12 06:00:58.375; org.apache.solr.core.RequestHandlers; created /update: solr.UpdateRequestHandler
+INFO  - 2014-03-12 06:00:58.375; org.apache.solr.core.RequestHandlers; created /update/json: solr.UpdateRequestHandler
+INFO  - 2014-03-12 06:00:58.376; org.apache.solr.core.RequestHandlers; created /update/csv: solr.UpdateRequestHandler
+INFO  - 2014-03-12 06:00:58.380; org.apache.solr.core.SolrCore; [collection1]  CLOSING SolrCore org.apache.solr.core.SolrCore@302b09c9
+INFO  - 2014-03-12 06:00:58.380; org.apache.solr.update.SolrCoreState; Closing SolrCoreState
+INFO  - 2014-03-12 06:00:58.380; org.apache.solr.update.DefaultSolrCoreState; SolrCoreState ref count has reached 0 - closing IndexWriter
+INFO  - 2014-03-12 06:00:58.380; org.apache.solr.core.SolrCore; [collection1] Closing main searcher on request.
+INFO  - 2014-03-12 06:00:58.381; org.apache.solr.core.CachingDirectoryFactory; Closing NRTCachingDirectoryFactory - 2 directories currently being tracked
+INFO  - 2014-03-12 06:00:58.381; org.apache.solr.core.CachingDirectoryFactory; looking to close /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data [CachedDir<<refCount=0;path=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data;done=false>>]
+INFO  - 2014-03-12 06:00:58.381; org.apache.solr.core.CachingDirectoryFactory; Closing directory: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data
+INFO  - 2014-03-12 06:00:58.382; org.apache.solr.core.CachingDirectoryFactory; looking to close /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index [CachedDir<<refCount=0;path=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index;done=false>>]
+INFO  - 2014-03-12 06:00:58.382; org.apache.solr.core.CachingDirectoryFactory; Closing directory: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index
+ERROR - 2014-03-12 06:00:58.382; org.apache.solr.core.CoreContainer; Unable to create core: collection1
+org.apache.solr.common.SolrException: RequestHandler init failure
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:844)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:630)
+	at org.apache.solr.core.CoreContainer.createFromLocal(CoreContainer.java:562)
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:597)
+	at org.apache.solr.core.CoreContainer$1.call(CoreContainer.java:258)
+	at org.apache.solr.core.CoreContainer$1.call(CoreContainer.java:250)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:334)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:166)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:334)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:166)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.apache.solr.common.SolrException: RequestHandler init failure
+	at org.apache.solr.core.RequestHandlers.initHandlersFromConfig(RequestHandlers.java:167)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:774)
+	... 13 more
+Caused by: org.apache.solr.common.SolrException: Error loading class 'solr.extraction.ExtractingRequestHandler'
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:470)
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:401)
+	at org.apache.solr.core.SolrCore.createInstance(SolrCore.java:531)
+	at org.apache.solr.core.SolrCore.createRequestHandler(SolrCore.java:604)
+	at org.apache.solr.core.RequestHandlers.initHandlersFromConfig(RequestHandlers.java:153)
+	... 14 more
+Caused by: java.lang.ClassNotFoundException: solr.extraction.ExtractingRequestHandler
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:423)
+	at java.net.FactoryURLClassLoader.loadClass(URLClassLoader.java:789)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:356)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:266)
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:454)
+	... 18 more
+ERROR - 2014-03-12 06:00:58.385; org.apache.solr.common.SolrException; null:org.apache.solr.common.SolrException: Unable to create core: collection1
+	at org.apache.solr.core.CoreContainer.recordAndThrow(CoreContainer.java:989)
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:606)
+	at org.apache.solr.core.CoreContainer$1.call(CoreContainer.java:258)
+	at org.apache.solr.core.CoreContainer$1.call(CoreContainer.java:250)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:334)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:166)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:334)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:166)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.apache.solr.common.SolrException: RequestHandler init failure
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:844)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:630)
+	at org.apache.solr.core.CoreContainer.createFromLocal(CoreContainer.java:562)
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:597)
+	... 10 more
+Caused by: org.apache.solr.common.SolrException: RequestHandler init failure
+	at org.apache.solr.core.RequestHandlers.initHandlersFromConfig(RequestHandlers.java:167)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:774)
+	... 13 more
+Caused by: org.apache.solr.common.SolrException: Error loading class 'solr.extraction.ExtractingRequestHandler'
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:470)
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:401)
+	at org.apache.solr.core.SolrCore.createInstance(SolrCore.java:531)
+	at org.apache.solr.core.SolrCore.createRequestHandler(SolrCore.java:604)
+	at org.apache.solr.core.RequestHandlers.initHandlersFromConfig(RequestHandlers.java:153)
+	... 14 more
+Caused by: java.lang.ClassNotFoundException: solr.extraction.ExtractingRequestHandler
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:423)
+	at java.net.FactoryURLClassLoader.loadClass(URLClassLoader.java:789)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:356)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:266)
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:454)
+	... 18 more
+
+INFO  - 2014-03-12 06:00:58.385; org.apache.solr.servlet.SolrDispatchFilter; user.dir=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example
+INFO  - 2014-03-12 06:00:58.386; org.apache.solr.servlet.SolrDispatchFilter; SolrDispatchFilter.init() done
+INFO  - 2014-03-12 06:00:58.417; org.eclipse.jetty.server.AbstractConnector; Started SocketConnector@0.0.0.0:8983
+INFO  - 2014-03-12 06:03:11.428; org.eclipse.jetty.server.Server; Graceful shutdown SocketConnector@0.0.0.0:8983
+INFO  - 2014-03-12 06:03:11.429; org.eclipse.jetty.server.Server; Graceful shutdown o.e.j.w.WebAppContext{/solr,file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr-webapp/webapp/},/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/webapps/solr.war
+INFO  - 2014-03-12 06:03:12.431; org.apache.solr.core.CoreContainer; Shutting down CoreContainer instance=444507014
+INFO  - 2014-03-12 06:03:12.433; org.eclipse.jetty.server.handler.ContextHandler; stopped o.e.j.w.WebAppContext{/solr,file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr-webapp/webapp/},/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/webapps/solr.war
+INFO  - 2014-03-12 06:07:37.842; org.eclipse.jetty.server.Server; jetty-8.1.10.v20130312
+INFO  - 2014-03-12 06:07:37.863; org.eclipse.jetty.deploy.providers.ScanningAppProvider; Deployment monitor /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/contexts at interval 0
+INFO  - 2014-03-12 06:07:37.868; org.eclipse.jetty.deploy.DeploymentManager; Deployable added: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/contexts/solr-jetty-context.xml
+INFO  - 2014-03-12 06:07:38.805; org.eclipse.jetty.webapp.StandardDescriptorProcessor; NO JSP Support for /solr, did not find org.apache.jasper.servlet.JspServlet
+INFO  - 2014-03-12 06:07:38.856; org.apache.solr.servlet.SolrDispatchFilter; SolrDispatchFilter.init()
+INFO  - 2014-03-12 06:07:38.871; org.apache.solr.core.SolrResourceLoader; JNDI not configured for solr (NoInitialContextEx)
+INFO  - 2014-03-12 06:07:38.871; org.apache.solr.core.SolrResourceLoader; solr home defaulted to 'solr/' (could not find system property or JNDI)
+INFO  - 2014-03-12 06:07:38.872; org.apache.solr.core.SolrResourceLoader; new SolrResourceLoader for directory: 'solr/'
+INFO  - 2014-03-12 06:07:38.982; org.apache.solr.core.ConfigSolr; Loading container configuration from /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/solr.xml
+INFO  - 2014-03-12 06:07:39.095; org.apache.solr.core.CorePropertiesLocator; Config-defined core root directory: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr
+INFO  - 2014-03-12 06:07:39.105; org.apache.solr.core.CoreContainer; New CoreContainer 703975299
+INFO  - 2014-03-12 06:07:39.105; org.apache.solr.core.CoreContainer; Loading cores into CoreContainer [instanceDir=solr/]
+INFO  - 2014-03-12 06:07:39.115; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting socketTimeout to: 0
+INFO  - 2014-03-12 06:07:39.115; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting urlScheme to: null
+INFO  - 2014-03-12 06:07:39.119; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting connTimeout to: 0
+INFO  - 2014-03-12 06:07:39.119; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maxConnectionsPerHost to: 20
+INFO  - 2014-03-12 06:07:39.121; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting corePoolSize to: 0
+INFO  - 2014-03-12 06:07:39.121; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maximumPoolSize to: 2147483647
+INFO  - 2014-03-12 06:07:39.122; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maxThreadIdleTime to: 5
+INFO  - 2014-03-12 06:07:39.122; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting sizeOfQueue to: -1
+INFO  - 2014-03-12 06:07:39.122; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting fairnessPolicy to: false
+INFO  - 2014-03-12 06:07:39.266; org.apache.solr.logging.LogWatcher; SLF4J impl is org.slf4j.impl.Log4jLoggerFactory
+INFO  - 2014-03-12 06:07:39.267; org.apache.solr.logging.LogWatcher; Registering Log Listener [Log4j (org.slf4j.impl.Log4jLoggerFactory)]
+INFO  - 2014-03-12 06:07:39.268; org.apache.solr.core.CoreContainer; Host Name: 
+INFO  - 2014-03-12 06:07:40.379; org.apache.solr.core.CorePropertiesLocator; Looking for core definitions underneath /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr
+INFO  - 2014-03-12 06:07:40.386; org.apache.solr.core.CorePropertiesLocator; Found core collection1 in /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/
+INFO  - 2014-03-12 06:07:40.386; org.apache.solr.core.CorePropertiesLocator; Found 1 core definitions
+INFO  - 2014-03-12 06:07:40.388; org.apache.solr.core.CoreContainer; Creating SolrCore 'collection1' using instanceDir: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1
+INFO  - 2014-03-12 06:07:40.388; org.apache.solr.core.SolrResourceLoader; new SolrResourceLoader for directory: '/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/'
+INFO  - 2014-03-12 06:07:40.458; org.apache.solr.core.SolrConfig; Adding specified lib dirs to ClassLoader
+WARN  - 2014-03-12 06:07:40.458; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../contrib/extraction/lib (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../contrib/extraction/lib).
+WARN  - 2014-03-12 06:07:40.459; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../contrib/clustering/lib/ (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../contrib/clustering/lib).
+WARN  - 2014-03-12 06:07:40.459; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../contrib/langid/lib/ (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../contrib/langid/lib).
+WARN  - 2014-03-12 06:07:40.459; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../contrib/velocity/lib (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../contrib/velocity/lib).
+INFO  - 2014-03-12 06:07:40.559; org.apache.solr.update.SolrIndexConfig; IndexWriter infoStream solr logging is enabled
+INFO  - 2014-03-12 06:07:40.566; org.apache.solr.core.SolrConfig; Using Lucene MatchVersion: LUCENE_47
+INFO  - 2014-03-12 06:07:40.685; org.apache.solr.core.SolrConfig; Loaded SolrConfig: solrconfig.xml
+INFO  - 2014-03-12 06:07:40.692; org.apache.solr.schema.IndexSchema; Reading Solr Schema from managed-schema.xml
+INFO  - 2014-03-12 06:07:40.762; org.apache.solr.schema.IndexSchema; [collection1] Schema name=example
+INFO  - 2014-03-12 06:07:41.417; org.apache.solr.schema.IndexSchema; unique key field: id
+INFO  - 2014-03-12 06:07:41.498; org.apache.solr.schema.FileExchangeRateProvider; Reloading exchange rates from file currency.xml
+INFO  - 2014-03-12 06:07:41.504; org.apache.solr.schema.FileExchangeRateProvider; Reloading exchange rates from file currency.xml
+INFO  - 2014-03-12 06:07:41.612; org.apache.solr.core.SolrCore; solr.NRTCachingDirectoryFactory
+INFO  - 2014-03-12 06:07:41.626; org.apache.solr.core.SolrCore; [collection1] Opening new SolrCore at /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/, dataDir=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/
+INFO  - 2014-03-12 06:07:41.628; org.apache.solr.core.JmxMonitoredMap; No JMX servers found, not exposing Solr information with JMX.
+INFO  - 2014-03-12 06:07:41.632; org.apache.solr.core.SolrCore; [collection1] Added SolrEventListener for newSearcher: org.apache.solr.core.QuerySenderListener{queries=[]}
+INFO  - 2014-03-12 06:07:41.632; org.apache.solr.core.SolrCore; [collection1] Added SolrEventListener for firstSearcher: org.apache.solr.core.QuerySenderListener{queries=[{q=static firstSearcher warming in solrconfig.xml}]}
+INFO  - 2014-03-12 06:07:41.643; org.apache.solr.core.CachingDirectoryFactory; return new directory for /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data
+INFO  - 2014-03-12 06:07:41.644; org.apache.solr.core.SolrCore; New index directory detected: old=null new=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index/
+INFO  - 2014-03-12 06:07:41.644; org.apache.solr.core.CachingDirectoryFactory; return new directory for /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index
+INFO  - 2014-03-12 06:07:41.652; org.apache.solr.core.SolrCore; created json: solr.JSONResponseWriter
+INFO  - 2014-03-12 06:07:41.652; org.apache.solr.core.SolrCore; adding lazy queryResponseWriter: solr.VelocityResponseWriter
+INFO  - 2014-03-12 06:07:41.652; org.apache.solr.core.SolrCore; created velocity: solr.VelocityResponseWriter
+INFO  - 2014-03-12 06:07:41.655; org.apache.solr.core.SolrCore; created xslt: solr.XSLTResponseWriter
+INFO  - 2014-03-12 06:07:41.655; org.apache.solr.response.XSLTResponseWriter; xsltCacheLifetimeSeconds=5
+INFO  - 2014-03-12 06:07:41.741; org.apache.solr.core.SolrCore; no updateRequestProcessorChain defined as default, creating implicit default
+INFO  - 2014-03-12 06:07:41.752; org.apache.solr.core.RequestHandlers; created /select: solr.SearchHandler
+INFO  - 2014-03-12 06:07:41.753; org.apache.solr.core.RequestHandlers; created /query: solr.SearchHandler
+INFO  - 2014-03-12 06:07:41.755; org.apache.solr.core.RequestHandlers; created /get: solr.RealTimeGetHandler
+INFO  - 2014-03-12 06:07:41.755; org.apache.solr.core.RequestHandlers; created /browse: solr.SearchHandler
+INFO  - 2014-03-12 06:07:41.757; org.apache.solr.core.RequestHandlers; created /update: solr.UpdateRequestHandler
+INFO  - 2014-03-12 06:07:41.758; org.apache.solr.core.RequestHandlers; created /update/json: solr.UpdateRequestHandler
+INFO  - 2014-03-12 06:07:41.758; org.apache.solr.core.RequestHandlers; created /update/csv: solr.UpdateRequestHandler
+INFO  - 2014-03-12 06:07:41.762; org.apache.solr.core.SolrCore; [collection1]  CLOSING SolrCore org.apache.solr.core.SolrCore@4c9fc2e7
+INFO  - 2014-03-12 06:07:41.762; org.apache.solr.update.SolrCoreState; Closing SolrCoreState
+INFO  - 2014-03-12 06:07:41.762; org.apache.solr.update.DefaultSolrCoreState; SolrCoreState ref count has reached 0 - closing IndexWriter
+INFO  - 2014-03-12 06:07:41.762; org.apache.solr.core.SolrCore; [collection1] Closing main searcher on request.
+INFO  - 2014-03-12 06:07:41.763; org.apache.solr.core.CachingDirectoryFactory; Closing NRTCachingDirectoryFactory - 2 directories currently being tracked
+INFO  - 2014-03-12 06:07:41.763; org.apache.solr.core.CachingDirectoryFactory; looking to close /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index [CachedDir<<refCount=0;path=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index;done=false>>]
+INFO  - 2014-03-12 06:07:41.763; org.apache.solr.core.CachingDirectoryFactory; Closing directory: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index
+INFO  - 2014-03-12 06:07:41.764; org.apache.solr.core.CachingDirectoryFactory; looking to close /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data [CachedDir<<refCount=0;path=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data;done=false>>]
+INFO  - 2014-03-12 06:07:41.764; org.apache.solr.core.CachingDirectoryFactory; Closing directory: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data
+ERROR - 2014-03-12 06:07:41.765; org.apache.solr.core.CoreContainer; Unable to create core: collection1
+org.apache.solr.common.SolrException: RequestHandler init failure
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:844)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:630)
+	at org.apache.solr.core.CoreContainer.createFromLocal(CoreContainer.java:562)
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:597)
+	at org.apache.solr.core.CoreContainer$1.call(CoreContainer.java:258)
+	at org.apache.solr.core.CoreContainer$1.call(CoreContainer.java:250)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:334)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:166)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:334)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:166)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.apache.solr.common.SolrException: RequestHandler init failure
+	at org.apache.solr.core.RequestHandlers.initHandlersFromConfig(RequestHandlers.java:167)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:774)
+	... 13 more
+Caused by: org.apache.solr.common.SolrException: Error loading class 'solr.extraction.ExtractingRequestHandler'
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:470)
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:401)
+	at org.apache.solr.core.SolrCore.createInstance(SolrCore.java:531)
+	at org.apache.solr.core.SolrCore.createRequestHandler(SolrCore.java:604)
+	at org.apache.solr.core.RequestHandlers.initHandlersFromConfig(RequestHandlers.java:153)
+	... 14 more
+Caused by: java.lang.ClassNotFoundException: solr.extraction.ExtractingRequestHandler
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:423)
+	at java.net.FactoryURLClassLoader.loadClass(URLClassLoader.java:789)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:356)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:266)
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:454)
+	... 18 more
+ERROR - 2014-03-12 06:07:41.767; org.apache.solr.common.SolrException; null:org.apache.solr.common.SolrException: Unable to create core: collection1
+	at org.apache.solr.core.CoreContainer.recordAndThrow(CoreContainer.java:989)
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:606)
+	at org.apache.solr.core.CoreContainer$1.call(CoreContainer.java:258)
+	at org.apache.solr.core.CoreContainer$1.call(CoreContainer.java:250)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:334)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:166)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:334)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:166)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.apache.solr.common.SolrException: RequestHandler init failure
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:844)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:630)
+	at org.apache.solr.core.CoreContainer.createFromLocal(CoreContainer.java:562)
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:597)
+	... 10 more
+Caused by: org.apache.solr.common.SolrException: RequestHandler init failure
+	at org.apache.solr.core.RequestHandlers.initHandlersFromConfig(RequestHandlers.java:167)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:774)
+	... 13 more
+Caused by: org.apache.solr.common.SolrException: Error loading class 'solr.extraction.ExtractingRequestHandler'
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:470)
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:401)
+	at org.apache.solr.core.SolrCore.createInstance(SolrCore.java:531)
+	at org.apache.solr.core.SolrCore.createRequestHandler(SolrCore.java:604)
+	at org.apache.solr.core.RequestHandlers.initHandlersFromConfig(RequestHandlers.java:153)
+	... 14 more
+Caused by: java.lang.ClassNotFoundException: solr.extraction.ExtractingRequestHandler
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:423)
+	at java.net.FactoryURLClassLoader.loadClass(URLClassLoader.java:789)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:356)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:266)
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:454)
+	... 18 more
+
+INFO  - 2014-03-12 06:07:41.768; org.apache.solr.servlet.SolrDispatchFilter; user.dir=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example
+INFO  - 2014-03-12 06:07:41.768; org.apache.solr.servlet.SolrDispatchFilter; SolrDispatchFilter.init() done
+INFO  - 2014-03-12 06:07:41.793; org.eclipse.jetty.server.AbstractConnector; Started SocketConnector@0.0.0.0:8983
+INFO  - 2014-03-12 06:07:46.198; org.eclipse.jetty.server.Server; Graceful shutdown SocketConnector@0.0.0.0:8983
+INFO  - 2014-03-12 06:07:46.198; org.eclipse.jetty.server.Server; Graceful shutdown o.e.j.w.WebAppContext{/solr,file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr-webapp/webapp/},/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/webapps/solr.war
+INFO  - 2014-03-12 06:07:47.201; org.apache.solr.core.CoreContainer; Shutting down CoreContainer instance=703975299
+INFO  - 2014-03-12 06:07:47.203; org.eclipse.jetty.server.handler.ContextHandler; stopped o.e.j.w.WebAppContext{/solr,file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr-webapp/webapp/},/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/webapps/solr.war
+INFO  - 2014-03-12 06:14:20.739; org.eclipse.jetty.server.Server; jetty-8.1.10.v20130312
+INFO  - 2014-03-12 06:14:20.761; org.eclipse.jetty.deploy.providers.ScanningAppProvider; Deployment monitor /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/contexts at interval 0
+INFO  - 2014-03-12 06:14:20.768; org.eclipse.jetty.deploy.DeploymentManager; Deployable added: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/contexts/solr-jetty-context.xml
+INFO  - 2014-03-12 06:14:21.676; org.eclipse.jetty.webapp.StandardDescriptorProcessor; NO JSP Support for /solr, did not find org.apache.jasper.servlet.JspServlet
+INFO  - 2014-03-12 06:14:21.728; org.apache.solr.servlet.SolrDispatchFilter; SolrDispatchFilter.init()
+INFO  - 2014-03-12 06:14:21.745; org.apache.solr.core.SolrResourceLoader; JNDI not configured for solr (NoInitialContextEx)
+INFO  - 2014-03-12 06:14:21.745; org.apache.solr.core.SolrResourceLoader; solr home defaulted to 'solr/' (could not find system property or JNDI)
+INFO  - 2014-03-12 06:14:21.746; org.apache.solr.core.SolrResourceLoader; new SolrResourceLoader for directory: 'solr/'
+INFO  - 2014-03-12 06:14:21.871; org.apache.solr.core.ConfigSolr; Loading container configuration from /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/solr.xml
+INFO  - 2014-03-12 06:14:21.982; org.apache.solr.core.CorePropertiesLocator; Config-defined core root directory: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr
+INFO  - 2014-03-12 06:14:21.989; org.apache.solr.core.CoreContainer; New CoreContainer 1881260032
+INFO  - 2014-03-12 06:14:21.989; org.apache.solr.core.CoreContainer; Loading cores into CoreContainer [instanceDir=solr/]
+INFO  - 2014-03-12 06:14:22.002; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting socketTimeout to: 0
+INFO  - 2014-03-12 06:14:22.002; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting urlScheme to: null
+INFO  - 2014-03-12 06:14:22.006; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting connTimeout to: 0
+INFO  - 2014-03-12 06:14:22.007; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maxConnectionsPerHost to: 20
+INFO  - 2014-03-12 06:14:22.008; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting corePoolSize to: 0
+INFO  - 2014-03-12 06:14:22.009; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maximumPoolSize to: 2147483647
+INFO  - 2014-03-12 06:14:22.009; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maxThreadIdleTime to: 5
+INFO  - 2014-03-12 06:14:22.009; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting sizeOfQueue to: -1
+INFO  - 2014-03-12 06:14:22.009; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting fairnessPolicy to: false
+INFO  - 2014-03-12 06:14:22.122; org.apache.solr.logging.LogWatcher; SLF4J impl is org.slf4j.impl.Log4jLoggerFactory
+INFO  - 2014-03-12 06:14:22.123; org.apache.solr.logging.LogWatcher; Registering Log Listener [Log4j (org.slf4j.impl.Log4jLoggerFactory)]
+INFO  - 2014-03-12 06:14:22.124; org.apache.solr.core.CoreContainer; Host Name: 
+INFO  - 2014-03-12 06:14:23.190; org.apache.solr.core.CorePropertiesLocator; Looking for core definitions underneath /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr
+INFO  - 2014-03-12 06:14:23.203; org.apache.solr.core.CorePropertiesLocator; Found core collection1 in /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/
+INFO  - 2014-03-12 06:14:23.203; org.apache.solr.core.CorePropertiesLocator; Found 1 core definitions
+INFO  - 2014-03-12 06:14:23.205; org.apache.solr.core.CoreContainer; Creating SolrCore 'collection1' using instanceDir: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1
+INFO  - 2014-03-12 06:14:23.205; org.apache.solr.core.SolrResourceLoader; new SolrResourceLoader for directory: '/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/'
+INFO  - 2014-03-12 06:14:23.313; org.apache.solr.core.SolrConfig; Adding specified lib dirs to ClassLoader
+WARN  - 2014-03-12 06:14:23.314; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../contrib/extraction/lib (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../contrib/extraction/lib).
+WARN  - 2014-03-12 06:14:23.314; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../contrib/clustering/lib/ (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../contrib/clustering/lib).
+WARN  - 2014-03-12 06:14:23.314; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../contrib/langid/lib/ (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../contrib/langid/lib).
+WARN  - 2014-03-12 06:14:23.315; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../contrib/velocity/lib (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../contrib/velocity/lib).
+WARN  - 2014-03-12 06:14:23.315; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../dist/ (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../dist).
+INFO  - 2014-03-12 06:14:23.412; org.apache.solr.update.SolrIndexConfig; IndexWriter infoStream solr logging is enabled
+INFO  - 2014-03-12 06:14:23.421; org.apache.solr.core.SolrConfig; Using Lucene MatchVersion: LUCENE_47
+INFO  - 2014-03-12 06:14:23.538; org.apache.solr.core.SolrConfig; Loaded SolrConfig: solrconfig.xml
+INFO  - 2014-03-12 06:14:23.544; org.apache.solr.schema.IndexSchema; Reading Solr Schema from managed-schema.xml
+INFO  - 2014-03-12 06:14:23.613; org.apache.solr.schema.IndexSchema; [collection1] Schema name=example
+INFO  - 2014-03-12 06:14:24.251; org.apache.solr.schema.IndexSchema; unique key field: id
+INFO  - 2014-03-12 06:14:24.327; org.apache.solr.schema.FileExchangeRateProvider; Reloading exchange rates from file currency.xml
+INFO  - 2014-03-12 06:14:24.333; org.apache.solr.schema.FileExchangeRateProvider; Reloading exchange rates from file currency.xml
+INFO  - 2014-03-12 06:14:24.449; org.apache.solr.core.SolrCore; solr.NRTCachingDirectoryFactory
+INFO  - 2014-03-12 06:14:24.455; org.apache.solr.core.SolrCore; [collection1] Opening new SolrCore at /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/, dataDir=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/
+INFO  - 2014-03-12 06:14:24.456; org.apache.solr.core.JmxMonitoredMap; No JMX servers found, not exposing Solr information with JMX.
+INFO  - 2014-03-12 06:14:24.507; org.apache.solr.core.SolrCore; [collection1] Added SolrEventListener for newSearcher: org.apache.solr.core.QuerySenderListener{queries=[]}
+INFO  - 2014-03-12 06:14:24.507; org.apache.solr.core.SolrCore; [collection1] Added SolrEventListener for firstSearcher: org.apache.solr.core.QuerySenderListener{queries=[{q=static firstSearcher warming in solrconfig.xml}]}
+INFO  - 2014-03-12 06:14:24.518; org.apache.solr.core.CachingDirectoryFactory; return new directory for /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data
+INFO  - 2014-03-12 06:14:24.518; org.apache.solr.core.SolrCore; New index directory detected: old=null new=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index/
+INFO  - 2014-03-12 06:14:24.518; org.apache.solr.core.CachingDirectoryFactory; return new directory for /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index
+INFO  - 2014-03-12 06:14:24.526; org.apache.solr.core.SolrCore; created json: solr.JSONResponseWriter
+INFO  - 2014-03-12 06:14:24.526; org.apache.solr.core.SolrCore; adding lazy queryResponseWriter: solr.VelocityResponseWriter
+INFO  - 2014-03-12 06:14:24.527; org.apache.solr.core.SolrCore; created velocity: solr.VelocityResponseWriter
+INFO  - 2014-03-12 06:14:24.529; org.apache.solr.core.SolrCore; created xslt: solr.XSLTResponseWriter
+INFO  - 2014-03-12 06:14:24.529; org.apache.solr.response.XSLTResponseWriter; xsltCacheLifetimeSeconds=5
+INFO  - 2014-03-12 06:14:24.616; org.apache.solr.core.SolrCore; no updateRequestProcessorChain defined as default, creating implicit default
+INFO  - 2014-03-12 06:14:24.628; org.apache.solr.core.RequestHandlers; created /select: solr.SearchHandler
+INFO  - 2014-03-12 06:14:24.629; org.apache.solr.core.RequestHandlers; created /query: solr.SearchHandler
+INFO  - 2014-03-12 06:14:24.630; org.apache.solr.core.RequestHandlers; created /get: solr.RealTimeGetHandler
+INFO  - 2014-03-12 06:14:24.630; org.apache.solr.core.RequestHandlers; created /browse: solr.SearchHandler
+INFO  - 2014-03-12 06:14:24.633; org.apache.solr.core.RequestHandlers; created /update: solr.UpdateRequestHandler
+INFO  - 2014-03-12 06:14:24.633; org.apache.solr.core.RequestHandlers; created /update/json: solr.UpdateRequestHandler
+INFO  - 2014-03-12 06:14:24.633; org.apache.solr.core.RequestHandlers; created /update/csv: solr.UpdateRequestHandler
+INFO  - 2014-03-12 06:14:24.637; org.apache.solr.core.SolrCore; [collection1]  CLOSING SolrCore org.apache.solr.core.SolrCore@3f86f612
+INFO  - 2014-03-12 06:14:24.637; org.apache.solr.update.SolrCoreState; Closing SolrCoreState
+INFO  - 2014-03-12 06:14:24.638; org.apache.solr.update.DefaultSolrCoreState; SolrCoreState ref count has reached 0 - closing IndexWriter
+INFO  - 2014-03-12 06:14:24.638; org.apache.solr.core.SolrCore; [collection1] Closing main searcher on request.
+INFO  - 2014-03-12 06:14:24.638; org.apache.solr.core.CachingDirectoryFactory; Closing NRTCachingDirectoryFactory - 2 directories currently being tracked
+INFO  - 2014-03-12 06:14:24.639; org.apache.solr.core.CachingDirectoryFactory; looking to close /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index [CachedDir<<refCount=0;path=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index;done=false>>]
+INFO  - 2014-03-12 06:14:24.639; org.apache.solr.core.CachingDirectoryFactory; Closing directory: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index
+INFO  - 2014-03-12 06:14:24.639; org.apache.solr.core.CachingDirectoryFactory; looking to close /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data [CachedDir<<refCount=0;path=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data;done=false>>]
+INFO  - 2014-03-12 06:14:24.639; org.apache.solr.core.CachingDirectoryFactory; Closing directory: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data
+ERROR - 2014-03-12 06:14:24.640; org.apache.solr.core.CoreContainer; Unable to create core: collection1
+org.apache.solr.common.SolrException: RequestHandler init failure
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:844)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:630)
+	at org.apache.solr.core.CoreContainer.createFromLocal(CoreContainer.java:562)
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:597)
+	at org.apache.solr.core.CoreContainer$1.call(CoreContainer.java:258)
+	at org.apache.solr.core.CoreContainer$1.call(CoreContainer.java:250)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:334)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:166)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:334)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:166)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.apache.solr.common.SolrException: RequestHandler init failure
+	at org.apache.solr.core.RequestHandlers.initHandlersFromConfig(RequestHandlers.java:167)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:774)
+	... 13 more
+Caused by: org.apache.solr.common.SolrException: Error loading class 'solr.extraction.ExtractingRequestHandler'
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:470)
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:401)
+	at org.apache.solr.core.SolrCore.createInstance(SolrCore.java:531)
+	at org.apache.solr.core.SolrCore.createRequestHandler(SolrCore.java:604)
+	at org.apache.solr.core.RequestHandlers.initHandlersFromConfig(RequestHandlers.java:153)
+	... 14 more
+Caused by: java.lang.ClassNotFoundException: solr.extraction.ExtractingRequestHandler
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:423)
+	at java.net.FactoryURLClassLoader.loadClass(URLClassLoader.java:789)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:356)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:266)
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:454)
+	... 18 more
+ERROR - 2014-03-12 06:14:24.642; org.apache.solr.common.SolrException; null:org.apache.solr.common.SolrException: Unable to create core: collection1
+	at org.apache.solr.core.CoreContainer.recordAndThrow(CoreContainer.java:989)
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:606)
+	at org.apache.solr.core.CoreContainer$1.call(CoreContainer.java:258)
+	at org.apache.solr.core.CoreContainer$1.call(CoreContainer.java:250)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:334)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:166)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:334)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:166)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.apache.solr.common.SolrException: RequestHandler init failure
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:844)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:630)
+	at org.apache.solr.core.CoreContainer.createFromLocal(CoreContainer.java:562)
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:597)
+	... 10 more
+Caused by: org.apache.solr.common.SolrException: RequestHandler init failure
+	at org.apache.solr.core.RequestHandlers.initHandlersFromConfig(RequestHandlers.java:167)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:774)
+	... 13 more
+Caused by: org.apache.solr.common.SolrException: Error loading class 'solr.extraction.ExtractingRequestHandler'
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:470)
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:401)
+	at org.apache.solr.core.SolrCore.createInstance(SolrCore.java:531)
+	at org.apache.solr.core.SolrCore.createRequestHandler(SolrCore.java:604)
+	at org.apache.solr.core.RequestHandlers.initHandlersFromConfig(RequestHandlers.java:153)
+	... 14 more
+Caused by: java.lang.ClassNotFoundException: solr.extraction.ExtractingRequestHandler
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:423)
+	at java.net.FactoryURLClassLoader.loadClass(URLClassLoader.java:789)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:356)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:266)
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:454)
+	... 18 more
+
+INFO  - 2014-03-12 06:14:24.643; org.apache.solr.servlet.SolrDispatchFilter; user.dir=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example
+INFO  - 2014-03-12 06:14:24.644; org.apache.solr.servlet.SolrDispatchFilter; SolrDispatchFilter.init() done
+INFO  - 2014-03-12 06:14:24.668; org.eclipse.jetty.server.AbstractConnector; Started SocketConnector@0.0.0.0:8983
+INFO  - 2014-03-12 06:14:36.590; org.eclipse.jetty.server.Server; Graceful shutdown SocketConnector@0.0.0.0:8983
+INFO  - 2014-03-12 06:14:36.591; org.eclipse.jetty.server.Server; Graceful shutdown o.e.j.w.WebAppContext{/solr,file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr-webapp/webapp/},/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/webapps/solr.war
+INFO  - 2014-03-12 06:14:37.594; org.apache.solr.core.CoreContainer; Shutting down CoreContainer instance=1881260032
+INFO  - 2014-03-12 06:14:37.596; org.eclipse.jetty.server.handler.ContextHandler; stopped o.e.j.w.WebAppContext{/solr,file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr-webapp/webapp/},/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/webapps/solr.war
+INFO  - 2014-03-12 06:16:55.480; org.eclipse.jetty.server.Server; jetty-8.1.10.v20130312
+INFO  - 2014-03-12 06:16:55.503; org.eclipse.jetty.deploy.providers.ScanningAppProvider; Deployment monitor /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/contexts at interval 0
+INFO  - 2014-03-12 06:16:55.509; org.eclipse.jetty.deploy.DeploymentManager; Deployable added: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/contexts/solr-jetty-context.xml
+INFO  - 2014-03-12 06:16:56.428; org.eclipse.jetty.webapp.StandardDescriptorProcessor; NO JSP Support for /solr, did not find org.apache.jasper.servlet.JspServlet
+INFO  - 2014-03-12 06:16:56.483; org.apache.solr.servlet.SolrDispatchFilter; SolrDispatchFilter.init()
+INFO  - 2014-03-12 06:16:56.496; org.apache.solr.core.SolrResourceLoader; JNDI not configured for solr (NoInitialContextEx)
+INFO  - 2014-03-12 06:16:56.496; org.apache.solr.core.SolrResourceLoader; solr home defaulted to 'solr/' (could not find system property or JNDI)
+INFO  - 2014-03-12 06:16:56.497; org.apache.solr.core.SolrResourceLoader; new SolrResourceLoader for directory: 'solr/'
+INFO  - 2014-03-12 06:16:56.618; org.apache.solr.core.ConfigSolr; Loading container configuration from /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/solr.xml
+INFO  - 2014-03-12 06:16:56.731; org.apache.solr.core.CorePropertiesLocator; Config-defined core root directory: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr
+INFO  - 2014-03-12 06:16:56.738; org.apache.solr.core.CoreContainer; New CoreContainer 1314256812
+INFO  - 2014-03-12 06:16:56.738; org.apache.solr.core.CoreContainer; Loading cores into CoreContainer [instanceDir=solr/]
+INFO  - 2014-03-12 06:16:56.752; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting socketTimeout to: 0
+INFO  - 2014-03-12 06:16:56.752; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting urlScheme to: null
+INFO  - 2014-03-12 06:16:56.756; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting connTimeout to: 0
+INFO  - 2014-03-12 06:16:56.756; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maxConnectionsPerHost to: 20
+INFO  - 2014-03-12 06:16:56.758; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting corePoolSize to: 0
+INFO  - 2014-03-12 06:16:56.759; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maximumPoolSize to: 2147483647
+INFO  - 2014-03-12 06:16:56.759; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maxThreadIdleTime to: 5
+INFO  - 2014-03-12 06:16:56.759; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting sizeOfQueue to: -1
+INFO  - 2014-03-12 06:16:56.759; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting fairnessPolicy to: false
+INFO  - 2014-03-12 06:16:56.873; org.apache.solr.logging.LogWatcher; SLF4J impl is org.slf4j.impl.Log4jLoggerFactory
+INFO  - 2014-03-12 06:16:56.874; org.apache.solr.logging.LogWatcher; Registering Log Listener [Log4j (org.slf4j.impl.Log4jLoggerFactory)]
+INFO  - 2014-03-12 06:16:56.875; org.apache.solr.core.CoreContainer; Host Name: 
+INFO  - 2014-03-12 06:16:56.913; org.apache.solr.core.CorePropertiesLocator; Looking for core definitions underneath /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr
+INFO  - 2014-03-12 06:16:56.924; org.apache.solr.core.CorePropertiesLocator; Found core collection1 in /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/
+INFO  - 2014-03-12 06:16:56.924; org.apache.solr.core.CorePropertiesLocator; Found 1 core definitions
+INFO  - 2014-03-12 06:16:56.926; org.apache.solr.core.CoreContainer; Creating SolrCore 'collection1' using instanceDir: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1
+INFO  - 2014-03-12 06:16:56.926; org.apache.solr.core.SolrResourceLoader; new SolrResourceLoader for directory: '/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/'
+INFO  - 2014-03-12 06:16:57.035; org.apache.solr.core.SolrConfig; Adding specified lib dirs to ClassLoader
+WARN  - 2014-03-12 06:16:57.036; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../contrib/extraction/lib (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../contrib/extraction/lib).
+WARN  - 2014-03-12 06:16:57.037; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../contrib/clustering/lib (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../contrib/clustering/lib).
+WARN  - 2014-03-12 06:16:57.037; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../contrib/langid/lib (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../contrib/langid/lib).
+WARN  - 2014-03-12 06:16:57.037; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../contrib/velocity/lib (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../contrib/velocity/lib).
+WARN  - 2014-03-12 06:16:57.037; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../dist/ (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../dist).
+INFO  - 2014-03-12 06:16:57.140; org.apache.solr.update.SolrIndexConfig; IndexWriter infoStream solr logging is enabled
+INFO  - 2014-03-12 06:16:57.149; org.apache.solr.core.SolrConfig; Using Lucene MatchVersion: LUCENE_47
+INFO  - 2014-03-12 06:16:57.267; org.apache.solr.core.SolrConfig; Loaded SolrConfig: solrconfig.xml
+INFO  - 2014-03-12 06:16:57.275; org.apache.solr.schema.IndexSchema; Reading Solr Schema from managed-schema.xml
+INFO  - 2014-03-12 06:16:57.343; org.apache.solr.schema.IndexSchema; [collection1] Schema name=example
+INFO  - 2014-03-12 06:16:57.971; org.apache.solr.schema.IndexSchema; unique key field: id
+INFO  - 2014-03-12 06:16:58.050; org.apache.solr.schema.FileExchangeRateProvider; Reloading exchange rates from file currency.xml
+INFO  - 2014-03-12 06:16:58.056; org.apache.solr.schema.FileExchangeRateProvider; Reloading exchange rates from file currency.xml
+INFO  - 2014-03-12 06:16:58.172; org.apache.solr.core.SolrCore; solr.NRTCachingDirectoryFactory
+INFO  - 2014-03-12 06:16:58.177; org.apache.solr.core.SolrCore; [collection1] Opening new SolrCore at /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/, dataDir=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/
+INFO  - 2014-03-12 06:16:58.178; org.apache.solr.core.JmxMonitoredMap; No JMX servers found, not exposing Solr information with JMX.
+INFO  - 2014-03-12 06:16:58.225; org.apache.solr.core.SolrCore; [collection1] Added SolrEventListener for newSearcher: org.apache.solr.core.QuerySenderListener{queries=[]}
+INFO  - 2014-03-12 06:16:58.225; org.apache.solr.core.SolrCore; [collection1] Added SolrEventListener for firstSearcher: org.apache.solr.core.QuerySenderListener{queries=[{q=static firstSearcher warming in solrconfig.xml}]}
+INFO  - 2014-03-12 06:16:58.238; org.apache.solr.core.CachingDirectoryFactory; return new directory for /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data
+INFO  - 2014-03-12 06:16:58.238; org.apache.solr.core.SolrCore; New index directory detected: old=null new=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index/
+INFO  - 2014-03-12 06:16:58.238; org.apache.solr.core.CachingDirectoryFactory; return new directory for /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index
+INFO  - 2014-03-12 06:16:58.246; org.apache.solr.core.SolrCore; created json: solr.JSONResponseWriter
+INFO  - 2014-03-12 06:16:58.246; org.apache.solr.core.SolrCore; adding lazy queryResponseWriter: solr.VelocityResponseWriter
+INFO  - 2014-03-12 06:16:58.246; org.apache.solr.core.SolrCore; created velocity: solr.VelocityResponseWriter
+INFO  - 2014-03-12 06:16:58.248; org.apache.solr.core.SolrCore; created xslt: solr.XSLTResponseWriter
+INFO  - 2014-03-12 06:16:58.249; org.apache.solr.response.XSLTResponseWriter; xsltCacheLifetimeSeconds=5
+INFO  - 2014-03-12 06:16:58.336; org.apache.solr.core.SolrCore; no updateRequestProcessorChain defined as default, creating implicit default
+INFO  - 2014-03-12 06:16:58.348; org.apache.solr.core.RequestHandlers; created /select: solr.SearchHandler
+INFO  - 2014-03-12 06:16:58.348; org.apache.solr.core.RequestHandlers; created /query: solr.SearchHandler
+INFO  - 2014-03-12 06:16:58.350; org.apache.solr.core.RequestHandlers; created /get: solr.RealTimeGetHandler
+INFO  - 2014-03-12 06:16:58.350; org.apache.solr.core.RequestHandlers; created /browse: solr.SearchHandler
+INFO  - 2014-03-12 06:16:58.352; org.apache.solr.core.RequestHandlers; created /update: solr.UpdateRequestHandler
+INFO  - 2014-03-12 06:16:58.353; org.apache.solr.core.RequestHandlers; created /update/json: solr.UpdateRequestHandler
+INFO  - 2014-03-12 06:16:58.353; org.apache.solr.core.RequestHandlers; created /update/csv: solr.UpdateRequestHandler
+INFO  - 2014-03-12 06:16:58.357; org.apache.solr.core.SolrCore; [collection1]  CLOSING SolrCore org.apache.solr.core.SolrCore@44d5576c
+INFO  - 2014-03-12 06:16:58.357; org.apache.solr.update.SolrCoreState; Closing SolrCoreState
+INFO  - 2014-03-12 06:16:58.357; org.apache.solr.update.DefaultSolrCoreState; SolrCoreState ref count has reached 0 - closing IndexWriter
+INFO  - 2014-03-12 06:16:58.358; org.apache.solr.core.SolrCore; [collection1] Closing main searcher on request.
+INFO  - 2014-03-12 06:16:58.358; org.apache.solr.core.CachingDirectoryFactory; Closing NRTCachingDirectoryFactory - 2 directories currently being tracked
+INFO  - 2014-03-12 06:16:58.358; org.apache.solr.core.CachingDirectoryFactory; looking to close /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data [CachedDir<<refCount=0;path=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data;done=false>>]
+INFO  - 2014-03-12 06:16:58.358; org.apache.solr.core.CachingDirectoryFactory; Closing directory: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data
+INFO  - 2014-03-12 06:16:58.359; org.apache.solr.core.CachingDirectoryFactory; looking to close /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index [CachedDir<<refCount=0;path=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index;done=false>>]
+INFO  - 2014-03-12 06:16:58.359; org.apache.solr.core.CachingDirectoryFactory; Closing directory: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index
+ERROR - 2014-03-12 06:16:58.360; org.apache.solr.core.CoreContainer; Unable to create core: collection1
+org.apache.solr.common.SolrException: RequestHandler init failure
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:844)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:630)
+	at org.apache.solr.core.CoreContainer.createFromLocal(CoreContainer.java:562)
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:597)
+	at org.apache.solr.core.CoreContainer$1.call(CoreContainer.java:258)
+	at org.apache.solr.core.CoreContainer$1.call(CoreContainer.java:250)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:334)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:166)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:334)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:166)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.apache.solr.common.SolrException: RequestHandler init failure
+	at org.apache.solr.core.RequestHandlers.initHandlersFromConfig(RequestHandlers.java:167)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:774)
+	... 13 more
+Caused by: org.apache.solr.common.SolrException: Error loading class 'solr.extraction.ExtractingRequestHandler'
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:470)
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:401)
+	at org.apache.solr.core.SolrCore.createInstance(SolrCore.java:531)
+	at org.apache.solr.core.SolrCore.createRequestHandler(SolrCore.java:604)
+	at org.apache.solr.core.RequestHandlers.initHandlersFromConfig(RequestHandlers.java:153)
+	... 14 more
+Caused by: java.lang.ClassNotFoundException: solr.extraction.ExtractingRequestHandler
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:423)
+	at java.net.FactoryURLClassLoader.loadClass(URLClassLoader.java:789)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:356)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:266)
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:454)
+	... 18 more
+ERROR - 2014-03-12 06:16:58.363; org.apache.solr.common.SolrException; null:org.apache.solr.common.SolrException: Unable to create core: collection1
+	at org.apache.solr.core.CoreContainer.recordAndThrow(CoreContainer.java:989)
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:606)
+	at org.apache.solr.core.CoreContainer$1.call(CoreContainer.java:258)
+	at org.apache.solr.core.CoreContainer$1.call(CoreContainer.java:250)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:334)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:166)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:334)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:166)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.apache.solr.common.SolrException: RequestHandler init failure
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:844)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:630)
+	at org.apache.solr.core.CoreContainer.createFromLocal(CoreContainer.java:562)
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:597)
+	... 10 more
+Caused by: org.apache.solr.common.SolrException: RequestHandler init failure
+	at org.apache.solr.core.RequestHandlers.initHandlersFromConfig(RequestHandlers.java:167)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:774)
+	... 13 more
+Caused by: org.apache.solr.common.SolrException: Error loading class 'solr.extraction.ExtractingRequestHandler'
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:470)
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:401)
+	at org.apache.solr.core.SolrCore.createInstance(SolrCore.java:531)
+	at org.apache.solr.core.SolrCore.createRequestHandler(SolrCore.java:604)
+	at org.apache.solr.core.RequestHandlers.initHandlersFromConfig(RequestHandlers.java:153)
+	... 14 more
+Caused by: java.lang.ClassNotFoundException: solr.extraction.ExtractingRequestHandler
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:423)
+	at java.net.FactoryURLClassLoader.loadClass(URLClassLoader.java:789)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:356)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:266)
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:454)
+	... 18 more
+
+INFO  - 2014-03-12 06:16:58.364; org.apache.solr.servlet.SolrDispatchFilter; user.dir=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example
+INFO  - 2014-03-12 06:16:58.364; org.apache.solr.servlet.SolrDispatchFilter; SolrDispatchFilter.init() done
+INFO  - 2014-03-12 06:16:58.388; org.eclipse.jetty.server.AbstractConnector; Started SocketConnector@0.0.0.0:8983
+INFO  - 2014-03-12 06:17:21.175; org.eclipse.jetty.server.Server; Graceful shutdown SocketConnector@0.0.0.0:8983
+INFO  - 2014-03-12 06:17:21.176; org.eclipse.jetty.server.Server; Graceful shutdown o.e.j.w.WebAppContext{/solr,file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr-webapp/webapp/},/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/webapps/solr.war
+INFO  - 2014-03-12 06:17:22.178; org.apache.solr.core.CoreContainer; Shutting down CoreContainer instance=1314256812
+INFO  - 2014-03-12 06:17:22.180; org.eclipse.jetty.server.handler.ContextHandler; stopped o.e.j.w.WebAppContext{/solr,file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr-webapp/webapp/},/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/webapps/solr.war
+INFO  - 2014-03-12 06:17:31.626; org.eclipse.jetty.server.Server; jetty-8.1.10.v20130312
+INFO  - 2014-03-12 06:17:31.648; org.eclipse.jetty.deploy.providers.ScanningAppProvider; Deployment monitor /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/contexts at interval 0
+INFO  - 2014-03-12 06:17:31.654; org.eclipse.jetty.deploy.DeploymentManager; Deployable added: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/contexts/solr-jetty-context.xml
+INFO  - 2014-03-12 06:17:32.591; org.eclipse.jetty.webapp.StandardDescriptorProcessor; NO JSP Support for /solr, did not find org.apache.jasper.servlet.JspServlet
+INFO  - 2014-03-12 06:17:32.641; org.apache.solr.servlet.SolrDispatchFilter; SolrDispatchFilter.init()
+INFO  - 2014-03-12 06:17:32.659; org.apache.solr.core.SolrResourceLoader; JNDI not configured for solr (NoInitialContextEx)
+INFO  - 2014-03-12 06:17:32.659; org.apache.solr.core.SolrResourceLoader; solr home defaulted to 'solr/' (could not find system property or JNDI)
+INFO  - 2014-03-12 06:17:32.660; org.apache.solr.core.SolrResourceLoader; new SolrResourceLoader for directory: 'solr/'
+INFO  - 2014-03-12 06:17:32.790; org.apache.solr.core.ConfigSolr; Loading container configuration from /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/solr.xml
+INFO  - 2014-03-12 06:17:32.903; org.apache.solr.core.CorePropertiesLocator; Config-defined core root directory: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr
+INFO  - 2014-03-12 06:17:32.912; org.apache.solr.core.CoreContainer; New CoreContainer 1584594060
+INFO  - 2014-03-12 06:17:32.912; org.apache.solr.core.CoreContainer; Loading cores into CoreContainer [instanceDir=solr/]
+INFO  - 2014-03-12 06:17:32.922; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting socketTimeout to: 0
+INFO  - 2014-03-12 06:17:32.923; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting urlScheme to: null
+INFO  - 2014-03-12 06:17:32.926; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting connTimeout to: 0
+INFO  - 2014-03-12 06:17:32.927; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maxConnectionsPerHost to: 20
+INFO  - 2014-03-12 06:17:32.928; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting corePoolSize to: 0
+INFO  - 2014-03-12 06:17:32.929; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maximumPoolSize to: 2147483647
+INFO  - 2014-03-12 06:17:32.929; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maxThreadIdleTime to: 5
+INFO  - 2014-03-12 06:17:32.929; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting sizeOfQueue to: -1
+INFO  - 2014-03-12 06:17:32.929; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting fairnessPolicy to: false
+INFO  - 2014-03-12 06:17:33.046; org.apache.solr.logging.LogWatcher; SLF4J impl is org.slf4j.impl.Log4jLoggerFactory
+INFO  - 2014-03-12 06:17:33.047; org.apache.solr.logging.LogWatcher; Registering Log Listener [Log4j (org.slf4j.impl.Log4jLoggerFactory)]
+INFO  - 2014-03-12 06:17:33.049; org.apache.solr.core.CoreContainer; Host Name: 
+INFO  - 2014-03-12 06:17:34.165; org.apache.solr.core.CorePropertiesLocator; Looking for core definitions underneath /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr
+INFO  - 2014-03-12 06:17:34.172; org.apache.solr.core.CorePropertiesLocator; Found core collection1 in /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/
+INFO  - 2014-03-12 06:17:34.173; org.apache.solr.core.CorePropertiesLocator; Found 1 core definitions
+INFO  - 2014-03-12 06:17:34.174; org.apache.solr.core.CoreContainer; Creating SolrCore 'collection1' using instanceDir: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1
+INFO  - 2014-03-12 06:17:34.174; org.apache.solr.core.SolrResourceLoader; new SolrResourceLoader for directory: '/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/'
+INFO  - 2014-03-12 06:17:34.245; org.apache.solr.core.SolrConfig; Adding specified lib dirs to ClassLoader
+WARN  - 2014-03-12 06:17:34.245; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../../contrib/extraction/lib (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../../contrib/extraction/lib).
+WARN  - 2014-03-12 06:17:34.246; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../contrib/clustering/lib (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../contrib/clustering/lib).
+WARN  - 2014-03-12 06:17:34.246; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../contrib/langid/lib (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../contrib/langid/lib).
+WARN  - 2014-03-12 06:17:34.246; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../contrib/velocity/lib (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../contrib/velocity/lib).
+WARN  - 2014-03-12 06:17:34.246; org.apache.solr.core.SolrResourceLoader; Can't find (or read) directory to add to classloader: ../dist/ (resolved as: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/../dist).
+INFO  - 2014-03-12 06:17:34.371; org.apache.solr.update.SolrIndexConfig; IndexWriter infoStream solr logging is enabled
+INFO  - 2014-03-12 06:17:34.378; org.apache.solr.core.SolrConfig; Using Lucene MatchVersion: LUCENE_47
+INFO  - 2014-03-12 06:17:34.494; org.apache.solr.core.SolrConfig; Loaded SolrConfig: solrconfig.xml
+INFO  - 2014-03-12 06:17:34.501; org.apache.solr.schema.IndexSchema; Reading Solr Schema from managed-schema.xml
+INFO  - 2014-03-12 06:17:34.571; org.apache.solr.schema.IndexSchema; [collection1] Schema name=example
+INFO  - 2014-03-12 06:17:35.206; org.apache.solr.schema.IndexSchema; unique key field: id
+INFO  - 2014-03-12 06:17:35.280; org.apache.solr.schema.FileExchangeRateProvider; Reloading exchange rates from file currency.xml
+INFO  - 2014-03-12 06:17:35.286; org.apache.solr.schema.FileExchangeRateProvider; Reloading exchange rates from file currency.xml
+INFO  - 2014-03-12 06:17:35.409; org.apache.solr.core.SolrCore; solr.NRTCachingDirectoryFactory
+INFO  - 2014-03-12 06:17:35.415; org.apache.solr.core.SolrCore; [collection1] Opening new SolrCore at /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/, dataDir=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/
+INFO  - 2014-03-12 06:17:35.416; org.apache.solr.core.JmxMonitoredMap; No JMX servers found, not exposing Solr information with JMX.
+INFO  - 2014-03-12 06:17:35.419; org.apache.solr.core.SolrCore; [collection1] Added SolrEventListener for newSearcher: org.apache.solr.core.QuerySenderListener{queries=[]}
+INFO  - 2014-03-12 06:17:35.419; org.apache.solr.core.SolrCore; [collection1] Added SolrEventListener for firstSearcher: org.apache.solr.core.QuerySenderListener{queries=[{q=static firstSearcher warming in solrconfig.xml}]}
+INFO  - 2014-03-12 06:17:35.429; org.apache.solr.core.CachingDirectoryFactory; return new directory for /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data
+INFO  - 2014-03-12 06:17:35.429; org.apache.solr.core.SolrCore; New index directory detected: old=null new=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index/
+INFO  - 2014-03-12 06:17:35.430; org.apache.solr.core.CachingDirectoryFactory; return new directory for /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index
+INFO  - 2014-03-12 06:17:35.438; org.apache.solr.core.SolrCore; created json: solr.JSONResponseWriter
+INFO  - 2014-03-12 06:17:35.438; org.apache.solr.core.SolrCore; adding lazy queryResponseWriter: solr.VelocityResponseWriter
+INFO  - 2014-03-12 06:17:35.438; org.apache.solr.core.SolrCore; created velocity: solr.VelocityResponseWriter
+INFO  - 2014-03-12 06:17:35.440; org.apache.solr.core.SolrCore; created xslt: solr.XSLTResponseWriter
+INFO  - 2014-03-12 06:17:35.441; org.apache.solr.response.XSLTResponseWriter; xsltCacheLifetimeSeconds=5
+INFO  - 2014-03-12 06:17:35.528; org.apache.solr.core.SolrCore; no updateRequestProcessorChain defined as default, creating implicit default
+INFO  - 2014-03-12 06:17:35.542; org.apache.solr.core.RequestHandlers; created /select: solr.SearchHandler
+INFO  - 2014-03-12 06:17:35.542; org.apache.solr.core.RequestHandlers; created /query: solr.SearchHandler
+INFO  - 2014-03-12 06:17:35.543; org.apache.solr.core.RequestHandlers; created /get: solr.RealTimeGetHandler
+INFO  - 2014-03-12 06:17:35.544; org.apache.solr.core.RequestHandlers; created /browse: solr.SearchHandler
+INFO  - 2014-03-12 06:17:35.546; org.apache.solr.core.RequestHandlers; created /update: solr.UpdateRequestHandler
+INFO  - 2014-03-12 06:17:35.546; org.apache.solr.core.RequestHandlers; created /update/json: solr.UpdateRequestHandler
+INFO  - 2014-03-12 06:17:35.546; org.apache.solr.core.RequestHandlers; created /update/csv: solr.UpdateRequestHandler
+INFO  - 2014-03-12 06:17:35.550; org.apache.solr.core.SolrCore; [collection1]  CLOSING SolrCore org.apache.solr.core.SolrCore@598f83d3
+INFO  - 2014-03-12 06:17:35.550; org.apache.solr.update.SolrCoreState; Closing SolrCoreState
+INFO  - 2014-03-12 06:17:35.551; org.apache.solr.update.DefaultSolrCoreState; SolrCoreState ref count has reached 0 - closing IndexWriter
+INFO  - 2014-03-12 06:17:35.551; org.apache.solr.core.SolrCore; [collection1] Closing main searcher on request.
+INFO  - 2014-03-12 06:17:35.551; org.apache.solr.core.CachingDirectoryFactory; Closing NRTCachingDirectoryFactory - 2 directories currently being tracked
+INFO  - 2014-03-12 06:17:35.552; org.apache.solr.core.CachingDirectoryFactory; looking to close /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index [CachedDir<<refCount=0;path=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index;done=false>>]
+INFO  - 2014-03-12 06:17:35.552; org.apache.solr.core.CachingDirectoryFactory; Closing directory: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index
+INFO  - 2014-03-12 06:17:35.552; org.apache.solr.core.CachingDirectoryFactory; looking to close /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data [CachedDir<<refCount=0;path=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data;done=false>>]
+INFO  - 2014-03-12 06:17:35.553; org.apache.solr.core.CachingDirectoryFactory; Closing directory: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data
+ERROR - 2014-03-12 06:17:35.553; org.apache.solr.core.CoreContainer; Unable to create core: collection1
+org.apache.solr.common.SolrException: RequestHandler init failure
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:844)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:630)
+	at org.apache.solr.core.CoreContainer.createFromLocal(CoreContainer.java:562)
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:597)
+	at org.apache.solr.core.CoreContainer$1.call(CoreContainer.java:258)
+	at org.apache.solr.core.CoreContainer$1.call(CoreContainer.java:250)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:334)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:166)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:334)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:166)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.apache.solr.common.SolrException: RequestHandler init failure
+	at org.apache.solr.core.RequestHandlers.initHandlersFromConfig(RequestHandlers.java:167)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:774)
+	... 13 more
+Caused by: org.apache.solr.common.SolrException: Error loading class 'solr.extraction.ExtractingRequestHandler'
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:470)
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:401)
+	at org.apache.solr.core.SolrCore.createInstance(SolrCore.java:531)
+	at org.apache.solr.core.SolrCore.createRequestHandler(SolrCore.java:604)
+	at org.apache.solr.core.RequestHandlers.initHandlersFromConfig(RequestHandlers.java:153)
+	... 14 more
+Caused by: java.lang.ClassNotFoundException: solr.extraction.ExtractingRequestHandler
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:423)
+	at java.net.FactoryURLClassLoader.loadClass(URLClassLoader.java:789)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:356)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:266)
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:454)
+	... 18 more
+ERROR - 2014-03-12 06:17:35.556; org.apache.solr.common.SolrException; null:org.apache.solr.common.SolrException: Unable to create core: collection1
+	at org.apache.solr.core.CoreContainer.recordAndThrow(CoreContainer.java:989)
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:606)
+	at org.apache.solr.core.CoreContainer$1.call(CoreContainer.java:258)
+	at org.apache.solr.core.CoreContainer$1.call(CoreContainer.java:250)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:334)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:166)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:334)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:166)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:722)
+Caused by: org.apache.solr.common.SolrException: RequestHandler init failure
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:844)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:630)
+	at org.apache.solr.core.CoreContainer.createFromLocal(CoreContainer.java:562)
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:597)
+	... 10 more
+Caused by: org.apache.solr.common.SolrException: RequestHandler init failure
+	at org.apache.solr.core.RequestHandlers.initHandlersFromConfig(RequestHandlers.java:167)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:774)
+	... 13 more
+Caused by: org.apache.solr.common.SolrException: Error loading class 'solr.extraction.ExtractingRequestHandler'
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:470)
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:401)
+	at org.apache.solr.core.SolrCore.createInstance(SolrCore.java:531)
+	at org.apache.solr.core.SolrCore.createRequestHandler(SolrCore.java:604)
+	at org.apache.solr.core.RequestHandlers.initHandlersFromConfig(RequestHandlers.java:153)
+	... 14 more
+Caused by: java.lang.ClassNotFoundException: solr.extraction.ExtractingRequestHandler
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:423)
+	at java.net.FactoryURLClassLoader.loadClass(URLClassLoader.java:789)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:356)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:266)
+	at org.apache.solr.core.SolrResourceLoader.findClass(SolrResourceLoader.java:454)
+	... 18 more
+
+INFO  - 2014-03-12 06:17:35.557; org.apache.solr.servlet.SolrDispatchFilter; user.dir=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example
+INFO  - 2014-03-12 06:17:35.557; org.apache.solr.servlet.SolrDispatchFilter; SolrDispatchFilter.init() done
+INFO  - 2014-03-12 06:17:35.592; org.eclipse.jetty.server.AbstractConnector; Started SocketConnector@0.0.0.0:8983
+INFO  - 2014-03-12 06:18:02.561; org.eclipse.jetty.server.Server; Graceful shutdown SocketConnector@0.0.0.0:8983
+INFO  - 2014-03-12 06:18:02.562; org.eclipse.jetty.server.Server; Graceful shutdown o.e.j.w.WebAppContext{/solr,file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr-webapp/webapp/},/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/webapps/solr.war
+INFO  - 2014-03-12 06:18:03.564; org.apache.solr.core.CoreContainer; Shutting down CoreContainer instance=1584594060
+INFO  - 2014-03-12 06:18:03.566; org.eclipse.jetty.server.handler.ContextHandler; stopped o.e.j.w.WebAppContext{/solr,file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr-webapp/webapp/},/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/webapps/solr.war
+INFO  - 2014-03-12 06:18:06.629; org.eclipse.jetty.server.Server; jetty-8.1.10.v20130312
+INFO  - 2014-03-12 06:18:06.653; org.eclipse.jetty.deploy.providers.ScanningAppProvider; Deployment monitor /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/contexts at interval 0
+INFO  - 2014-03-12 06:18:06.659; org.eclipse.jetty.deploy.DeploymentManager; Deployable added: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/contexts/solr-jetty-context.xml
+INFO  - 2014-03-12 06:18:07.562; org.eclipse.jetty.webapp.StandardDescriptorProcessor; NO JSP Support for /solr, did not find org.apache.jasper.servlet.JspServlet
+INFO  - 2014-03-12 06:18:07.613; org.apache.solr.servlet.SolrDispatchFilter; SolrDispatchFilter.init()
+INFO  - 2014-03-12 06:18:07.630; org.apache.solr.core.SolrResourceLoader; JNDI not configured for solr (NoInitialContextEx)
+INFO  - 2014-03-12 06:18:07.630; org.apache.solr.core.SolrResourceLoader; solr home defaulted to 'solr/' (could not find system property or JNDI)
+INFO  - 2014-03-12 06:18:07.631; org.apache.solr.core.SolrResourceLoader; new SolrResourceLoader for directory: 'solr/'
+INFO  - 2014-03-12 06:18:07.754; org.apache.solr.core.ConfigSolr; Loading container configuration from /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/solr.xml
+INFO  - 2014-03-12 06:18:07.865; org.apache.solr.core.CorePropertiesLocator; Config-defined core root directory: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr
+INFO  - 2014-03-12 06:18:07.872; org.apache.solr.core.CoreContainer; New CoreContainer 935623043
+INFO  - 2014-03-12 06:18:07.872; org.apache.solr.core.CoreContainer; Loading cores into CoreContainer [instanceDir=solr/]
+INFO  - 2014-03-12 06:18:07.885; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting socketTimeout to: 0
+INFO  - 2014-03-12 06:18:07.885; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting urlScheme to: null
+INFO  - 2014-03-12 06:18:07.889; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting connTimeout to: 0
+INFO  - 2014-03-12 06:18:07.890; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maxConnectionsPerHost to: 20
+INFO  - 2014-03-12 06:18:07.892; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting corePoolSize to: 0
+INFO  - 2014-03-12 06:18:07.893; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maximumPoolSize to: 2147483647
+INFO  - 2014-03-12 06:18:07.893; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting maxThreadIdleTime to: 5
+INFO  - 2014-03-12 06:18:07.893; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting sizeOfQueue to: -1
+INFO  - 2014-03-12 06:18:07.893; org.apache.solr.handler.component.HttpShardHandlerFactory; Setting fairnessPolicy to: false
+INFO  - 2014-03-12 06:18:08.008; org.apache.solr.logging.LogWatcher; SLF4J impl is org.slf4j.impl.Log4jLoggerFactory
+INFO  - 2014-03-12 06:18:08.009; org.apache.solr.logging.LogWatcher; Registering Log Listener [Log4j (org.slf4j.impl.Log4jLoggerFactory)]
+INFO  - 2014-03-12 06:18:08.010; org.apache.solr.core.CoreContainer; Host Name: 
+INFO  - 2014-03-12 06:18:08.043; org.apache.solr.core.CorePropertiesLocator; Looking for core definitions underneath /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr
+INFO  - 2014-03-12 06:18:08.054; org.apache.solr.core.CorePropertiesLocator; Found core collection1 in /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/
+INFO  - 2014-03-12 06:18:08.055; org.apache.solr.core.CorePropertiesLocator; Found 1 core definitions
+INFO  - 2014-03-12 06:18:08.056; org.apache.solr.core.CoreContainer; Creating SolrCore 'collection1' using instanceDir: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1
+INFO  - 2014-03-12 06:18:08.056; org.apache.solr.core.SolrResourceLoader; new SolrResourceLoader for directory: '/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/'
+INFO  - 2014-03-12 06:18:08.160; org.apache.solr.core.SolrConfig; Adding specified lib dirs to ClassLoader
+INFO  - 2014-03-12 06:18:08.162; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/apache-mime4j-core-0.7.2.jar' to classloader
+INFO  - 2014-03-12 06:18:08.162; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/apache-mime4j-dom-0.7.2.jar' to classloader
+INFO  - 2014-03-12 06:18:08.162; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/asm-3.1.jar' to classloader
+INFO  - 2014-03-12 06:18:08.163; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/aspectjrt-1.6.11.jar' to classloader
+INFO  - 2014-03-12 06:18:08.163; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/bcmail-jdk15-1.45.jar' to classloader
+INFO  - 2014-03-12 06:18:08.163; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/bcprov-jdk15-1.45.jar' to classloader
+INFO  - 2014-03-12 06:18:08.163; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/boilerpipe-1.1.0.jar' to classloader
+INFO  - 2014-03-12 06:18:08.163; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/commons-compress-1.7.jar' to classloader
+INFO  - 2014-03-12 06:18:08.164; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/dom4j-1.6.1.jar' to classloader
+INFO  - 2014-03-12 06:18:08.164; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/fontbox-1.8.1.jar' to classloader
+INFO  - 2014-03-12 06:18:08.164; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/icu4j-52.1.jar' to classloader
+INFO  - 2014-03-12 06:18:08.164; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/isoparser-1.0-RC-1.jar' to classloader
+INFO  - 2014-03-12 06:18:08.164; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/jdom-1.0.jar' to classloader
+INFO  - 2014-03-12 06:18:08.165; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/jempbox-1.8.1.jar' to classloader
+INFO  - 2014-03-12 06:18:08.165; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/juniversalchardet-1.0.3.jar' to classloader
+INFO  - 2014-03-12 06:18:08.165; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/metadata-extractor-2.6.2.jar' to classloader
+INFO  - 2014-03-12 06:18:08.165; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/netcdf-4.2-min.jar' to classloader
+INFO  - 2014-03-12 06:18:08.166; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/pdfbox-1.8.1.jar' to classloader
+INFO  - 2014-03-12 06:18:08.166; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/poi-3.9.jar' to classloader
+INFO  - 2014-03-12 06:18:08.166; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/poi-ooxml-3.9.jar' to classloader
+INFO  - 2014-03-12 06:18:08.166; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/poi-ooxml-schemas-3.9.jar' to classloader
+INFO  - 2014-03-12 06:18:08.166; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/poi-scratchpad-3.9.jar' to classloader
+INFO  - 2014-03-12 06:18:08.167; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/rome-0.9.jar' to classloader
+INFO  - 2014-03-12 06:18:08.167; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/tagsoup-1.2.1.jar' to classloader
+INFO  - 2014-03-12 06:18:08.167; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/tika-core-1.4.jar' to classloader
+INFO  - 2014-03-12 06:18:08.167; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/tika-parsers-1.4.jar' to classloader
+INFO  - 2014-03-12 06:18:08.167; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/tika-xmp-1.4.jar' to classloader
+INFO  - 2014-03-12 06:18:08.168; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/vorbis-java-core-0.1.jar' to classloader
+INFO  - 2014-03-12 06:18:08.168; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/vorbis-java-tika-0.1.jar' to classloader
+INFO  - 2014-03-12 06:18:08.168; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/xercesImpl-2.9.1.jar' to classloader
+INFO  - 2014-03-12 06:18:08.168; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/xmlbeans-2.3.0.jar' to classloader
+INFO  - 2014-03-12 06:18:08.169; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/xmpcore-5.1.2.jar' to classloader
+INFO  - 2014-03-12 06:18:08.169; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/extraction/lib/xz-1.0.jar' to classloader
+INFO  - 2014-03-12 06:18:08.170; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/clustering/lib/attributes-binder-1.2.0.jar' to classloader
+INFO  - 2014-03-12 06:18:08.170; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/clustering/lib/carrot2-mini-3.8.0.jar' to classloader
+INFO  - 2014-03-12 06:18:08.170; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/clustering/lib/hppc-0.5.2.jar' to classloader
+INFO  - 2014-03-12 06:18:08.171; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/clustering/lib/jackson-core-asl-1.9.13.jar' to classloader
+INFO  - 2014-03-12 06:18:08.171; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/clustering/lib/jackson-mapper-asl-1.9.13.jar' to classloader
+INFO  - 2014-03-12 06:18:08.171; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/clustering/lib/mahout-collections-1.0.jar' to classloader
+INFO  - 2014-03-12 06:18:08.171; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/clustering/lib/mahout-math-0.6.jar' to classloader
+INFO  - 2014-03-12 06:18:08.171; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/clustering/lib/simple-xml-2.7.jar' to classloader
+INFO  - 2014-03-12 06:18:08.172; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/langid/lib/jsonic-1.2.7.jar' to classloader
+INFO  - 2014-03-12 06:18:08.172; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/langid/lib/langdetect-1.1-20120112.jar' to classloader
+INFO  - 2014-03-12 06:18:08.173; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/velocity/lib/commons-beanutils-1.7.0.jar' to classloader
+INFO  - 2014-03-12 06:18:08.173; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/velocity/lib/commons-collections-3.2.1.jar' to classloader
+INFO  - 2014-03-12 06:18:08.173; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/velocity/lib/velocity-1.7.jar' to classloader
+INFO  - 2014-03-12 06:18:08.174; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/contrib/velocity/lib/velocity-tools-2.0.jar' to classloader
+INFO  - 2014-03-12 06:18:08.174; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/dist/solr-cell-4.7.0.jar' to classloader
+INFO  - 2014-03-12 06:18:08.175; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/dist/solr-clustering-4.7.0.jar' to classloader
+INFO  - 2014-03-12 06:18:08.175; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/dist/solr-langid-4.7.0.jar' to classloader
+INFO  - 2014-03-12 06:18:08.175; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/dist/solr-map-reduce-4.7.0.jar' to classloader
+INFO  - 2014-03-12 06:18:08.175; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/dist/solr-morphlines-cell-4.7.0.jar' to classloader
+INFO  - 2014-03-12 06:18:08.175; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/dist/solr-morphlines-core-4.7.0.jar' to classloader
+INFO  - 2014-03-12 06:18:08.176; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/dist/solr-uima-4.7.0.jar' to classloader
+INFO  - 2014-03-12 06:18:08.176; org.apache.solr.core.SolrResourceLoader; Adding 'file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/dist/solr-velocity-4.7.0.jar' to classloader
+INFO  - 2014-03-12 06:18:08.288; org.apache.solr.update.SolrIndexConfig; IndexWriter infoStream solr logging is enabled
+INFO  - 2014-03-12 06:18:08.294; org.apache.solr.core.SolrConfig; Using Lucene MatchVersion: LUCENE_47
+INFO  - 2014-03-12 06:18:08.411; org.apache.solr.core.SolrConfig; Loaded SolrConfig: solrconfig.xml
+INFO  - 2014-03-12 06:18:08.418; org.apache.solr.schema.IndexSchema; Reading Solr Schema from managed-schema.xml
+INFO  - 2014-03-12 06:18:08.484; org.apache.solr.schema.IndexSchema; [collection1] Schema name=example
+INFO  - 2014-03-12 06:18:09.117; org.apache.solr.schema.IndexSchema; unique key field: id
+INFO  - 2014-03-12 06:18:09.197; org.apache.solr.schema.FileExchangeRateProvider; Reloading exchange rates from file currency.xml
+INFO  - 2014-03-12 06:18:09.203; org.apache.solr.schema.FileExchangeRateProvider; Reloading exchange rates from file currency.xml
+INFO  - 2014-03-12 06:18:09.317; org.apache.solr.core.SolrCore; solr.NRTCachingDirectoryFactory
+INFO  - 2014-03-12 06:18:09.367; org.apache.solr.core.SolrCore; [collection1] Opening new SolrCore at /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/, dataDir=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/
+INFO  - 2014-03-12 06:18:09.368; org.apache.solr.core.JmxMonitoredMap; No JMX servers found, not exposing Solr information with JMX.
+INFO  - 2014-03-12 06:18:09.374; org.apache.solr.core.SolrCore; [collection1] Added SolrEventListener for newSearcher: org.apache.solr.core.QuerySenderListener{queries=[]}
+INFO  - 2014-03-12 06:18:09.374; org.apache.solr.core.SolrCore; [collection1] Added SolrEventListener for firstSearcher: org.apache.solr.core.QuerySenderListener{queries=[{q=static firstSearcher warming in solrconfig.xml}]}
+INFO  - 2014-03-12 06:18:09.386; org.apache.solr.core.CachingDirectoryFactory; return new directory for /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data
+INFO  - 2014-03-12 06:18:09.386; org.apache.solr.core.SolrCore; New index directory detected: old=null new=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index/
+INFO  - 2014-03-12 06:18:09.387; org.apache.solr.core.CachingDirectoryFactory; return new directory for /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index
+INFO  - 2014-03-12 06:18:09.394; org.apache.solr.core.SolrCore; created json: solr.JSONResponseWriter
+INFO  - 2014-03-12 06:18:09.394; org.apache.solr.core.SolrCore; adding lazy queryResponseWriter: solr.VelocityResponseWriter
+INFO  - 2014-03-12 06:18:09.395; org.apache.solr.core.SolrCore; created velocity: solr.VelocityResponseWriter
+INFO  - 2014-03-12 06:18:09.397; org.apache.solr.core.SolrCore; created xslt: solr.XSLTResponseWriter
+INFO  - 2014-03-12 06:18:09.397; org.apache.solr.response.XSLTResponseWriter; xsltCacheLifetimeSeconds=5
+INFO  - 2014-03-12 06:18:09.485; org.apache.solr.core.SolrCore; no updateRequestProcessorChain defined as default, creating implicit default
+INFO  - 2014-03-12 06:18:09.492; org.apache.solr.core.RequestHandlers; created /select: solr.SearchHandler
+INFO  - 2014-03-12 06:18:09.492; org.apache.solr.core.RequestHandlers; created /query: solr.SearchHandler
+INFO  - 2014-03-12 06:18:09.494; org.apache.solr.core.RequestHandlers; created /get: solr.RealTimeGetHandler
+INFO  - 2014-03-12 06:18:09.494; org.apache.solr.core.RequestHandlers; created /browse: solr.SearchHandler
+INFO  - 2014-03-12 06:18:09.496; org.apache.solr.core.RequestHandlers; created /update: solr.UpdateRequestHandler
+INFO  - 2014-03-12 06:18:09.497; org.apache.solr.core.RequestHandlers; created /update/json: solr.UpdateRequestHandler
+INFO  - 2014-03-12 06:18:09.497; org.apache.solr.core.RequestHandlers; created /update/csv: solr.UpdateRequestHandler
+INFO  - 2014-03-12 06:18:09.503; org.apache.solr.core.RequestHandlers; created /update/extract: solr.extraction.ExtractingRequestHandler
+INFO  - 2014-03-12 06:18:09.504; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.FieldAnalysisRequestHandler
+INFO  - 2014-03-12 06:18:09.504; org.apache.solr.core.RequestHandlers; created /analysis/field: solr.FieldAnalysisRequestHandler
+INFO  - 2014-03-12 06:18:09.504; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.DocumentAnalysisRequestHandler
+INFO  - 2014-03-12 06:18:09.504; org.apache.solr.core.RequestHandlers; created /analysis/document: solr.DocumentAnalysisRequestHandler
+INFO  - 2014-03-12 06:18:09.506; org.apache.solr.core.RequestHandlers; created /admin/: solr.admin.AdminHandlers
+INFO  - 2014-03-12 06:18:09.512; org.apache.solr.core.RequestHandlers; created /admin/ping: solr.PingRequestHandler
+INFO  - 2014-03-12 06:18:09.514; org.apache.solr.core.RequestHandlers; created /debug/dump: solr.DumpRequestHandler
+INFO  - 2014-03-12 06:18:09.521; org.apache.solr.core.RequestHandlers; created /replication: solr.ReplicationHandler
+INFO  - 2014-03-12 06:18:09.521; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.SearchHandler
+INFO  - 2014-03-12 06:18:09.522; org.apache.solr.core.RequestHandlers; created /spell: solr.SearchHandler
+INFO  - 2014-03-12 06:18:09.522; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.SearchHandler
+INFO  - 2014-03-12 06:18:09.522; org.apache.solr.core.RequestHandlers; created /suggest: solr.SearchHandler
+INFO  - 2014-03-12 06:18:09.522; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.SearchHandler
+INFO  - 2014-03-12 06:18:09.522; org.apache.solr.core.RequestHandlers; created /tvrh: solr.SearchHandler
+INFO  - 2014-03-12 06:18:09.522; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.SearchHandler
+INFO  - 2014-03-12 06:18:09.523; org.apache.solr.core.RequestHandlers; created /terms: solr.SearchHandler
+INFO  - 2014-03-12 06:18:09.523; org.apache.solr.core.RequestHandlers; adding lazy requestHandler: solr.SearchHandler
+INFO  - 2014-03-12 06:18:09.523; org.apache.solr.core.RequestHandlers; created /elevate: solr.SearchHandler
+INFO  - 2014-03-12 06:18:09.536; org.apache.solr.handler.loader.XMLLoader; xsltCacheLifetimeSeconds=60
+INFO  - 2014-03-12 06:18:09.537; org.apache.solr.handler.loader.XMLLoader; xsltCacheLifetimeSeconds=60
+INFO  - 2014-03-12 06:18:09.538; org.apache.solr.handler.loader.XMLLoader; xsltCacheLifetimeSeconds=60
+INFO  - 2014-03-12 06:18:09.566; org.apache.solr.update.CommitTracker; Hard AutoCommit: if uncommited for 15000ms; 
+INFO  - 2014-03-12 06:18:09.566; org.apache.solr.update.CommitTracker; Soft AutoCommit: disabled
+INFO  - 2014-03-12 06:18:09.600; org.apache.solr.core.SolrDeletionPolicy; SolrDeletionPolicy.onInit: commits: num=1
+	commit{dir=NRTCachingDirectory(NIOFSDirectory@/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index lockFactory=NativeFSLockFactory@/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index; maxCacheMB=48.0 maxMergeSizeMB=4.0),segFN=segments_2,generation=2}
+INFO  - 2014-03-12 06:18:09.600; org.apache.solr.core.SolrDeletionPolicy; newest commit generation = 2
+INFO  - 2014-03-12 06:18:09.622; org.apache.solr.search.SolrIndexSearcher; Opening Searcher@6ec213ad[collection1] main
+INFO  - 2014-03-12 06:18:09.626; org.apache.solr.handler.component.SpellCheckComponent; Initializing spell checkers
+INFO  - 2014-03-12 06:18:09.640; org.apache.solr.spelling.DirectSolrSpellChecker; init: {name=default,field=text,classname=solr.DirectSolrSpellChecker,distanceMeasure=internal,accuracy=0.5,maxEdits=2,minPrefix=1,maxInspections=5,minQueryLength=4,maxQueryFrequency=0.01}
+INFO  - 2014-03-12 06:18:09.647; org.apache.solr.handler.component.SpellCheckComponent; No queryConverter defined, using default converter
+INFO  - 2014-03-12 06:18:09.648; org.apache.solr.handler.component.SuggestComponent; Initializing SuggestComponent
+INFO  - 2014-03-12 06:18:09.649; org.apache.solr.spelling.suggest.SolrSuggester; init: {name=mySuggester,lookupImpl=FuzzyLookupFactory,dictionaryImpl=DocumentDictionaryFactory,field=cat,weightField=price,suggestAnalyzerFieldType=string}
+INFO  - 2014-03-12 06:18:09.661; org.apache.solr.spelling.suggest.SolrSuggester; Dictionary loaded with params: {name=mySuggester,lookupImpl=FuzzyLookupFactory,dictionaryImpl=DocumentDictionaryFactory,field=cat,weightField=price,suggestAnalyzerFieldType=string}
+INFO  - 2014-03-12 06:18:09.662; org.apache.solr.handler.component.QueryElevationComponent; Loading QueryElevation from: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/conf/elevate.xml
+INFO  - 2014-03-12 06:18:09.925; org.apache.solr.handler.ReplicationHandler; Commits will be reserved for  10000
+INFO  - 2014-03-12 06:18:09.925; org.apache.solr.core.QuerySenderListener; QuerySenderListener sending requests to Searcher@6ec213ad[collection1] main{StandardDirectoryReader(segments_2:3:nrt _0(4.7):C1)}
+INFO  - 2014-03-12 06:18:09.926; org.apache.solr.core.CoreContainer; registering core: collection1
+INFO  - 2014-03-12 06:18:09.927; org.apache.solr.servlet.SolrDispatchFilter; user.dir=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example
+INFO  - 2014-03-12 06:18:09.928; org.apache.solr.servlet.SolrDispatchFilter; SolrDispatchFilter.init() done
+INFO  - 2014-03-12 06:18:09.958; org.eclipse.jetty.server.AbstractConnector; Started SocketConnector@0.0.0.0:8983
+INFO  - 2014-03-12 06:18:09.973; org.apache.solr.core.SolrCore; [collection1] webapp=null path=null params={event=firstSearcher&q=static+firstSearcher+warming+in+solrconfig.xml&distrib=false} hits=0 status=0 QTime=46 
+INFO  - 2014-03-12 06:18:09.973; org.apache.solr.core.QuerySenderListener; QuerySenderListener done.
+INFO  - 2014-03-12 06:18:09.973; org.apache.solr.handler.component.SpellCheckComponent$SpellCheckerListener; Loading spell index for spellchecker: default
+INFO  - 2014-03-12 06:18:09.974; org.apache.solr.handler.component.SpellCheckComponent$SpellCheckerListener; Loading spell index for spellchecker: wordbreak
+INFO  - 2014-03-12 06:18:09.974; org.apache.solr.handler.component.SuggestComponent$SuggesterListener; Loading suggester index for: mySuggester
+INFO  - 2014-03-12 06:18:09.974; org.apache.solr.spelling.suggest.SolrSuggester; reload()
+INFO  - 2014-03-12 06:18:09.974; org.apache.solr.spelling.suggest.SolrSuggester; build()
+INFO  - 2014-03-12 06:18:09.983; org.apache.solr.core.SolrCore; [collection1] Registered new searcher Searcher@6ec213ad[collection1] main{StandardDirectoryReader(segments_2:3:nrt _0(4.7):C1)}
+INFO  - 2014-03-12 06:18:20.686; org.apache.solr.update.processor.LogUpdateProcessor; [collection1] webapp=/solr path=/update/extract params={extra=info&literal.id=svdtut_pdf&wt=json} {add=[svdtut_pdf (1462364537442271232)]} 0 1683
+INFO  - 2014-03-12 06:18:35.692; org.apache.solr.update.DirectUpdateHandler2; start commit{,optimize=false,openSearcher=false,waitSearcher=true,expungeDeletes=false,softCommit=false,prepareCommit=false}
+INFO  - 2014-03-12 06:18:35.754; org.apache.solr.core.SolrDeletionPolicy; SolrDeletionPolicy.onCommit: commits: num=2
+	commit{dir=NRTCachingDirectory(NIOFSDirectory@/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index lockFactory=NativeFSLockFactory@/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index; maxCacheMB=48.0 maxMergeSizeMB=4.0),segFN=segments_2,generation=2}
+	commit{dir=NRTCachingDirectory(NIOFSDirectory@/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index lockFactory=NativeFSLockFactory@/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index; maxCacheMB=48.0 maxMergeSizeMB=4.0),segFN=segments_3,generation=3}
+INFO  - 2014-03-12 06:18:35.754; org.apache.solr.core.SolrDeletionPolicy; newest commit generation = 3
+INFO  - 2014-03-12 06:18:35.758; org.apache.solr.search.SolrIndexSearcher; Opening Searcher@5461689c[collection1] realtime
+INFO  - 2014-03-12 06:18:35.759; org.apache.solr.update.DirectUpdateHandler2; end_commit_flush
+INFO  - 2014-03-12 06:18:48.757; org.apache.solr.update.processor.LogUpdateProcessor; [collection1] webapp=/solr path=/update/extract params={extra=info&literal.id=svdtut_pdf&wt=json} {add=[svdtut_pdf (1462364566833856512)]} 0 2805
+INFO  - 2014-03-12 06:18:58.733; org.apache.solr.update.processor.LogUpdateProcessor; [collection1] webapp=/solr path=/update/extract params={extra=info&literal.id=taming&wt=json} {add=[taming (1462364577370996736)]} 0 1973
+INFO  - 2014-03-12 06:19:03.766; org.apache.solr.update.DirectUpdateHandler2; start commit{,optimize=false,openSearcher=false,waitSearcher=true,expungeDeletes=false,softCommit=false,prepareCommit=false}
+INFO  - 2014-03-12 06:19:04.012; org.apache.solr.core.SolrDeletionPolicy; SolrDeletionPolicy.onCommit: commits: num=2
+	commit{dir=NRTCachingDirectory(NIOFSDirectory@/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index lockFactory=NativeFSLockFactory@/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index; maxCacheMB=48.0 maxMergeSizeMB=4.0),segFN=segments_3,generation=3}
+	commit{dir=NRTCachingDirectory(NIOFSDirectory@/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index lockFactory=NativeFSLockFactory@/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index; maxCacheMB=48.0 maxMergeSizeMB=4.0),segFN=segments_4,generation=4}
+INFO  - 2014-03-12 06:19:04.012; org.apache.solr.core.SolrDeletionPolicy; newest commit generation = 4
+INFO  - 2014-03-12 06:19:04.015; org.apache.solr.search.SolrIndexSearcher; Opening Searcher@208cc3b7[collection1] realtime
+INFO  - 2014-03-12 06:19:04.016; org.apache.solr.update.DirectUpdateHandler2; end_commit_flush
+INFO  - 2014-03-12 06:19:07.309; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select params={indent=true&q=*:*&_=1394619547305&wt=json} hits=1 status=0 QTime=1 
+INFO  - 2014-03-12 06:19:14.014; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/admin/luke params={numTerms=0&_=1394619554009&show=index&wt=json} status=0 QTime=2 
+INFO  - 2014-03-12 06:19:14.017; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/replication params={command=details&_=1394619554012&wt=json} status=0 QTime=3 
+INFO  - 2014-03-12 06:19:14.018; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/admin/file/ params={file=admin-extra.html&_=1394619554013} status=0 QTime=1 
+INFO  - 2014-03-12 06:19:14.031; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/admin/ping params={action=status&_=1394619554014&wt=json} status=503 QTime=9 
+INFO  - 2014-03-12 06:19:14.051; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/admin/system params={_=1394619554012&wt=json} status=0 QTime=35 
+INFO  - 2014-03-12 06:19:20.773; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/admin/file params={_=1394619560771&wt=json} status=0 QTime=1 
+INFO  - 2014-03-12 06:19:25.056; org.apache.solr.servlet.SolrDispatchFilter; [admin] webapp=null path=/admin/cores params={_=1394619565051&wt=json} status=0 QTime=3 
+INFO  - 2014-03-12 06:19:25.071; org.apache.solr.servlet.SolrDispatchFilter; [admin] webapp=null path=/admin/cores params={_=1394619565067&wt=json} status=0 QTime=1 
+INFO  - 2014-03-12 06:19:29.235; org.apache.solr.update.DirectUpdateHandler2; start commit{,optimize=true,openSearcher=true,waitSearcher=true,expungeDeletes=false,softCommit=false,prepareCommit=false}
+INFO  - 2014-03-12 06:19:29.439; org.apache.solr.core.SolrDeletionPolicy; SolrDeletionPolicy.onCommit: commits: num=2
+	commit{dir=NRTCachingDirectory(NIOFSDirectory@/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index lockFactory=NativeFSLockFactory@/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index; maxCacheMB=48.0 maxMergeSizeMB=4.0),segFN=segments_4,generation=4}
+	commit{dir=NRTCachingDirectory(NIOFSDirectory@/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index lockFactory=NativeFSLockFactory@/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index; maxCacheMB=48.0 maxMergeSizeMB=4.0),segFN=segments_5,generation=5}
+INFO  - 2014-03-12 06:19:29.439; org.apache.solr.core.SolrDeletionPolicy; newest commit generation = 5
+INFO  - 2014-03-12 06:19:29.441; org.apache.solr.search.SolrIndexSearcher; Opening Searcher@252de844[collection1] main
+INFO  - 2014-03-12 06:19:29.444; org.apache.solr.update.DirectUpdateHandler2; end_commit_flush
+INFO  - 2014-03-12 06:19:29.444; org.apache.solr.core.QuerySenderListener; QuerySenderListener sending requests to Searcher@252de844[collection1] main{StandardDirectoryReader(segments_5:11:nrt _3(4.7):C3)}
+INFO  - 2014-03-12 06:19:29.445; org.apache.solr.core.QuerySenderListener; QuerySenderListener done.
+INFO  - 2014-03-12 06:19:29.445; org.apache.solr.core.SolrCore; [collection1] Registered new searcher Searcher@252de844[collection1] main{StandardDirectoryReader(segments_5:11:nrt _3(4.7):C3)}
+INFO  - 2014-03-12 06:19:29.446; org.apache.solr.update.processor.LogUpdateProcessor; [collection1] webapp=/solr path=/update params={optimize=true&_=1394619569232&wt=json&waitFlush=true} {optimize=} 0 211
+INFO  - 2014-03-12 06:19:32.805; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/admin/luke params={numTerms=0&_=1394619572802&show=index&wt=json} status=0 QTime=1 
+INFO  - 2014-03-12 06:19:32.807; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/replication params={command=details&_=1394619572803&wt=json} status=0 QTime=0 
+INFO  - 2014-03-12 06:19:32.815; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/admin/file/ params={file=admin-extra.html&_=1394619572805} status=0 QTime=7 
+INFO  - 2014-03-12 06:19:32.816; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/admin/ping params={action=status&_=1394619572805&wt=json} status=503 QTime=5 
+INFO  - 2014-03-12 06:19:32.829; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/admin/system params={_=1394619572804&wt=json} status=0 QTime=23 
+INFO  - 2014-03-12 06:19:38.162; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select params={indent=true&q=*:*&_=1394619578158&wt=json} hits=3 status=0 QTime=0 
+INFO  - 2014-03-12 06:19:57.611; org.apache.solr.core.SolrCore; [collection1] webapp=/solr path=/select params={indent=true&q=turing+test&_=1394619597594&wt=json} hits=2 status=0 QTime=2 
+INFO  - 2014-03-12 06:20:42.637; org.eclipse.jetty.server.Server; Graceful shutdown SocketConnector@0.0.0.0:8983
+INFO  - 2014-03-12 06:20:42.639; org.eclipse.jetty.server.Server; Graceful shutdown o.e.j.w.WebAppContext{/solr,file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr-webapp/webapp/},/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/webapps/solr.war
+INFO  - 2014-03-12 06:20:43.641; org.apache.solr.core.CoreContainer; Shutting down CoreContainer instance=935623043
+INFO  - 2014-03-12 06:20:43.642; org.apache.solr.core.SolrCore; [collection1]  CLOSING SolrCore org.apache.solr.core.SolrCore@7f364454
+INFO  - 2014-03-12 06:20:43.643; org.apache.solr.update.DirectUpdateHandler2; closing DirectUpdateHandler2{commits=2,autocommit maxTime=15000ms,autocommits=2,soft autocommits=0,optimizes=1,rollbacks=0,expungeDeletes=0,docsPending=0,adds=0,deletesById=0,deletesByQuery=0,errors=0,cumulative_adds=3,cumulative_deletesById=0,cumulative_deletesByQuery=0,cumulative_errors=0,transaction_logs_total_size=1754412,transaction_logs_total_number=3}
+INFO  - 2014-03-12 06:20:43.644; org.apache.solr.update.SolrCoreState; Closing SolrCoreState
+INFO  - 2014-03-12 06:20:43.644; org.apache.solr.update.DefaultSolrCoreState; SolrCoreState ref count has reached 0 - closing IndexWriter
+INFO  - 2014-03-12 06:20:43.644; org.apache.solr.update.DefaultSolrCoreState; closing IndexWriter with IndexWriterCloser
+INFO  - 2014-03-12 06:20:43.647; org.apache.solr.core.SolrCore; [collection1] Closing main searcher on request.
+INFO  - 2014-03-12 06:20:43.648; org.apache.solr.core.CachingDirectoryFactory; Closing NRTCachingDirectoryFactory - 2 directories currently being tracked
+INFO  - 2014-03-12 06:20:43.648; org.apache.solr.core.CachingDirectoryFactory; looking to close /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index [CachedDir<<refCount=0;path=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index;done=false>>]
+INFO  - 2014-03-12 06:20:43.648; org.apache.solr.core.CachingDirectoryFactory; Closing directory: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data/index
+INFO  - 2014-03-12 06:20:43.649; org.apache.solr.core.CachingDirectoryFactory; looking to close /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data [CachedDir<<refCount=0;path=/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data;done=false>>]
+INFO  - 2014-03-12 06:20:43.649; org.apache.solr.core.CachingDirectoryFactory; Closing directory: /Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr/collection1/data
+INFO  - 2014-03-12 06:20:43.651; org.eclipse.jetty.server.handler.ContextHandler; stopped o.e.j.w.WebAppContext{/solr,file:/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/solr-webapp/webapp/},/Users/grantingersoll/projects/manning/tamingText/book/apache-solr/example/webapps/solr.war

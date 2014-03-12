@@ -5,7 +5,7 @@
 #  
 DIR=$(dirname "$0")
 cd ${DIR}/../apache-solr/example
-
+pwd
 INSTANCE=$1;
 
 if [ "x$INSTANCE" == "x" ]; then

@@ -15,4 +15,4 @@ apache-solr/solr-tagging/conf/dataimport.properties
 apache-solr/solr-clustering/data
 apache-solr/solr-clustering/conf/dataimport.properties
 apache-solr/example/solr/collection1/data
-
+apache-solr/example/logs/solr.log

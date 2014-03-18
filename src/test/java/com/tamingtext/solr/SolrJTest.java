@@ -19,13 +19,6 @@
 
 package com.tamingtext.solr;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.solr.BaseDistributedSearchTestCase;
@@ -33,14 +26,19 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.embedded.JettySolrRunner;
-import org.apache.solr.client.solrj.impl.CommonsHttpSolrServer;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.solr.common.util.DateUtil;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
 
 public class SolrJTest extends BaseDistributedSearchTestCase {
   private transient static Log log = LogFactory.getLog(SolrJTest.class);
@@ -67,10 +65,10 @@ public class SolrJTest extends BaseDistributedSearchTestCase {
     SolrJettyTestBase.afterSolrJettyTestBase();
   }
   */
-  
+
   JettySolrRunner runner;
-  SolrServer      solr;
-  
+  SolrServer solr;
+
   @Before
   @Override
   public void setUp() throws Exception {
@@ -78,8 +76,8 @@ public class SolrJTest extends BaseDistributedSearchTestCase {
     File home = new File(getSolrHome());
     runner = createJetty(home, "target/solrjtest-data");
     port = runner.getLocalPort();
-    
-    solr = new CommonsHttpSolrServer(new URL("http://localhost:" + port + "/solr"));
+
+    solr = new HttpSolrServer("http://localhost:" + port + "/solr");
     //clean out all the docs
     solr.deleteByQuery("*:*");
     solr.commit();
@@ -93,12 +91,12 @@ public class SolrJTest extends BaseDistributedSearchTestCase {
     runner.stop();
     super.tearDown();
   }
-  
+
   @Override
   public String getSolrHome() {
     //need to handle original source and packaging source
     File tmp = new File("target/tamingText-src/solr");
-    if (tmp.exists()){
+    if (tmp.exists()) {
       return tmp.getAbsolutePath();
     }
     return "solr";
@@ -116,7 +114,7 @@ public class SolrJTest extends BaseDistributedSearchTestCase {
             "Fans everywhere were appalled by the revelations, with " +
             "allegiances falling roughly along species lines.";
     //<start id="solrj"/>
-    SolrServer solr = new CommonsHttpSolrServer(new URL("http://localhost:" + port + "/solr"));//<co id="co.solrj.server"/>
+    SolrServer solr = new HttpSolrServer("http://localhost:" + port + "/solr");//<co id="co.solrj.server"/>
     SolrInputDocument doc = new SolrInputDocument();
     doc.addField("id", "http://tortoisehare5k.tamingtext.com");//<co id="co.solrj.unique"/>
     doc.addField("mimeType", "text/plain");

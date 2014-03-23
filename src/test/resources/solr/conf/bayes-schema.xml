@@ -20,6 +20,7 @@
   <fields>
     <field name="id" type="string" indexed="true" stored="true" required="true"/>
     <field name="subject" type="string" indexed="true" stored="true"/>
+    <field name="subjectScore" type="string" indexed="true" stored="true"/>
     <field name="category" type="string" indexed="true" stored="true"/>
     <field name="details" type="text" indexed="true" stored="true" termVectors="true"/>
   </fields>

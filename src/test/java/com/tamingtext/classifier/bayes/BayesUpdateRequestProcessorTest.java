@@ -19,6 +19,10 @@
 
 package com.tamingtext.classifier.bayes;
 
+import java.io.File;
+
+import org.apache.commons.io.FileUtils;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -26,10 +30,29 @@ import com.tamingtext.TTTestCaseJ4;
 
 
 public class BayesUpdateRequestProcessorTest extends TTTestCaseJ4 {
+  
+  static File baseDir;
+  static File solrDir;
+  
   @BeforeClass
   public static void beforeClass() throws Exception {
-    initCore("bayes-update-config.xml", 
-        "bayes-update-schema.xml");
+    /*
+    baseDir = new File("target/test-output/update-test");
+    if (!FileUtils.deleteQuietly(baseDir)) {
+      Assert.fail("Could not delete " + baseDir);
+    }
+
+    if (!baseDir.mkdirs()) {
+      Assert.fail("Count not create " + baseDir);
+    }
+
+    solrDir = new File(baseDir, "solr");
+    solrDir.mkdirs();
+    */
+    initCore(
+        "solr/conf/bayes-update-config.xml", 
+        "solr/conf/bayes-schema.xml",
+        "");
   }
   
   @Test
@@ -47,10 +70,8 @@ public class BayesUpdateRequestProcessorTest extends TTTestCaseJ4 {
     assertQ("Couldn't find indexed scifi instance",
         req("details:Empire"), "//result[@numFound=1]", "//str[@name='id'][.='1234']");
 
-    
     assertQ("Couldn't find indexed fantasy instance",
         req("details:Towers"), "//result[@numFound=1]", "//str[@name='id'][.='1235']");
-    
     
     assertQ("Couldn't find classified scifi instance",
         req("subject:scifi"), "//result[@numFound=1]", "//str[@name='id'][.='1234']");

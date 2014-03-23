@@ -35,6 +35,7 @@ public class FSTDictionaryTest {
       {"tower","1","16"},
       {"two","1","17"},
       {"war","3","18"},
+      {FSTDictionary.NUM_DOCS, "12", "-1"},
   };
   
   String dictionaryFile = "src/test/resources/classifier/bayes/sample-dictionary.txt";
@@ -54,7 +55,8 @@ public class FSTDictionaryTest {
       assertEquals("Term index mismatch", expected[pos][2], String.valueOf(entry.index));
       pos++;
     }
-    assertEquals("Number of terms in dictionary", expected.length, pos);
+    // we don't expect the NUM_DOCS to be present in the dictionary itself
+    assertEquals("Number of terms in dictionary", expected.length-1, pos);
   }
   
   /** Test that we can create an FST from the sample dictionary
@@ -65,6 +67,7 @@ public class FSTDictionaryTest {
   public void testBuildAndReadFST() throws Exception {
     String[] args = {
         "--input",  dictionaryFile,
+        "--document-count", "12", 
         "--output", fstOutputFile
     };
 

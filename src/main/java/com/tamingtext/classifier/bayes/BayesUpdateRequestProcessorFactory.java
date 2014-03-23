@@ -19,9 +19,10 @@
 
 package com.tamingtext.classifier.bayes;
 
-import java.io.File;
+import java.io.IOException;
 
 import org.apache.solr.common.SolrException;
+import org.apache.solr.common.params.SolrParams;
 import org.apache.solr.common.util.NamedList;
 import org.apache.solr.core.SolrCore;
 import org.apache.solr.request.SolrQueryRequest;
@@ -63,102 +64,78 @@ public class BayesUpdateRequestProcessorFactory extends UpdateRequestProcessorFa
 
   public static final Logger log = org.slf4j.LoggerFactory.getLogger(BayesUpdateRequestProcessorFactory.class);
 
-  static final String DEFAULT_MODEL_DIR    = "data/bayes-model";
   static final String DEFAULT_INPUT_FIELD  = "text";
   static final String DEFAULT_OUTPUT_FIELD = "bayes-class";
+  static final String DEFAULT_SCORE_FIELD  = "bayes-score";
   
-  private SolrCore core;
-  private String inputFieldName;
-  private String outputFieldName;
-  private String defaultCategory;
-  private File modelDir;
-  //private ClassifierContext ctx;
-  private boolean enabled;
+  static final String DEFAULT_MODEL_DIR    = "data/bayes-model";
+  static final String DEFAULT_DICTIONARY_FILE = "data/bayes-dictionary.fst";
+  static final String DEFAULT_LABEL_FILE = "data/bayes-labels";
+  
+  static final String DEFAULT_TERM_WEIGHT_METHOD = "tfidf";
+  
+  private final SolrCore core;
+  
+  private String inputFieldName = DEFAULT_INPUT_FIELD;
+  private String outputFieldName = DEFAULT_OUTPUT_FIELD;
+  private String scoreFieldName  = DEFAULT_SCORE_FIELD;
+  private String defaultCategory = "";
+
+  private String modelDirName = DEFAULT_MODEL_DIR;
+  private String dictionaryName = DEFAULT_DICTIONARY_FILE;
+  private String labelFileName = DEFAULT_LABEL_FILE;
+  private String termWeightMethod = DEFAULT_TERM_WEIGHT_METHOD;
+  
+  TextClassifier docClassifier;
   
   // used for locking during context swap.
   private final Object swapContext = new Object();
   
-  public BayesUpdateRequestProcessorFactory(SolrCore core) {
+  public BayesUpdateRequestProcessorFactory(SolrCore core) throws IOException {
     this.core = core;
   }
   
+  @SuppressWarnings("rawtypes")
   @Override
-  @SuppressWarnings("unchecked")
-  public void init(NamedList args) {
-    super.init(args);
-    Object o;
-    
-    enabled = Boolean.valueOf((String) args.get("enabled"));
-  
-    o = args.get("inputField");
-    inputFieldName = DEFAULT_INPUT_FIELD;
-    if (o != null && o instanceof String) {
-      inputFieldName = (String) o;
+  public void init(final NamedList args) {
+    if (args != null) {
+      SolrParams params = SolrParams.toSolrParams(args);
+      inputFieldName   = params.get("inputField", DEFAULT_INPUT_FIELD);
+      outputFieldName  = params.get("outputField", DEFAULT_OUTPUT_FIELD);
+      scoreFieldName   = params.get("scoreField", DEFAULT_SCORE_FIELD);
+      defaultCategory  = params.get("defaultCategory", "");
+      modelDirName     = params.get("model", DEFAULT_MODEL_DIR);
+      dictionaryName   = params.get("dictionary", DEFAULT_DICTIONARY_FILE);
+      labelFileName    = params.get("labels", DEFAULT_LABEL_FILE);
+      termWeightMethod = params.get("termWeightMethod", DEFAULT_TERM_WEIGHT_METHOD);
     }
-    
-    o = args.get("outputField");
-    outputFieldName = DEFAULT_OUTPUT_FIELD;
-    if (o != null && o instanceof String) {
-      outputFieldName = (String) o;
+
+    docClassifier = new TextClassifier();
+    docClassifier.defaultCategory = defaultCategory;
+    docClassifier.modelDirName = modelDirName;
+    docClassifier.dictionaryName = dictionaryName;
+    docClassifier.labelFileName = labelFileName;
+    docClassifier.termWeightMethod = termWeightMethod;
+    docClassifier.analyzer = core.getLatestSchema().getAnalyzer();
+      
+    try {
+      docClassifier.init();
     }
-    
-    o = args.get("defaultCategory");
-    if (o != null && o instanceof String) {
-      defaultCategory = (String) o;
+    catch (IOException ex) {
+      throw new SolrException(SolrException.ErrorCode.SERVER_ERROR, ex.getMessage(), ex.getCause());
     }
-    
-    o = args.get("model");
-    String modelDirName = DEFAULT_MODEL_DIR;
-    if (o != null && o instanceof String) {
-      modelDirName = (String) o;
-    }
-    
-    modelDir = new File(modelDirName);
-    
-    if (!modelDir.isDirectory()) {
-      log.warn("WARNING: model directory " + modelDir.getAbsolutePath() + " does not exist. Classification disabled");
-      enabled = false;
-    }
-    
-    initClassifierContext();
   }
 
-  public void initClassifierContext() {
-    try {
-      /*
-      //<start id="mahout.bayes.setup"/>
-      BayesParameters p = new BayesParameters();
-      p.set("basePath", modelDir.getCanonicalPath());
-      Datastore ds = new InMemoryBayesDatastore(p);
-      Algorithm a  = new BayesAlgorithm();
-      ClassifierContext ctx = new ClassifierContext(a,ds);
-      ctx.initialize();
-      //<end id="mahout.bayes.setup"/>
-      synchronized (swapContext) {
-          this.ctx = ctx; // swap upon successful load.
-      }
-      */
-      enabled = true;
-    }
-    catch (Exception e) {
-      throw new SolrException(SolrException.ErrorCode.SERVER_ERROR,"Error initializing clasifier context", e);
-    }
-  }
-  
   @Override
   public UpdateRequestProcessor getInstance(SolrQueryRequest req,
       SolrQueryResponse rsp, UpdateRequestProcessor next) {
-    return null;
-      /*
-    if (enabled) {
       synchronized (swapContext) {
-        return new BayesUpdateRequestProcessor(ctx, core.getSchema().getAnalyzer(), inputFieldName, outputFieldName, 
-            defaultCategory, next);
+        return new BayesUpdateRequestProcessor(
+            docClassifier,
+            inputFieldName, 
+            outputFieldName,
+            scoreFieldName,
+            next);
       }
-    }
-    else {
-      return next;
-    }
-    */
   }
 }

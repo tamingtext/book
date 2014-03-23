@@ -15,7 +15,12 @@
     <processor class="com.tamingtext.classifier.bayes.BayesUpdateRequestProcessorFactory">
       <str name="inputField">details</str>
       <str name="outputField">subject</str>
-      <str name="model">src/test/resources/solr/conf/bayes-model</str>
+      <str name="scoreField">subjectScore</str>
+      <str name="defaultCategory">unknown</str>
+      <str name="model">src/test/resources/classifier/bayes/sample-model</str>
+      <str name="dictionary">src/test/resources/classifier/bayes/sample-dictionary.fst</str>
+      <str name="labels">src/test/resources/classifier/bayes/sample-label-index</str>
+      <str name="termWeightMethod">TFIDF</str>
     </processor>
     <processor class="solr.RunUpdateProcessorFactory"/>
     <processor class="solr.LogUpdateProcessorFactory"/>

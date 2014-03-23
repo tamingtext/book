@@ -31,6 +31,7 @@ import org.apache.commons.cli2.builder.DefaultOptionBuilder;
 import org.apache.commons.cli2.builder.GroupBuilder;
 import org.apache.commons.cli2.commandline.Parser;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.SequenceFile;
@@ -40,7 +41,6 @@ import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.mahout.common.CommandLineUtil;
-import org.apache.mahout.math.VectorWritable;
 import org.apache.mahout.utils.vectors.TermEntry;
 import org.apache.mahout.utils.vectors.TermInfo;
 import org.apache.mahout.utils.vectors.io.DelimitedTermInfoWriter;
@@ -137,11 +137,12 @@ public final class BayesVectorsFromLucene {
       Configuration conf = new Configuration();
       SequenceFile.Writer seqWriter = null;
       try {
-        seqWriter = SequenceFile.createWriter(conf,
-            SequenceFile.Writer.file(path), 
-            SequenceFile.Writer.keyClass(Text.class),
-            SequenceFile.Writer.valueClass(IntWritable.class));
-        
+        seqWriter = SequenceFile.createWriter(
+            FileSystem.get(conf), conf, 
+            path,
+            Text.class,
+            IntWritable.class
+            );
         Text term = new Text();
         IntWritable termIndex = new IntWritable();
 
@@ -183,7 +184,7 @@ public final class BayesVectorsFromLucene {
             + "id is used which is prone to error if the underlying index changes").create();
 
     Option categoryFieldOpt = obuilder.withLongName("categoryField").withRequired(true).withArgument(
-        abuilder.withName("idField").withMinimum(1).withMaximum(1).create()).withDescription(
+        abuilder.withName("categoryField").withMinimum(1).withMaximum(1).create()).withDescription(
         "The field in the index containing the category.").create();
     
     Option dictOutOpt = obuilder.withLongName("dictOut").withRequired(true).withArgument(
@@ -307,16 +308,8 @@ public final class BayesVectorsFromLucene {
     }
   }
 
-  private static VectorWriter getSeqFileWriter(String outFile) throws IOException {
-    Configuration conf = new Configuration();
-    Path path = new Path(outFile);
-
-    SequenceFile.Writer seqWriter = SequenceFile.createWriter(conf, 
-        SequenceFile.Writer.file(path), 
-        SequenceFile.Writer.keyClass(Text.class),
-        SequenceFile.Writer.valueClass(VectorWritable.class));
-
-    return new SequenceFileCategoryVectorWriter(seqWriter);
+  private static VectorWriter getSeqFileWriter(String outDir) throws IOException {
+    return new SequenceFileCategoryVectorWriter(outDir);
   }
 
   public void setLuceneDir(String luceneDir) {

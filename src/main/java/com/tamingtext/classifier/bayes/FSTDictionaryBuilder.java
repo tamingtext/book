@@ -11,6 +11,9 @@ import java.io.Reader;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.Text;
 import org.apache.hadoop.util.ToolRunner;
 import org.apache.lucene.store.OutputStreamDataOutput;
 import org.apache.lucene.util.BytesRef;
@@ -18,8 +21,11 @@ import org.apache.lucene.util.IntsRef;
 import org.apache.lucene.util.fst.Builder;
 import org.apache.lucene.util.fst.FST;
 import org.apache.lucene.util.fst.FST.INPUT_TYPE;
-import org.apache.lucene.util.fst.UpToTwoPositiveIntOutputs;
 import org.apache.lucene.util.fst.Util;
+import org.apache.mahout.common.Pair;
+import org.apache.mahout.common.iterator.sequencefile.PathType;
+import org.apache.mahout.common.iterator.sequencefile.SequenceFileDirIterable;
+import org.apache.mahout.math.VectorWritable;
 import org.slf4j.Logger;
 
 import com.beust.jcommander.JCommander;
@@ -43,6 +49,15 @@ public class FSTDictionaryBuilder {
   @Parameter(names = { "-i", "--input" }, description = "Input File", required = true)
   private String inputFile;
 
+  @Parameter(names = { "-c", "--count-vectors" }, description = "Count Vectors", required = false)
+  private boolean countVectors;
+  
+  @Parameter(names = { "-d", "--document-count" }, description = "Document Count", required = false)
+  private long documentCount = -1;
+  
+  @Parameter(names = { "-v", "--vector-dir" }, description = "Vector Directory", required = false)
+  private String vectorDir;
+  
   @Parameter(names = { "-o", "--output" }, description = "Output FST File", required = true)
   private String fstOutputFile;
 
@@ -55,6 +70,10 @@ public class FSTDictionaryBuilder {
 
     Preconditions.checkNotNull("Expected an input file to be specified",
         inputFile);
+
+    Preconditions.checkArgument(vectorDir != null || documentCount > -1, 
+        "Expected a document count or a vector directory to be specified");
+
     Preconditions.checkNotNull("Expected an output file to be specified",
         fstOutputFile);
 
@@ -65,6 +84,22 @@ public class FSTDictionaryBuilder {
       throw new FileNotFoundException("Can not write to directory (can not create, or already exists and is not a directory): " + p.getAbsolutePath());
     }
 
+    if (vectorDir != null) {
+      logger.info("Counting vectors found in " + vectorDir);
+      // we need to derive the document count from the number of vectors,
+      // this is a pretty ham-handed approach.
+      Configuration conf = new Configuration();
+      Path vp = new Path(vectorDir);
+      SequenceFileDirIterable<Text, VectorWritable> it = new SequenceFileDirIterable<Text, VectorWritable>(vp, PathType.LIST, conf);
+      documentCount = 0;
+      Iterator<Pair<Text, VectorWritable>> itr = it.iterator();
+      while (itr.hasNext()) {
+        itr.next();
+        documentCount++;
+      }
+      logger.info("Completed counting vectors, found: " + documentCount);
+    }
+    
     Builder<Object> builder = new Builder<Object>(INPUT_TYPE.BYTE1, FSTDictionary.OUTPUTS);
     BytesRef scratchBytes = new BytesRef();
     IntsRef scratchInts = new IntsRef();
@@ -78,6 +113,10 @@ public class FSTDictionaryBuilder {
           new FileOutputStream(fstOutputFile));
       c.register(out);
 
+      scratchBytes.copyChars(FSTDictionary.NUM_DOCS);
+      Util.toIntsRef(scratchBytes, scratchInts);
+      builder.add(scratchInts, Long.valueOf(documentCount));
+      
       for (FSTDictionary.Entry entry : new TextDictionaryIterable(r)) {
         scratchBytes.copyChars(entry.term);
         Util.toIntsRef(scratchBytes, scratchInts);
@@ -235,10 +274,10 @@ public class FSTDictionaryBuilder {
               entry.term = col;
               break;
             case 1:
-              entry.df = Long.parseLong(col);
+              entry.df = Integer.parseInt(col);
               break;
             case 2:
-              entry.index = Long.parseLong(col);
+              entry.index = Integer.parseInt(col);
               break;
             default:
               logger.warn("Extra column " + pos + " observed at line: " + line

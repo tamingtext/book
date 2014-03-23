@@ -51,16 +51,16 @@ public class LuceneCategoryIterator extends LuceneIterator {
   public LuceneCategoryIterator(IndexReader indexReader,
                         String idField,
                         String field,
-                        String catergoryField,
+                        String categoryField,
                         TermInfo termInfo,
                         Weight weight,
                         double normPower,
                         double maxPercentErrorDocs) {
     super(indexReader, idField, field, termInfo, weight, normPower, maxPercentErrorDocs);
-    this.categoryField = idField;
+    this.categoryField = categoryField;
     if (categoryField != null) {
       categoryFieldSelector = new TreeSet<String>();
-      categoryFieldSelector.add(catergoryField);
+      categoryFieldSelector.add(categoryField);
     } else {
       categoryFieldSelector = null;
     }

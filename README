@@ -46,6 +46,10 @@ To build the source, in TT_HOME:
 
    mvn clean package 
 
+Depending upon your internet connection, this step may take a while to
+complete while maven automatically downloads a number of dependencies
+it needs to build the project
+
 Running the Examples
 --------------------
 

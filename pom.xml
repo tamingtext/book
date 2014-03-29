@@ -161,7 +161,7 @@
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
-      <version>1.2.17</version>
+      <version>1.2.12</version>
     </dependency>
 
     <dependency>
@@ -611,61 +611,4 @@
     </dependency>
   </dependencies>
 
-  <repositories>
-    <repository>
-      <id>opennlp</id>
-      <name>OpenNLP Maven Repository</name>
-      <url>http://opennlp.sourceforge.net/maven2/</url>
-      <releases>
-        <updatePolicy>always</updatePolicy>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-        <updatePolicy>always</updatePolicy>
-      </snapshots>
-    </repository>
-
-    <repository>
-      <id>apache.maven2.snapshot.repository</id>
-      <name>Apache Maven 2 repository</name>
-      <url>http://people.apache.org/maven-snapshot-repository</url>
-      <releases>
-        <updatePolicy>always</updatePolicy>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-        <updatePolicy>always</updatePolicy>
-      </snapshots>
-    </repository>
-
-    <repository>
-      <id>tamingtext.maven2.repository</id>
-      <name>TamingText Maven 2 repository</name>
-      <url>http://maven.tamingtext.com</url>
-      <releases>
-        <updatePolicy>always</updatePolicy>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-        <updatePolicy>always</updatePolicy>
-      </snapshots>
-    </repository>
-
-    <repository>
-      <!-- carrot can be found here -->
-      <id>sonatype-nexus-public</id>
-      <name>SonaType public snapshots and releases repository</name>
-      <url>https://oss.sonatype.org/content/groups/public</url>
-      <releases> 
-          <enabled>true</enabled>
-      </releases> 
-      <snapshots>
-          <enabled>true</enabled>
-      </snapshots>
-    </repository>
-
-  </repositories>
 </project>

@@ -39,6 +39,13 @@ started, you will need:
    rm index.html*
    tar -xf Wordnet-3.0.tar.gz
 
+   On Windows, the java wordnet libraries behave a bit differently in terms of
+   the filenames they attempt to open, so for now, you'll need to manually
+   rename the files in the `Wordnet-3.0/dict` directory if you're attempting
+   to run this code on Windows. Files starting with index or data should be
+   renamed to have an idx or dat suffix insteas. For example index.adv should
+   be renamed to adv.idx
+
 Building the Source
 -------------------
 

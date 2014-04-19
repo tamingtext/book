@@ -56,6 +56,7 @@ public class UnicodeExamplesTest {
 
   @Test
   public void testASCIIFoldingFilter() throws Exception {
+    //<start id="foldingFilter"/>
     String input = "Résumé";
     StandardTokenizer t = new StandardTokenizer(Version.LUCENE_47, new StringReader(input));
     ASCIIFoldingFilter tf = new ASCIIFoldingFilter(t);
@@ -65,6 +66,7 @@ public class UnicodeExamplesTest {
       System.err.println(input + " -> " + term);
     }
     tf.close();
+    //<end id="foldingFilter"/>
   }
   
   public static String toCodePoints(String s) {

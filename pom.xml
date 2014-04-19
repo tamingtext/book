@@ -9,9 +9,9 @@
   <url>http://www.tamingtext.com</url>
 
   <properties>
-     <lucene.version>4.6.1</lucene.version>
-     <tika.version>1.4</tika.version>
-     <mahout.version>0.9</mahout.version>
+     <lucene.version>4.7.0</lucene.version>
+     <tika.version>1.5</tika.version>
+     <mahout.version>1.0tt-SNAPSHOT</mahout.version>
      <release.update.interval>daily</release.update.interval>
      <snapshot.update.interval>interval:60</snapshot.update.interval>
      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -116,6 +116,29 @@
             </excludes>
           </resource>
         </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>stage-sources-slurper</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>src</directory>
+                                </resource>
+                            </resources>
+                            <outputDirectory>target/classes/src</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
       </build>
     </profile>
     <profile>
@@ -547,22 +570,6 @@
           <groupId>org.slf4j</groupId>
           <artifactId>jcl-over-slf4j</artifactId>
         </exclusion>
-        <exclusion>
-          <groupId>org.apache.hadoop</groupId>
-          <artifactId>hadoop-annotations</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.hadoop</groupId>
-          <artifactId>hadoop-auth</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.hadoop</groupId>
-          <artifactId>hadoop-common</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.hadoop</groupId>
-          <artifactId>hadoop-hdfs</artifactId>
-        </exclusion>
       </exclusions>
     </dependency>
 
@@ -739,55 +746,16 @@
         </exclusion>
       </exclusions>
     </dependency>
+
     <dependency>
         <groupId>com.beust</groupId>
         <artifactId>jcommander</artifactId>
         <version>1.35</version>
     </dependency>
+
   </dependencies>
-
+  
   <repositories>
-    <repository>
-      <id>opennlp</id>
-      <name>OpenNLP Maven Repository</name>
-      <url>http://opennlp.sourceforge.net/maven2/</url>
-      <releases>
-        <updatePolicy>always</updatePolicy>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-        <updatePolicy>always</updatePolicy>
-      </snapshots>
-    </repository>
-
-    <repository>
-      <id>apache.maven2.snapshot.repository</id>
-      <name>Apache Snapshot repository</name>
-      <url>https://repository.apache.org/content/groups/snapshots/</url>
-      <releases>
-        <updatePolicy>always</updatePolicy>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-        <updatePolicy>always</updatePolicy>
-      </snapshots>
-    </repository>
-    <!--<repository>
-      <id>apache.maven2.snapshot.repository</id>
-      <name>Apache Maven 2 repository</name>
-      <url>http://people.apache.org/maven-snapshot-repository</url>
-      <releases>
-        <updatePolicy>always</updatePolicy>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-        <updatePolicy>always</updatePolicy>
-      </snapshots>
-    </repository>-->
-
     <repository>
       <id>tamingtext.maven2.repository</id>
       <name>TamingText Maven 2 repository</name>
@@ -801,19 +769,5 @@
         <updatePolicy>always</updatePolicy>
       </snapshots>
     </repository>
-
-    <repository>
-      <!-- carrot can be found here -->
-      <id>sonatype-nexus-public</id>
-      <name>SonaType public snapshots and releases repository</name>
-      <url>https://oss.sonatype.org/content/groups/public</url>
-      <releases> 
-          <enabled>true</enabled>
-      </releases> 
-      <snapshots>
-          <enabled>true</enabled>
-      </snapshots>
-    </repository>
-
   </repositories>
 </project>

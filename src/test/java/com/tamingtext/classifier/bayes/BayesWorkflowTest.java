@@ -37,9 +37,7 @@ public class BayesWorkflowTest extends TTTestCaseJ4 {
   @BeforeClass
   public static void beforeClass() throws Exception {
     baseDir = new File("target/test-output/extract-test");
-    if (!FileUtils.deleteQuietly(baseDir)) {
-      Assert.fail("Could not delete " + baseDir);
-    }
+    FileUtils.deleteQuietly(baseDir);
 
     if (!baseDir.mkdirs()) {
       Assert.fail("Count not create " + baseDir);

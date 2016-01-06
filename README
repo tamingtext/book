@@ -31,7 +31,7 @@ started, you will need:
    rm index.html*
    
    
-   or using [wget](https://eternallybored.org/misc/wget/) and [7-Zip](http://www.7-zip.org/) on windows (both must be added to the path environment variable):
+   or using wget (https://eternallybored.org/misc/wget/) and 7-Zip (http://www.7-zip.org/) on windows (both must be added to the path environment variable):
    
    md opennlp-models 
    cd opennlp-models
@@ -48,7 +48,7 @@ started, you will need:
    rm index.html*
    tar -xf WordNet-3.0.tar.gz
 
-   or using [wget](https://eternallybored.org/misc/wget/) and [7-Zip](http://www.7-zip.org/) on windows (both must be added to the path environment variable):
+   or using wget (https://eternallybored.org/misc/wget/) and  7-Zip (http://www.7-zip.org/) on windows (both must be added to the path environment variable):
    
    wget -nd -np -r http://maven.tamingtext.com/wordnet/
    del index.html*

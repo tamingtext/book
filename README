@@ -29,6 +29,15 @@ started, you will need:
    cd opennlp-models 
    wget -nd -np -r http://maven.tamingtext.com/opennlp-models/models-1.5/ 
    rm index.html*
+   
+   
+   or using wget (https://eternallybored.org/misc/wget/) and 7-Zip (http://www.7-zip.org/) on windows (both must be added to the path environment variable):
+   
+   md opennlp-models 
+   cd opennlp-models
+   wget -nd -np -r http://maven.tamingtext.com/opennlp-models/models-1.5/ 
+   del index.htm*
+   
 
 4. Get WordNet 3.0 and place it in the TT_HOME directory.
    
@@ -38,6 +47,13 @@ started, you will need:
    wget -nd -np -m http://maven.tamingtext.com/wordnet/
    rm index.html*
    tar -xf WordNet-3.0.tar.gz
+
+   or using wget (https://eternallybored.org/misc/wget/) and  7-Zip (http://www.7-zip.org/) on windows (both must be added to the path environment variable):
+   
+   wget -nd -np -r http://maven.tamingtext.com/wordnet/
+   del index.html*
+   7z x WordNet-3.0.tar.gz
+   7z x WordNet-3.0.tar
 
 Building the Source
 -------------------

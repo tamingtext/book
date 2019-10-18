@@ -10,7 +10,7 @@
 
   <properties>
      <lucene.version>3.6.0</lucene.version>
-     <tika.version>0.10</tika.version>
+     <tika.version>1.22</tika.version>
      <mahout.version>0.6</mahout.version>
      <release.update.interval>daily</release.update.interval>
      <snapshot.update.interval>interval:60</snapshot.update.interval>

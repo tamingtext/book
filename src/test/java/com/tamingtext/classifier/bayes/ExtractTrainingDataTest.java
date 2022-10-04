@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,9 +55,7 @@ public class ExtractTrainingDataTest extends SolrTestCaseJ4 {
   }
   
   public static File createTempDirectory() throws IOException {
-    File file = File.createTempFile("extract-test", "test");
-    file.delete();
-    file.mkdirs();
+    File file = Files.createTempDirectory("extract-test" + "test").toFile();
     if (!file.isDirectory()) {
       throw new IOException("Could not create temporary directory: " + file);
     }

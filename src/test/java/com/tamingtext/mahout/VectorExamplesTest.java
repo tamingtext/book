@@ -20,6 +20,7 @@
 package com.tamingtext.mahout;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,7 +78,7 @@ public class VectorExamplesTest extends TamingTextTestJ4 {
     File tmpDir = new File(System.getProperty("java.io.tmpdir"));
     File tmpLoc = new File(tmpDir, "sfvwt");
     tmpLoc.mkdirs();
-    File tmpFile = File.createTempFile("sfvwt", ".dat", tmpLoc);
+    File tmpFile = Files.createTempFile(tmpLoc.toPath(), "sfvwt", ".dat").toFile();
 
     Path path = new Path(tmpFile.getAbsolutePath());
     Configuration conf = new Configuration();//<co id="vec.examples.seq.conf"/>

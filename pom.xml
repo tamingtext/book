@@ -647,7 +647,7 @@
     <repository>
       <id>tamingtext.maven2.repository</id>
       <name>TamingText Maven 2 repository</name>
-      <url>http://maven.tamingtext.com</url>
+      <url>https://maven.tamingtext.com</url>
       <releases>
         <updatePolicy>always</updatePolicy>
         <enabled>true</enabled>
